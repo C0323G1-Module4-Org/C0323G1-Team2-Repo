@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm mới</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .form-container {
+            position: relative;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-top: 50px;
+            margin-left: 10px;
+            width: 800px;
+            height: 480px;
+        }
+
+        #imagePreview {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            margin-bottom: 10px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="image-container">
+                    <img id="imagePreview" src="" alt="" class="img-thumbnail">
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="form-container">
+                    <form action="/product/create" method="post" th:object="${product}">
+                        <div class="form-group">
+                            <b for="productName">Nhập tên sản phẩm: <span style="color: red">*</span></b>
+                            <input type="text" th:field="*{productName}" id="productName" class="form-control">
+                            <span style="color:red;" th:if="${#fields.hasErrors('productName')}"
+                                  th:errors="*{productName}" class="invalid-feedback"></span>
+                        </div>
+                        <div class="form-group">
+                            <b for="productPrice">Nhập giá: <span style="color: red">*</span></b>
+                            <input type="number" th:field="*{productPrice}" id="productPrice" class="form-control">
+                            <span style="color: red" th:if="${#fields.hasErrors('productPrice')}"
+                                  th:errors="*{productPrice}" class="invalid-feedback"></span>
+                        </div>
+                        <div class="form-group">
+                            <b for="productDescription">Nhập mô tả:</b>
+                            <input type="text" th:field="*{productDescription}" id="productDescription"
+                                   class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <b for="thumbnailURL">Up Image:</b>
+                            <input type="hidden" id="thumbnailURL" th:field="*{productImagePath}"/>
+                            <input id="btnThumbnailURL" type="file" class="form-control"/>
+                            <progress id="uploader" value="0" max="100">0%</progress>
+                        </div>
+                        <div class="form-group">
+                            <b for="productType">Chọn loại sản phẩm:</b>
+                            <select th:field="*{productType}" id="productType" class="form-control">
+                                <option th:each="productType : ${productTypes}"
+                                        th:value="${productType.productTypeId}"
+                                        th:text="${productType.productTypeName}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Thêm mới</button>
+                            <a style="color: white" href="/product">
+                                <button type="button" class="btn btn-secondary">Hủy</button>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
+<script>
+    document.getElementById('btnThumbnailURL').addEventListener('change', function () {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var preview = document.getElementById('imagePreview');
+            preview.src = reader.result;
+        };
+        reader.readAsDataURL(this.files[0]);
+    });
+
+    //paste here your copied configuration code
+    const firebaseConfig = {
+        apiKey: "AIzaSyDFIFtviHbm8hKCtidU9nVSlcD9fcQSvN4",
+        authDomain: "employeecasestudy.firebaseapp.com",
+        projectId: "employeecasestudy",
+        storageBucket: "employeecasestudy.appspot.com",
+        messagingSenderId: "562015708192",
+        appId: "1:562015708192:web:07cf40d25a6339b95d0845",
+        measurementId: "G-CGWJ0KZSJM"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    // const analytics = getAnalytics(app);
+    let uploader = document.getElementById('uploader');
+    let fileButton = document.getElementById('btnThumbnailURL');
+    fileButton.addEventListener('change', function (e) {
+        let file = e.target.files[0];
+        let storageRef = firebase.storage().ref('img/' + file.name);
+        let task = storageRef.put(file);
+        task.on('state_changed', function progress(snapshot) {
+            let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            uploader.value = percentage;
+            //  lúc chưa load xong thì thì ko cho submit
+            if (percentage === 100) {
+                document.getElementById('createButton').removeAttribute('disabled');
+            } else {
+                document.getElementById('createButton').setAttribute('disabled', 'disabled');
+            }
+        });
+        //   getDownloadURL() để lấy URL của file đã được lưu trữ trên Firebase Storage.
+        //   Sau khi URL được lấy thành công, nó được sử dụng để đặt giá trị cho thuộc tính value của phần tử HTML có id là thumbnailURL.
+        //   Điều này có nghĩa là URL được gán cho giá trị của trường input có tên là thumbnailURL.
+        //   Sau đó, URL này có thể được sử dụng để hiển thị hình ảnh hoặc thực hiện các thao tác khác liên quan đến hình ảnh trong code JavaScript và HTML.
+        task.then(snapshot => snapshot.ref.getDownloadURL())
+            .then(url => {
+                document.getElementById('thumbnailURL').setAttribute("value", url);
+                // tải hình ảnh
+                previewImage.style.display = 'none';
+                newImage.src = url;
+                newImage.style.display = 'block';
+            });
+    });
+</script>
+</body>
+</html>

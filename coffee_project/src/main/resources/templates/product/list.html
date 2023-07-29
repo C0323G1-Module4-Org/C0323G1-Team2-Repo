@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <style>
+        #success {
+            position: fixed;
+            right: 1em;
+        }
+
+        .tin {
+            contain: layout;
+            display: flex;
+            align-items: center;
+            background-color: wheat;
+            border-radius: 12px;
+            border-left: 16px #a0b4ff;
+            min-width: 50px;
+            max-width: 200px;
+            max-height: 70px;
+            box-shadow: 0 5px 8px rgba(36, 245, 10, 0.08);
+            animation: slideInLeft ease 2s, fadeOut linear 1s 2s forwards;
+            transition: all linear 0.5s;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .card {
+            margin: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            /*align-items: center;*/
+            /*justify-content: center;*/
+            height: 200px;
+        }
+
+        /*.card-text {*/
+        /*    text-align: center;*/
+        /*}*/
+    </style>
+</head>
+<body>
+<h1>Danh sách sản phẩm</h1>
+<span th:if="${msg}!=null" th:text="${msg}" id="success"
+      class="tin"
+      style="float: left; background-color: rgba(97,139,234,0.87);font-size: 20px"></span>
+<form action="/product/search" method="post">
+    <input type="text" name="name" placeholder="nhập tên sản phẩm ">
+    <select name="productType">
+        <option value="" selected disabled>-- Chọn loại sản phẩm --</option>
+        <option th:each="productType : ${productTypes}"
+                th:value="${productType.productTypeId}" th:text="${productType.productTypeName}"></option>
+    </select>
+    <select name="price">
+        <option value="" selected disabled>-- Chọn giá sản phẩm --</option>
+        <option th:each="price : ${prices}" th:value="${price}" th:text="${price}"></option>
+    </select>
+    <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i>
+    </button>
+</form>
+<a href="/product/create" style="color: white">
+    <button title="Thêm mới sản phẩm"
+            class="btn btn-primary">
+        <i class="fa-solid fa-plus"></i></button>
+</a>
+<!--<i-->
+<!--        class="fa-solid fa-plus"></i></a>-->
+
+<div class="row">
+    <div th:each="product,status: ${products}" class="col-md-3">
+        <div class="card" style="width: 18rem;">
+            <img th:src="${product.productImagePath}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 th:text="${product.productName}" class="card-title"></h5>
+                <p th:text="${product.productDescription}" class="card-text"></p>
+                <p th:text="${product.productType.productTypeName}" class="card-text"></p>
+                <p th:text="${product.productPrice} +'vnđ'" class="card-text"></p>
+                <!--                <div class="d-flex justify-content-between w-100">-->
+                <a href="#" class="btn btn-primary">Chọn</a>
+                <!--                </div>-->
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
