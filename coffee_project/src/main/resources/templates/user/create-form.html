@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style th:insert="/layout::style"></style>
+    <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
+          href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
+</head>
+<body>
+<div th:replace="layout::nav"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="layout::content1"></div>
+        <div class="col-sm-10" style="background-color: #FEFAE0;min-height: 700px">
+
+
+            <!---------------BODY---------------------------------------------------------------------------------------->
+            <h1>Đăng kí thông tin nhân viên</h1>
+            <form th:object="${userDto}" method="post" th:action="@{/user/create}">
+
+
+                <!--                    //Drag and Drop-->
+
+                <div class="row d-flex ">
+                <div class="col-4">
+                <div id="dnd" class="preview">
+                    <center style="margin-left: 40px">Thả ảnh vào đây</center>
+                </div>
+
+                <!--                    //File css Img-->
+                <style>
+                    #dnd {
+                        height: 300px;
+                        display: flex;
+                        align-items: center;
+                        justify-items: center;
+                        justify-content: left;
+                        margin: 0 auto 2rem;
+                        border: 2px dashed #ccc;
+                        width: 200px;
+                    }
+
+                    .drag-over {
+                        border-color: red !important;
+                        color: red;
+                    }
+
+                    .preview-img {
+                        width: 100%;
+                       height: 100%;
+                        /*margin: 0 1em 1em 0;*/
+                        padding: 0.5em;
+                        /*border: 1px solid #ccc;*/
+                        /*border-radius: 3px;*/
+
+                        display: inline-block;
+                    }
+                </style>
+                <!--                    //file Js Img-->
+                <script>
+                    const dndElement = document.querySelector('#dnd')
+                    const resultElement = document.querySelector('.preview')
+                    const validImageTypes = ['image/gif', 'image/jpeg', 'image/png']
+
+                    dndElement.addEventListener('dragover', function (e) {
+                        e.preventDefault()
+                        this.classList.add('drag-over')
+                    })
+
+                    dndElement.addEventListener('dragleave', function (e) {
+                        e.preventDefault()
+                        this.classList.remove('drag-over')
+                    })
+
+                    dndElement.addEventListener('drop', function (e) {
+                        e.preventDefault()
+                        this.classList.remove('drag-over')
+                        const files = e.dataTransfer.files;
+                        for (var i = 0; i < files.length; i++) {
+                            const file = files[i]
+                            renderPreviewImage(file)
+                        }
+                    })
+
+                    function renderPreviewImage(file) {
+                        const fileType = file['type']
+
+                        if (!validImageTypes.includes(fileType)) {
+                            resultElement.insertAdjacentHTML(
+                                'beforeend',
+                                '<span class="preview-img">Chọn ảnh đi :3</span>'
+                            )
+                            return
+                        }
+
+                        const fileReader = new FileReader()
+                        fileReader.readAsDataURL(file)
+
+                        fileReader.onload = function () {
+                            const url = fileReader.result
+                            resultElement.innerHTML = `<img src="${url}" alt="${file.name}" class="preview-img" />`
+                        }
+                    }
+
+                </script>
+
+
+
+
+<!--                    //Table đăng kí thông tin-->
+                </div>
+                <div class="col-8">
+                    <table>
+
+                        <tr>
+                            <td>Tên nhân viên<span style="color: red">*</span>:</td>
+                            <td><input class="form-control-sm" th:field="*{userName}" th:value="${userDto.userName}"></td>
+                            <td style="color: red" th:if="${#fields.hasErrors('userName')}"
+                                th:errors="*{userName}"></td>
+                        </tr>
+                        <tr>
+                            <td>Giới tính<span style="color: red">*</span>:</td>
+                            <td><input type="radio" name="gender" th:field="*{userGender}"
+                                       th:value="true"><span>Nam</span>
+                                <input type="radio" name="gender" th:field="*{userGender}"
+                                       th:value="false"><span>Nữ</span>
+                                <input type="radio" name="gender" th:field="*{userGender}"
+                                       th:value="null"><span>Khác</span>
+                            </td>
+                            <td style="color: red" th:if="${#fields.hasErrors('userGender')}"
+                                th:errors="*{userGender}"></td>
+                        </tr>
+                        <tr>
+                            <td>Ngày sinh<span style="color: red">*</span>:</td>
+                            <td><input type="date" th:field="*{userBirthday}"></td>
+                            <td style="color: red" th:if="${#fields.hasErrors('userBirthday')}"
+                                th:errors="*{userBirthday}"></td>
+                        </tr>
+                        <tr>
+                            <td>Số điện thoại<span style="color: red">*</span>:</td>
+                            <td><input th:field="*{userPhoneNumber}"></td>
+                            <td style="color: red" th:if="${#fields.hasErrors('userPhoneNumber')}"
+                                th:errors="*{userPhoneNumber}"></td>
+                        </tr>
+                        <tr>
+                            <td>Mail<span style="color: red">*</span>:</td>
+                            <td><input th:field="*{userEmail}"></td>
+                            <td style="color: red" th:if="${#fields.hasErrors('userEmail')}"
+                                th:errors="*{userEmail}"></td>
+                        </tr>
+                        <tr>
+                            <td>Giấy tờ tuỳ thân<span style="color: red">*</span>:</td>
+                            <td><input th:field="*{userIdCard}"></td>
+                            <td style="color: red" th:if="${#fields.hasErrors('userIdCard')}"
+                                th:errors="*{userIdCard}"></td>
+                        </tr>
+                        <tr>
+                            <td>Lương<span style="color: red">*</span>:</td>
+                            <td><input th:field="*{userSalary}" type="number"></td>
+                            <td style="color: red" th:if="${#fields.hasErrors('userSalary')}"
+                                th:errors="*{userSalary}"></td>
+                        </tr>
+                        <tr>
+                            <td>Địa chỉ<span style="color: red">*</span>:</td>
+                            <td><input id="a" th:field="*{userAddress}"></td>
+                            <td style="color: red" th:if="${#fields.hasErrors('userAddress')}"
+                                th:errors="*{userAddress}"></td>
+                        </tr>
+                        <tr>
+                            <td>Ca làm việc<span style="color: red">*</span>:</td>
+                            <td><select th:field="*{employeeType}">
+                                <option th:each="employeeType :${employeeTypeList}"
+                                        th:value="${employeeType.employeeTypeId}"
+                                        th:text="${employeeType.employeeTypeName}"></option>
+                            </select></td>
+                        </tr>
+                        <tr>
+                            <td>Tài khoản đăng kí<span style="color: red">*</span>:</td>
+                            <td><input th:field="*{account}"></td>
+                        </tr>
+                        <tr>
+
+                            <td><a th:href="@{/user/list}">
+                                <button type="button">Quay lại</button>
+                            </a></td>
+                            <td>
+                                <button>Đăng kí</button>
+                            </td>
+                            <td>
+                                <button type="reset">Xoá mọi thông tin</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                </div>
+            </form>
+
+
+            <!---------------END BODY---------------------------------------------------------------------------------------->
+
+
+        </div>
+    </div>
+</div>
+<div th:replace="layout::footer"></div>
+<script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
+        src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
+
+</body>
+</html>
