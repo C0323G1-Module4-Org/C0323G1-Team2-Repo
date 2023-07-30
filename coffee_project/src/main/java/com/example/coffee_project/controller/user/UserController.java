@@ -43,7 +43,7 @@ public class UserController {
 
     @GetMapping("/create-form")
     public ModelAndView showCreateForm() {
-        ModelAndView modelAndView = new ModelAndView("user/create-form");
+        ModelAndView modelAndView = new ModelAndView("user/create");
         modelAndView.addObject("userDto", new UserDto());
         modelAndView.addObject("employeeTypeList", employeeTypeService.findAll());
         return modelAndView;
@@ -59,7 +59,7 @@ public class UserController {
             model.addAttribute("userDto", userDto);
 
             model.addAttribute("employeeTypeList", employeeTypeService.findAll());
-            return "/user/create-form";
+            return "/user/create";
         }
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
@@ -88,7 +88,7 @@ public class UserController {
         if(user == null){
             return "redirect:/user/create-form";
         }
-
+        model.addAttribute("employeeTypeList", employeeTypeService.findAll());
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(user,userDto);
         model.addAttribute("userDto",userDto);
