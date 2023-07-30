@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style th:insert="/layout::style"></style>
+    <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
+          href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
+</head>
+<body>
+<div th:replace="layout::nav"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="layout::content1"></div>
+
+        <div class="col-sm-10" style="background-color: #FEFAE0;min-height: 700px">
+
+            <!-----------------------//CODE------------------------------------------------------------>
+            <h1 style="text-align: center">Danh Sách Nhân Viên</h1>
+
+            <div class="justify-content-center">
+                <form th:action="@{/user/list}" th:method="get">
+                    <div class="row" style="padding: 10px 10px;margin: 15px 5px">
+                        <div class="col-3" style="padding: 10px 10px">
+                            <a style="text-decoration: none" href="/user/create-form">
+                                <input class="btn btn-primary" value="Add new employee" type="button">
+                            </a>
+                        </div>
+                        <div class="col-6" style="padding: 10px 10px">
+
+                            <input style="width: 70%" th:name="search"
+                                   placeholder="Nhập tên nhân viên" th:value="${search}">
+                            <button class="btn btn-primary" type="submit">Search</button>
+
+                        </div>
+                        <div class="col-3" style="padding: 10px 10px">
+                            <!--//Toast hiển thị thông báo đã xoá thành công-->
+                            <div th:if="${deleteSuccess}" class="toast p-0" id="myToast" role="alert"
+                                 aria-live="assertive" aria-atomic="true">
+                                <div class="toast-header d-flex justify-content-between ">
+                                    <span> <strong>Đã xoá thành công!</strong></span>
+                                    <button type="button" class="btn-close float-end" data-bs-dismiss="toast"
+                                            aria-label="Đóng"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div>
+                    <table class="table table-striped">
+                        <thead>
+                        <th>STT</th>
+                        <th>Tên</th>
+                        <th>Mail</th>
+                        <th>Giới tính</th>
+                        <th>Số điện thoại</th>
+                        <th>Tài khoản</th>
+                        <th>Lương</th>
+                        <th>Vị trí</th>
+                        <th style="text-align: center">Thông tin chi tiết</th>
+                        <th style="text-align: center">Xoá</th>
+                        </thead>
+                        <tr th:each="user, status :${userPage}">
+                            <td th:text="${status.count}">
+                            <td th:text="${user.userName}">
+                            <td th:text="${user.userEmail}">
+                            <td th:text="${user.userGender}">
+                            <td th:text="${user.userPhoneNumber}">
+                            <td th:text="${user.account.accountName}">
+                            <td th:text="${user.userSalary}">
+                            <td th:text="${user.employeeType.employeeTypeName}">
+                            <td style="text-align: center">
+                                <a style="text-align: center" th:href="@{/user/detail}">
+                                    <button type="button" class="btn btn-primary">Chi tiết</button>
+                                </a>
+                            </td>
+                            <td style="text-align: center">
+                                <button style="text-align: center" type="button" class="btn btn-danger"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal"
+                                        th:attr="onclick=|showInfo(${user.userId},'${user.userName}')|">
+                                    Xoá
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-4"></div>
+
+
+                    <div class="col-1"><a th:if="${userPage.hasPrevious()}"
+                                          th:href="@{/user/list(page=${userPage.number-1},search=${search})}">
+                        <button class="btn btn-primary">Previous</button>
+                    </a>
+                    </div>
+                    <!----------------------//số trang--------------------------------------------------------------------------------->
+                    <div class="col-2 d-flex justify-content-center">
+                        <span th:text="${userPage.number +1}"></span>
+                        &nbsp;
+                        /
+                        &nbsp;
+                        <span th:text="${userPage.totalPages}"></span>
+                    </div>
+                    <!----------------------------------------------------------------------------------------------------------------->
+                    <div class="col-1">
+                        <a th:if="${userPage.hasNext()}"
+                           th:href="@{/user/list(page=${userPage.number+1},search=${search})}">
+                            <button class="btn btn-primary">Next</button>
+                        </a>
+
+
+                    </div>
+                    <div class="col-4"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/user/delete" method="post">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input id="userId" hidden="hidden" name="userId">
+                    <input name="userName" id="userName" hidden="hidden">
+                    <div>Bạn có xác nhận xoá người dùng có tên là: <span id="userNameDisplay"></span></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
+                    <button type="submit" class="btn btn-primary">Xác nhận</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--//code-->
+
+<script th:if="${deleteSuccess}">
+    window.onload = (event) => {
+        let myAlert = document.querySelectorAll('.toast')[0];
+        if (myAlert) {
+            let bsAlert = new bootstrap.Toast(myAlert);
+            bsAlert.show();
+        }
+    };
+</script>
+
+
+<script>
+
+//    let salary = document.getElementById("salary").value;
+//
+//    // Định dạng số thành chuỗi có định dạng "1.000.000"
+//    let formattedSalary = salary.toLocaleString('vi-VN');
+//
+//    // Hiển thị chuỗi đã định dạng
+//    document.getElementById("salary").innerText = formattedSalary;
+//    console.log(formattedSalary)
+
+    function showInfo(id, name) {
+
+        document.getElementById("userId").value = id;
+        document.getElementById("userName").value = name;
+        document.getElementById("userNameDisplay").innerText = name
+    }
+</script>
+
+<div th:replace="layout::footer"></div>
+<script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
+        src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
+</body>
+</html>

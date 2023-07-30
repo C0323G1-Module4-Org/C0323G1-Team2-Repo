@@ -3,7 +3,8 @@ package com.example.coffee_project.model.user;
 import com.example.coffee_project.model.account.Account;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
+
 
 @Entity
 @Table(name = "user")
