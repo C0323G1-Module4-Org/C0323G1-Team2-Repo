@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Customer Form</title>
+</head>
+<body>
+<div class="container">
+    <h1>Thông tin khách hàng</h1>
+    <div class="form">
+        <form th:action="@{/customer/save}" th:object="${customer}" method="post" class="form-group">
+            <div class="table">
+                <table>
+                    <tr>
+                        <th>Tên khách hàng: </th>
+                        <td><input class="form-control" type="text" th:field="*{customerName}"></td>
+                    </tr>
+                    <tr>
+                        <th>Giới tính</th>
+                        <td><input type="radio" th:field="*{customerGender}" th:value="0"><span th:text="Nam"></span></td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
