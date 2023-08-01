@@ -48,7 +48,7 @@
                     <div class="col-7">
                         <form th:action="@{/user/list}" th:method="get">
                             <label style="float: right">
-                                <input style="width: 400px;margin-right: 10px;display: inline-block" type="text"
+                                <input style="width: 400px;display: inline-block" type="text"
                                        id="disabledTextInput" class="form-control"
                                        th:name="search" placeholder="Nhập tên nhân viên" th:value="${search}">
                                 <button style="margin-bottom: 5px" class="btn btn-primary" type="submit"><i
@@ -69,7 +69,7 @@
                         <th scope="col">Tài khoản</th>
                         <th scope="col">Lương</th>
                         <th scope="col">Vị trí</th>
-                        <th scope="col" style="text-align: center">Thông tin chi tiết</th>
+                        <th scope="col" style="text-align: center">Chi tiết</th>
                         <th scope="col" style="text-align: center">Xoá</th>
                         </thead>
                         <tr th:each="user, status :${userPage}">
@@ -84,12 +84,11 @@
                             </td>
                             <td th:text="${user.userPhoneNumber}">
                             <td th:text="${user.account.accountName}">
-                            <td th:text="${user.userSalary}">
+                            <td th:text="${#numbers.formatDecimal(user.userSalary, 0, 'COMMA', 0, 'POINT') + ' VND'}"></td>
                             <td th:text="${user.employeeType.employeeTypeName}">
                             <td style="text-align: center">
 
-
-                                <a style="text-align: center" th:href="@{/user/detail}" class="btn btn-primary">
+                                <a style="text-align: center" th:href="@{/user/detail/{id}(id=${user.userId})}" class="btn btn-primary">
                                     <i class="fa-solid fa-circle-info"></i>
                                 </a>
                             </td>
@@ -98,7 +97,7 @@
                                         data-bs-toggle="modal"
                                         data-bs-target="#exampleModal"
                                         th:attr="onclick=|showInfo(${user.userId},'${user.userName}')|">
-                                    Xoá
+                                    <i class="fa-regular fa-trash-can"></i>
                                 </button>
                             </td>
                         </tr>
