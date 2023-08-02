@@ -6,6 +6,10 @@
     <style th:insert="/layout::style"></style>
     <!--                    //File css Img-->
     <style>
+        td {
+            padding-right: 35px;
+        }
+
         #dnd {
             height: 300px;
             display: flex;
@@ -45,100 +49,100 @@
 
 
             <!-------------------------CODE--------------------------------------------------------------------------------->
-            <h1>Thay đổi thông tin nhân viên</h1>
+            <h1 style="text-align: center; margin-bottom: 20px">Thay đổi thông tin nhân viên</h1>
             <form th:object="${userDto}" method="post" th:action="@{/user/create}">
 
                 <!--------------//Drag and Drop---------------------------------------------------------->
 
                 <div class="row d-flex ">
                     <div class="col-4">
-                        <div id="dnd" class="preview">
-                            <center style="margin-left: 40px">Thả ảnh vào đây</center>
+                        <div id="dnd" class="preview" style="margin-top: 15px">
+                            <img style="margin-left: 40px">Thả ảnh vào đây
+
                         </div>
 
+                        <a th:href="@{/user/list}" style="text-decoration: none;margin-top: 35px" class="btn btn-primary">Quay lại</a>
 
                         <!--                    //Table đăng kí thông tin-->
                     </div>
                     <div class="col-8">
-                        <table>
+                        <table class="table-responsive">
 
                             <tr>
-                                <td>Tên nhân viên<span style="color: red">*</span>:</td>
-                                <td><input class="form-control-sm" th:field="*{userName}"
+                                <th>Tên nhân viên<span style="color: red">*</span></th>
+                                <td><input class="form-control" th:field="*{userName}"
                                            th:value="${userDto.userName}"></td>
                                 <td style="color: red" th:if="${#fields.hasErrors('userName')}"
                                     th:errors="*{userName}"></td>
                             </tr>
                             <tr>
-                                <td>Giới tính<span style="color: red">*</span>:</td>
-                                <td><input type="radio" name="gender" th:field="*{userGender}"
+                                <th>Giới tính<span style="color: red">*</span></th>
+                                <td><input class="form-check-input" type="radio" name="gender" th:field="*{userGender}"
                                            th:value="true"><span>Nam</span>
-                                    <input type="radio" name="gender" th:field="*{userGender}"
+                                    <input class="form-check-input" type="radio" name="gender" th:field="*{userGender}"
                                            th:value="false"><span>Nữ</span>
-                                    <input type="radio" name="gender" th:field="*{userGender}"
+                                    <input class="form-check-input" type="radio" name="gender" th:field="*{userGender}"
                                            th:value="null"><span>Khác</span>
                                 </td>
                                 <td style="color: red" th:if="${#fields.hasErrors('userGender')}"
                                     th:errors="*{userGender}"></td>
                             </tr>
                             <tr>
-                                <td>Ngày sinh<span style="color: red">*</span>:</td>
-                                <td><input type="date" th:field="*{userBirthday}"></td>
+                                <th>Ngày sinh<span style="color: red">*</span></th>
+                                <td><input class="form-control" type="date" th:field="*{userBirthday}"></td>
                                 <td style="color: red" th:if="${#fields.hasErrors('userBirthday')}"
                                     th:errors="*{userBirthday}"></td>
                             </tr>
                             <tr>
-                                <td>Số điện thoại<span style="color: red">*</span>:</td>
-                                <td><input th:field="*{userPhoneNumber}"></td>
+                                <th>Số điện thoại<span style="color: red">*</span></th>
+                                <td><input class="form-control" th:field="*{userPhoneNumber}"></td>
                                 <td style="color: red" th:if="${#fields.hasErrors('userPhoneNumber')}"
                                     th:errors="*{userPhoneNumber}"></td>
                             </tr>
                             <tr>
-                                <td>Mail<span style="color: red">*</span>:</td>
-                                <td><input th:field="*{userEmail}"></td>
+                                <th>Mail<span style="color: red">*</span>:</th>
+                                <td><input class="form-control" th:field="*{userEmail}"></td>
                                 <td style="color: red" th:if="${#fields.hasErrors('userEmail')}"
                                     th:errors="*{userEmail}"></td>
                             </tr>
                             <tr>
-                                <td>Giấy tờ tuỳ thân<span style="color: red">*</span>:</td>
-                                <td><input th:field="*{userIdCard}"></td>
+                                <th>Căn cước công dân<span style="color: red">*</span></th>
+                                <td><input class="form-control" th:field="*{userIdCard}"></td>
                                 <td style="color: red" th:if="${#fields.hasErrors('userIdCard')}"
                                     th:errors="*{userIdCard}"></td>
                             </tr>
                             <tr>
-                                <td>Lương<span style="color: red">*</span>:</td>
-                                <td><input th:field="*{userSalary}" type="number"></td>
+                                <th>Lương<span style="color: red">*</span></th>
+                                <td><input class="form-control" th:field="*{userSalary}" type="number"></td>
                                 <td style="color: red" th:if="${#fields.hasErrors('userSalary')}"
                                     th:errors="*{userSalary}"></td>
                             </tr>
                             <tr>
-                                <td>Địa chỉ<span style="color: red">*</span>:</td>
-                                <td><input id="a" th:field="*{userAddress}"></td>
+                                <th>Địa chỉ<span style="color: red">*</span></th>
+                                <td><input class="form-control" id="a" th:field="*{userAddress}"></td>
                                 <td style="color: red" th:if="${#fields.hasErrors('userAddress')}"
                                     th:errors="*{userAddress}"></td>
                             </tr>
                             <tr>
-                                <td>Ca làm việc<span style="color: red">*</span>:</td>
-                                <td><select th:field="*{employeeType}">
-                                    <option th:each="employeeType :${employeeTypeList}"
+                                <th>Ca làm việc<span style="color: red">*</span></th>
+                                <td><select class="form-select" th:field="*{employeeType}">
+                                    <option  th:each="employeeType :${employeeTypeList}"
                                             th:value="${employeeType.employeeTypeId}"
                                             th:text="${employeeType.employeeTypeName}"></option>
                                 </select></td>
                             </tr>
                             <tr>
-                                <td>Tài khoản đăng kí<span style="color: red">*</span>:</td>
-                                <td><input th:field="*{account.accountName}"></td>
+                                <th>Tài khoản đăng kí<span style="color: red">*</span></th>
+                                <td><input class="form-control" th:field="*{account.accountName}"></td>
                             </tr>
                             <tr>
 
                                 <td><a th:href="@{/user/list}">
-                                    <button type="button">Quay lại</button>
+                                    <button class="btn btn-danger" type="reset">Xoá thông tin</button>
+
                                 </a></td>
                                 <td>
-                                    <button>Đăng kí</button>
-                                </td>
-                                <td>
-                                    <button type="reset">Xoá mọi thông tin</button>
+                                    <button style="margin-left: 60px" class="btn btn-primary">Đăng kí</button>
                                 </td>
                             </tr>
                         </table>

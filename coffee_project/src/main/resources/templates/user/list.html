@@ -2,10 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Danh Sách Nhân Viên</title>
     <style th:insert="/layout::style"></style>
     <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
           href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
 </head>
 <body>
 <div th:replace="layout::nav"></div>
@@ -17,62 +18,78 @@
         <div class="col-sm-10" style="background-color: #FEFAE0;min-height: 700px">
 
             <!-----------------------//CODE------------------------------------------------------------>
-            <h1 style="text-align: center">Danh Sách Nhân Viên</h1>
+            <h1 style="text-align: center; margin-bottom: 20px">Danh Sách Nhân Viên</h1>
 
-            <div class="justify-content-center">
-                <form th:action="@{/user/list}" th:method="get">
-                    <div class="row" style="padding: 10px 10px;margin: 15px 5px">
-                        <div class="col-3" style="padding: 10px 10px">
-                            <a style="text-decoration: none" href="/user/create-form">
-                                <input class="btn btn-primary" value="Add new employee" type="button">
-                            </a>
-                        </div>
-                        <div class="col-6" style="padding: 10px 10px">
+            <div class="justify-content-center" style="margin-bottom: 20px">
 
-                            <input style="width: 70%" th:name="search"
-                                   placeholder="Nhập tên nhân viên" th:value="${search}">
-                            <button class="btn btn-primary" type="submit">Search</button>
+                <div class="row">
+                    <div class="col-1">
 
-                        </div>
-                        <div class="col-3" style="padding: 10px 10px">
-                            <!--//Toast hiển thị thông báo đã xoá thành công-->
-                            <div th:if="${deleteSuccess}" class="toast p-0" id="myToast" role="alert"
-                                 aria-live="assertive" aria-atomic="true">
-                                <div class="toast-header d-flex justify-content-between ">
-                                    <span> <strong>Đã xoá thành công!</strong></span>
-                                    <button type="button" class="btn-close float-end" data-bs-dismiss="toast"
-                                            aria-label="Đóng"></button>
-                                </div>
+                        <a style="text-decoration: none" href="/user/create-form">
+                            <button title="Thêm mới sản phẩm"
+                                    class="btn btn-primary">
+                                <i class="fa-solid fa-plus"></i></button>
+                        </a>
+
+                    </div>
+
+                    <div class="col-4">
+                        <!--//Toast hiển thị thông báo đã xoá thành công-->
+                        <div th:if="${deleteSuccess}" class="toast p-0" id="myToast" role="alert"
+                             aria-live="assertive" aria-atomic="true">
+                            <div style="margin-left: 20px"
+                                 class="toast-header d-flex justify-content-between bg-success text-dark">
+                                <span> <strong>Đã xoá thành công!</strong></span>
+                                <button type="button" class="btn-close float-end" data-bs-dismiss="toast"
+                                        aria-label="Đóng"></button>
                             </div>
                         </div>
                     </div>
-                </form>
-                <div>
-                    <table class="table table-striped">
+                    <div class="col-7">
+                        <form th:action="@{/user/list}" th:method="get">
+                            <label style="float: right">
+                                <input style="width: 400px;display: inline-block" type="text"
+                                       id="disabledTextInput" class="form-control"
+                                       th:name="search" placeholder="Nhập tên nhân viên" th:value="${search}">
+                                <button style="margin-bottom: 5px" class="btn btn-primary" type="submit"><i
+                                        class="fas fa-search"></i></button>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="table-responsive" style="margin-top: 20px">
+                    <table class="table table-hover">
                         <thead>
-                        <th>STT</th>
-                        <th>Tên</th>
-                        <th>Mail</th>
-                        <th>Giới tính</th>
-                        <th>Số điện thoại</th>
-                        <th>Tài khoản</th>
-                        <th>Lương</th>
-                        <th>Vị trí</th>
-                        <th style="text-align: center">Thông tin chi tiết</th>
-                        <th style="text-align: center">Xoá</th>
+                        <th scope="col">STT</th>
+                        <th scope="col">Tên</th>
+                        <th scope="col">Mail</th>
+                        <th scope="col">Giới tính</th>
+                        <th scope="col">Số điện thoại</th>
+                        <th scope="col">Tài khoản</th>
+                        <th scope="col">Lương</th>
+                        <th scope="col">Vị trí</th>
+                        <th scope="col" style="text-align: center">Chi tiết</th>
+                        <th scope="col" style="text-align: center">Xoá</th>
                         </thead>
                         <tr th:each="user, status :${userPage}">
-                            <td th:text="${status.count}">
+                            <th th:text="${status.count}">
                             <td th:text="${user.userName}">
                             <td th:text="${user.userEmail}">
-                            <td th:text="${user.userGender}">
+                            <td>
+                                <div th:if="${user.userGender == null}">Khác</div>
+                                <div th:if="${user.userGender}">Nam</div>
+                                <div th:if="${!user.userGender}">Nữ</div>
+
+                            </td>
                             <td th:text="${user.userPhoneNumber}">
                             <td th:text="${user.account.accountName}">
-                            <td th:text="${user.userSalary}">
+                            <td th:text="${#numbers.formatDecimal(user.userSalary, 0, 'COMMA', 0, 'POINT') + ' VND'}"></td>
                             <td th:text="${user.employeeType.employeeTypeName}">
                             <td style="text-align: center">
-                                <a style="text-align: center" th:href="@{/user/detail}">
-                                    <button type="button" class="btn btn-primary">Chi tiết</button>
+
+                                <a style="text-align: center" th:href="@{/user/detail/{id}(id=${user.userId})}" class="btn btn-primary">
+                                    <i class="fa-solid fa-circle-info"></i>
                                 </a>
                             </td>
                             <td style="text-align: center">
@@ -80,7 +97,7 @@
                                         data-bs-toggle="modal"
                                         data-bs-target="#exampleModal"
                                         th:attr="onclick=|showInfo(${user.userId},'${user.userName}')|">
-                                    Xoá
+                                    <i class="fa-regular fa-trash-can"></i>
                                 </button>
                             </td>
                         </tr>
@@ -90,7 +107,8 @@
                     <div class="col-4"></div>
 
 
-                    <div class="col-1"><a th:if="${userPage.hasPrevious()}"
+                    <div class="col-1">
+                        <a style="text-decoration: none" th:if="${userPage.hasPrevious()}"
                                           th:href="@{/user/list(page=${userPage.number-1},search=${search})}">
                         <button class="btn btn-primary">Previous</button>
                     </a>
@@ -105,7 +123,7 @@
                     </div>
                     <!----------------------------------------------------------------------------------------------------------------->
                     <div class="col-1">
-                        <a th:if="${userPage.hasNext()}"
+                        <a style="text-decoration: none" th:if="${userPage.hasNext()}"
                            th:href="@{/user/list(page=${userPage.number+1},search=${search})}">
                             <button class="btn btn-primary">Next</button>
                         </a>
@@ -129,7 +147,7 @@
         <div class="modal-content">
             <form action="/user/delete" method="post">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel"><strong>Xoá nhân viên</strong></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -160,14 +178,14 @@
 
 <script>
 
-//    let salary = document.getElementById("salary").value;
-//
-//    // Định dạng số thành chuỗi có định dạng "1.000.000"
-//    let formattedSalary = salary.toLocaleString('vi-VN');
-//
-//    // Hiển thị chuỗi đã định dạng
-//    document.getElementById("salary").innerText = formattedSalary;
-//    console.log(formattedSalary)
+    //    let salary = document.getElementById("salary").value;
+    //
+    //    // Định dạng số thành chuỗi có định dạng "1.000.000"
+    //    let formattedSalary = salary.toLocaleString('vi-VN');
+    //
+    //    // Hiển thị chuỗi đã định dạng
+    //    document.getElementById("salary").innerText = formattedSalary;
+    //    console.log(formattedSalary)
 
     function showInfo(id, name) {
 

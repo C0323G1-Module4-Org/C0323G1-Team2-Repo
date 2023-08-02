@@ -18,6 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.Period;
 
 @Controller
 @RequestMapping("/user")
@@ -43,8 +45,9 @@ public class UserController {
 
     @GetMapping("/create-form")
     public ModelAndView showCreateForm() {
-        ModelAndView modelAndView = new ModelAndView("user/create-form");
-        modelAndView.addObject("userDto", new UserDto());
+        ModelAndView modelAndView = new ModelAndView("user/create");
+        UserDto userDto = new UserDto();
+        modelAndView.addObject("userDto", userDto);
         modelAndView.addObject("employeeTypeList", employeeTypeService.findAll());
         return modelAndView;
     }
@@ -59,7 +62,7 @@ public class UserController {
             model.addAttribute("userDto", userDto);
 
             model.addAttribute("employeeTypeList", employeeTypeService.findAll());
-            return "/user/create-form";
+            return "/user/create";
         }
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
@@ -82,17 +85,22 @@ public class UserController {
 
     @GetMapping("/update-form/{id}")
     public String showUpdateUserForm(@PathVariable Integer id,
-                                     RedirectAttributes redirectAttributes,
                                      Model model){
         User user = userService.findByID(id);
         if(user == null){
             return "redirect:/user/create-form";
         }
-
+        model.addAttribute("employeeTypeList", employeeTypeService.findAll());
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(user,userDto);
         model.addAttribute("userDto",userDto);
         return "/user/update";
     }
-
+    @GetMapping("/detail/{id}")
+    public ModelAndView showUserInfo(@PathVariable Integer id){
+        ModelAndView modelAndView = new ModelAndView("user/detail");
+        User user = userService.findByID(id);
+        modelAndView.addObject("user",user);
+        return modelAndView;
+    }
 }
