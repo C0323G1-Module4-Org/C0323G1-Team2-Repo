@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Đăng kí thông tin nhân viên</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
     <style th:insert="/layout::style"></style>
     <!--                    //File css Img-->
     <style>
@@ -21,10 +23,6 @@
             width: 200px;
         }
 
-        .drag-over {
-            border-color: red !important;
-            color: red;
-        }
 
         .preview-img {
             width: 100%;
@@ -32,6 +30,26 @@
             padding: 0.5em;
             display: inline-block;
         }
+
+        #form-create {
+            padding-left: 4rem;
+        }
+
+        #form-create .form-check-input {
+            width: 16px;
+            height: 16px;
+        }
+
+        #form-create input,
+        #form-create select {
+            width: 350px;
+            margin-left: 20px;
+        }
+
+        small {
+            margin-left: 20px;
+        }
+
 
     </style>
     <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
@@ -47,12 +65,12 @@
 
             <!---------------BODY---------------------------------------------------------------------------------------->
             <div class="row" style="margin-top: 15px;margin-bottom: 20px">
-                <a th:href="@{/user/list}" style="text-decoration: none"
-                   class="col-1">
-                    <button class="btn btn-primary ">Quay laij</button>
-                </a>
 
-                <h1 class="col-11" style="text-align: center">Đăng kí thông tin nhân viên</h1>
+                <h1 class="col-10" style="text-align: center">Đăng Kí Thông Tin Nhân Viên</h1>
+                <a th:href="@{/user/list}" style="text-decoration: none"
+                   class="col-2 d-flex justify-content-center">
+                    <button class="btn btn-primary "><i class="fa-solid fa-circle-arrow-left"></i></button>
+                </a>
 
             </div>
             <form th:object="${userDto}" method="post" th:action="@{/user/create}">
@@ -62,17 +80,20 @@
 
                 <div class="row d-flex ">
                     <div class="col-4">
-                        <div id="dnd" class="preview" style="margin-top: 15px">
-                            <span style="margin-left: 40px">Thả ảnh vào đây</span>
-                        </div>
-                        <!--                        <progress id="uploader" value="0" max="100">0%</progress>-->
+                        <div id="dnd" class="preview" style="margin-top: 5px">
 
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div>
+                            <div>Thả ảnh 4x6 vào đây</div>
+                            <progress id="uploader" style="width: 100%" value="0" max="100">0%</progress>
+                            </div>
+                        </div>
                     </div>
-                    <progress id="uploader" value="0" max="100">0%</progress>
 
                     <!-----------------------//Table đăng kí thông tin------------------------->
 
-                    <div class="col-8">
+                    <div class="col-8" id="form-create">
                         <table class="table-responsive">
                             <input id="thumbnailURL" hidden="hidden" th:field="*{userImagePath}">
 
@@ -95,10 +116,10 @@
                                 </th>
                                 <td><input class="form-check-input" type="radio" name="gender"
                                            th:field="*{userGender}"
-                                           th:value="true"><span>Nam</span>
+                                           th:value="true">&nbsp;<span>Nam</span>
                                     <input class="form-check-input" type="radio" name="gender"
                                            th:field="*{userGender}"
-                                           th:value="false"><span>Nữ</span>
+                                           th:value="false">&nbsp;<span>Nữ</span>
                                     <div style=" height: 20px"><small style="color: red"
                                                                       th:if="${#fields.hasErrors('userGender')}"
                                                                       th:errors="*{userGender}"></small></div>
@@ -110,7 +131,7 @@
                                 <th>Ngày sinh<span style="color: red">*</span>
                                     <div style="height: 20px"></div>
                                 </th>
-                                <td><input class="form-control" style="width: 200px" type="date"
+                                <td><input class="form-control" type="date"
                                            th:field="*{userBirthday}">
                                     <div style=" height: 20px"><small style="color: red"
                                                                       th:if="${#fields.hasErrors('userBirthday')}"
@@ -119,7 +140,7 @@
                             </tr>
 
                             <tr>
-                                <th>Số điện thoại<span style="color: red">*</span>
+                                <th>Điện thoại<span style="color: red">*</span>
                                     <div style=" height: 20px"></div>
                                 </th>
                                 <td><input class="form-control" th:field="*{userPhoneNumber}">
@@ -141,7 +162,7 @@
                             </tr>
 
                             <tr>
-                                <th>Căn cước công dân<span style="color: red">*</span>
+                                <th>Căn cước<span style="color: red">*</span>
                                     <div style=" height: 20px"></div>
                                 </th>
                                 <td><input class="form-control" th:field="*{userIdCard}">
@@ -151,16 +172,16 @@
                                 </td>
                             </tr>
 
-                            <tr>
-                                <th>Lương<span style="color: red">*</span>
-                                    <div style=" height: 20px"></div>
-                                </th>
-                                <td><input class="form-control" th:field="*{userSalary}" type="number">
-                                    <div style=" height: 20px"><small style="color: red"
-                                                                      th:if="${#fields.hasErrors('userSalary')}"
-                                                                      th:errors="*{userSalary}"></small></div>
-                                </td>
-                            </tr>
+<!--                            <tr>-->
+<!--                                <th>Lương<span style="color: red">*</span>-->
+<!--                                    <div style=" height: 20px"></div>-->
+<!--                                </th>-->
+<!--                                <td><input class="form-control" th:field="*{userSalary}" type="number">-->
+<!--                                    <div style=" height: 20px"><small style="color: red"-->
+<!--                                                                      th:if="${#fields.hasErrors('userSalary')}"-->
+<!--                                                                      th:errors="*{userSalary}"></small></div>-->
+<!--                                </td>-->
+<!--                            </tr>-->
 
                             <tr>
                                 <th>Địa chỉ<span style="color: red">*</span>
@@ -173,42 +194,34 @@
                                 </td>
                             </tr>
 
-                            <tr>
-                                <th>Ca làm việc<span style="color: red">*</span>
-                                    <div style=" height: 20px"></div>
-                                </th>
-                                <td><select id="disabledSelect" class="form-select" th:field="*{employeeType}">
-                                    <option th:each="employeeType :${employeeTypeList}"
-                                            th:value="${employeeType.employeeTypeId}"
-                                            th:text="${employeeType.employeeTypeName}"></option>
-                                </select></td>
-                            </tr>
-
-                            <tr>
-                                <th>Tài khoản đăng kí<span style="color: red">*</span></th>
-                                <td><input class="form-control" th:field="*{account.accountName}"></td>
-                            </tr>
+<!--                            <tr>-->
+<!--                                <th>Ca làm việc<span style="color: red">*</span>-->
+<!--                                    <div style=" height: 20px"></div>-->
+<!--                                </th>-->
+<!--                                <td><select id="disabledSelect" class="form-select" th:field="*{employeeType}">-->
+<!--                                    <option th:each="employeeType :${employeeTypeList}"-->
+<!--                                            th:value="${employeeType.employeeTypeId}"-->
+<!--                                            th:text="${employeeType.employeeTypeName}"></option>-->
+<!--                                </select>-->
+<!--                                    <div style=" height: 20px"></div>-->
+<!--                                </td>-->
+<!--                            </tr>-->
 
                             <tr>
 
-                                <td></td>
-                                <td>
-                                    <button style="margin-left: 60px" id="submit" class="btn btn-primary">Đăng kí
+                                <td colspan="2">
+                                    <button style="margin-top:20px; width: 100%" id="submit" class="btn btn-primary">
+                                        Đăng kí
                                     </button>
                                 </td>
 
                             </tr>
                         </table>
-
                     </div>
                 </div>
             </form>
-
-
-            <!---------------END BODY---------------------------------------------------------------------------------------->
-
-
         </div>
+        <!---------------END BODY---------------------------------------------------------------------------------------->
     </div>
 </div>
 <div th:replace="layout::footer"></div>

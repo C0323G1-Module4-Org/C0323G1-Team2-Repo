@@ -7,6 +7,13 @@
     <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
           href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <script src="/js/jquery-3.7.0.min.js"></script>
+    <style>
+        .modal-backdrop {
+            z-index: 1040 !important;
+        }
+    </style>
+
 </head>
 <body>
 <div th:replace="layout::nav"></div>
@@ -63,9 +70,7 @@
                         <thead>
                         <th scope="col">STT</th>
                         <th scope="col">Tên</th>
-                        <th scope="col">Mail</th>
                         <th scope="col">Giới tính</th>
-                        <th scope="col">Số điện thoại</th>
                         <th scope="col">Tài khoản</th>
                         <th scope="col">Lương</th>
                         <th scope="col">Vị trí</th>
@@ -75,22 +80,24 @@
                         <tr th:each="user, status :${userPage}">
                             <th th:text="${status.count}">
                             <td th:text="${user.userName}">
-                            <td th:text="${user.userEmail}">
                             <td>
                                 <div th:if="${user.userGender == null}">Khác</div>
                                 <div th:if="${user.userGender}">Nam</div>
                                 <div th:if="${!user.userGender}">Nữ</div>
 
                             </td>
-                            <td th:text="${user.userPhoneNumber}">
                             <td th:text="${user.account.accountName}">
                             <td th:text="${#numbers.formatDecimal(user.userSalary, 0, 'COMMA', 0, 'POINT') + ' VND'}"></td>
                             <td th:text="${user.employeeType.employeeTypeName}">
                             <td style="text-align: center">
 
-                                <a style="text-align: center" th:href="@{/user/detail/{id}(id=${user.userId})}" class="btn btn-primary">
+                                <!-- Button trigger detail modal -->
+                                <button type="button" class="btn btn-primary"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal1"
+                                        th:attr="onclick=|showDetail(${user.userId})|">
                                     <i class="fa-solid fa-circle-info"></i>
-                                </a>
+                                </button>
                             </td>
                             <td style="text-align: center">
                                 <button style="text-align: center" type="button" class="btn btn-danger"
@@ -109,9 +116,9 @@
 
                     <div class="col-1">
                         <a style="text-decoration: none" th:if="${userPage.hasPrevious()}"
-                                          th:href="@{/user/list(page=${userPage.number-1},search=${search})}">
-                        <button class="btn btn-primary">Previous</button>
-                    </a>
+                           th:href="@{/user/list(page=${userPage.number-1},search=${search})}">
+                            <button class="btn btn-primary">Previous</button>
+                        </a>
                     </div>
                     <!----------------------//số trang--------------------------------------------------------------------------------->
                     <div class="col-2 d-flex justify-content-center">
@@ -127,8 +134,6 @@
                            th:href="@{/user/list(page=${userPage.number+1},search=${search})}">
                             <button class="btn btn-primary">Next</button>
                         </a>
-
-
                     </div>
                     <div class="col-4"></div>
                 </div>
@@ -140,8 +145,7 @@
 
 <!-- Button trigger modal -->
 
-
-<!-- Modal -->
+<!-- Modal Delete-->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -163,8 +167,102 @@
         </div>
     </div>
 </div>
+
+
+<!-------Modal Detail---------------------------------->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel1">Thông tin chi tiết</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-4">
+                        <div id="dnd" class="preview" style="margin-top: 15px">
+                            <img id="imgPath" style="height: 150px; width: 100px;">
+                        </div>
+                    </div>
+                    <div class="col-8">
+
+                        <div>Tên: <span id="userNameDetail"></span></div>
+
+                        <div>Giới tính: <span id="userGender"></span></div>
+
+                        <div>Ngày Sinh: <span id="userBirthday"></span></div>
+
+                        <div>Điện thoại: <span id="userPhoneNumber"></span></div>
+
+                        <div>Email: <span id="userEmail"></span></div>
+
+                        <div>Căn cước : <span id="userIdCard"></span></div>
+
+                        <div>Lương: <span id="userSalary"></span></div>
+
+                        <div>Địa chỉ: <span id="userAddress"></span></div>
+
+                        <div>Ca làm việc: <span id="employeeTypeName"></span></div>
+
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-------End Modal Detail---------------------------------->
 <!--//code-->
 
+
+<div th:replace="layout::footer"></div>
+<script>
+    //User Detail
+    function showDetail(id) {
+        console.log(id)
+        $.ajax({
+            contentType: "application/json",
+            method: "GET",
+            dataType: "json",
+            url: "http://localhost:8080/api/user/detail/" + id,
+            success: function (data) {
+                let gender = "";
+                if(data.userGender){
+                    gender = "Nam";
+                }else {
+                    gender = "Nữ";
+                }
+                $("#userNameDetail").text(data.userName);
+                $("#userGender").text(gender);
+                $("#userBirthday").text(data.userBirthday);
+                $("#userPhoneNumber").text(data.userPhoneNumber);
+                $("#userEmail").text(data.userEmail);
+                $("#userIdCard").text(data.userIdCard);
+                $("#userSalary").text(data.userSalary.toLocaleString('en-US'));
+                $("#userAddress").text(data.userAddress);
+                $("#employeeTypeName").text(data.employeeType.employeeTypeName);
+                $("#imgPath").attr("src",data.userImagePath);
+                $("#exampleModal1").show();
+            }
+        })
+    }
+
+    //Show Delete Modal
+    function showInfo(id, name) {
+        document.getElementById("userId").value = id;
+        document.getElementById("userName").value = name;
+        document.getElementById("userNameDisplay").innerText = name
+    }
+
+</script>
+
+    //Toast Delete Successfully
 <script th:if="${deleteSuccess}">
     window.onload = (event) => {
         let myAlert = document.querySelectorAll('.toast')[0];
@@ -175,27 +273,6 @@
     };
 </script>
 
-
-<script>
-
-    //    let salary = document.getElementById("salary").value;
-    //
-    //    // Định dạng số thành chuỗi có định dạng "1.000.000"
-    //    let formattedSalary = salary.toLocaleString('vi-VN');
-    //
-    //    // Hiển thị chuỗi đã định dạng
-    //    document.getElementById("salary").innerText = formattedSalary;
-    //    console.log(formattedSalary)
-
-    function showInfo(id, name) {
-
-        document.getElementById("userId").value = id;
-        document.getElementById("userName").value = name;
-        document.getElementById("userNameDisplay").innerText = name
-    }
-</script>
-
-<div th:replace="layout::footer"></div>
 <script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
         src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
 </body>
