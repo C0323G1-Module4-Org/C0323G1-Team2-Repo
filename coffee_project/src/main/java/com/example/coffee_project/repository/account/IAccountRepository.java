@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.persistence.EntityManager;
+
 public interface IAccountRepository extends JpaRepository<Account,String> {
 // @Query(value = "select account.account_name,\n" +
 //         "role.role_name,\n" +
@@ -18,4 +20,5 @@ public interface IAccountRepository extends JpaRepository<Account,String> {
 //         "where account.account_name like :name",nativeQuery = true)
 // Page<Account> findAllByNameContaining(Pageable pageable,@Param("name") String name);
  Page<Account> findAllByAccountNameContaining(Pageable pageable,String name);
+ Account findAccountByAccountName(String name);
 }

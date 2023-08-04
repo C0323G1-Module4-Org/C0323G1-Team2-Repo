@@ -15,7 +15,12 @@
     <script src="/js/popper.js"></script>
     <style>
         body {
-            background: #ccd5ae;
+            background: #f1f0ee;
+        }
+
+        @font-face {
+            font-family: "Fira Code Light";
+            src: url("https://fonts.google.com/specimen/Fira+Sans");
         }
     </style>
 </head>
@@ -25,12 +30,12 @@
         <div class="row justify-content-center">
             <div class="col-md-12 col-lg-10">
                 <div class="wrap d-md-flex">
-                    <div class="img" style="background-image: url(/images/hinh-cafe-sang.jpg);">
+                    <div class="img" style="background-image: url(/images/login.jpg);">
                     </div>
-                    <div class="login-wrap p-4 p-md-5">
+                    <div style="background: #fefae0" class="login-wrap p-4 p-md-5">
                         <div class="d-flex">
                             <div class="w-100">
-                                <h3 class="mb-4">Đăng Nhập</h3>
+                                <h2 class="mb-4" style="color: #6694a1  ">Đăng Nhập</h2>
                             </div>
                             <div class="w-100">
                                 <p class="social-media d-flex justify-content-end">
@@ -41,15 +46,20 @@
                                 </p>
                             </div>
                         </div>
-                        <form th:object="${accountDto}" th:action="@{/account/login}" th:method="post"
+                        <div th:if="${#request.getParameter('error')=='true'}"
+                             style="color: red;margin: 10px 0">
+
+                        </div>
+                        <form th:object="${accountDto}" th:action="@{/j_spring_security_check}" method="POST"
                               class="signin-form">
                             <div class="form-group mb-3">
-                                <label class="label" for="username">Tên đăng nhập</label>
+                                <label style="color: #6694a1"  for="username">Tên đăng nhập</label>
                                 <input id="username" th:field="*{username}" type="text" class="form-control" required>
                             </div>
                             <div class="form-group mb-3">
-                                <label class="label" for="password">Mật khẩu</label>
-                                <input type="password" th:field="*{password}" id="password" class="form-control" required>
+                                <label style="color: #6694a1" for="password">Mật khẩu</label>
+                                <input type="password" th:field="*{password}" id="password" class="form-control"
+                                       required>
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="form-control btn btn-primary rounded submit px-3">Đăng
@@ -58,8 +68,9 @@
                             </div>
                             <div class="form-group d-md-flex">
                                 <div class="w-50 text-left">
-                                    <label class="checkbox-wrap checkbox-primary mb-0">Nhớ thông tin
-                                        <input type="checkbox" checked>
+                                    <label style="color: #6694a1" class="checkbox-wrap checkbox-primary mb-0">Nhớ thông
+                                        tin
+                                        <input type="checkbox" checked name="remember-me">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>

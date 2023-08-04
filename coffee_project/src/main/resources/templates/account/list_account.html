@@ -32,7 +32,7 @@
             <div class="row col-12">
                 <!--            <p style="color: green" th:if="${message!=null}" th:text="${message}" ></p>-->
                 <div class="col-1">
-                    <a>
+                    <a th:href="@{/account/signup}">
                         <button type="button" class="btn btn-primary">
                             <i class="fa-solid fa-plus"></i></button>
                     </a>
@@ -76,7 +76,9 @@
                         </button>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-danger">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                th:attr="onclick=|confirm('${a.accountName}')|">
                             <i class="fa-regular fa-trash-can"></i>
                         </button>
                     </td>
@@ -94,7 +96,35 @@
         </div>
     </div>
 </div>
-<div th:replace="~{layout::footer}"></div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/acount/delete" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Bạn muốn xóa tài khoản :</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" hidden="hidden" id="accountName">
+                    <span id="usernameDelete" name="usernameDelete"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
+                    <button type="submit" class="btn btn-primary">Xóa</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<div th:replace="~{layout::footer}"></div>\
+<script>
+    function confirm(name){
+        document.getElementById("usernameDelete").innerText=name;
+        document.getElementById("accountName").value=name;
+    }
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>

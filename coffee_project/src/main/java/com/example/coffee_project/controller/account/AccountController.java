@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,17 +22,19 @@ public class AccountController {
     @Autowired
     IAccountService accountService;
     @GetMapping("/login")
-    public ModelAndView login() {
-        ModelAndView modelAndView = new ModelAndView("login");
+    public ModelAndView login(Model model) {
+        ModelAndView modelAndView = new ModelAndView("/login");
         AccountDto accountDto=new AccountDto();
         modelAndView.addObject("accountDto",accountDto);
         return modelAndView;
     }
+
     @PostMapping("/login")
     public ModelAndView loginAccount(@ModelAttribute AccountDto accountDto) {
-        ModelAndView modelAndView = new ModelAndView("/account/list_account");
+     if (accountService.equals(accountDto)){
 
-        return modelAndView;
+     }
+     return new ModelAndView("/login");
     }
     @GetMapping("/signup")
     public ModelAndView signup(){
@@ -47,7 +50,8 @@ public class AccountController {
         modelAndView.addObject("accountDto", accountDto);
         return modelAndView;
     }
-    @GetMapping("/list")
+    //    Trang admin
+    @GetMapping("/admin")
     public  ModelAndView showListAccount(@RequestParam(defaultValue = "0") int page,
                                          @RequestParam(defaultValue = "")String searchName){
         Pageable pageable= PageRequest.of(page, 10,Sort.by("role.roleId").ascending());

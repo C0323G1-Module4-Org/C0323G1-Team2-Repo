@@ -15,7 +15,14 @@
     <script src="/js/popper.js"></script>
     <style>
         body {
-            background: #ccd5ae;
+            background: #f1f0ee;
+            /*background: #927055;*/
+        }
+       div,form,h2,label{
+            color: #6694a1;
+        }
+        .label{
+            color: #6694a1;
         }
     </style>
 </head>
@@ -25,12 +32,12 @@
         <div class="row justify-content-center">
             <div class="col-md-12 col-lg-10">
                 <div class="wrap d-md-flex">
-                    <div class="img" style="background-image: url(/images/hinh-cafe-sang.jpg);">
+                    <div class="img" style="background-image: url(/images/login.jpg);">
                     </div>
-                    <div class="login-wrap p-4 p-md-5">
+                    <div style="background: #fefae0" class="login-wrap p-4 p-md-5">
                         <div class="d-flex">
                             <div class="w-100">
-                                <h3 class="mb-4">Đăng Nhập</h3>
+                                <h2 class="mb-4">Đăng ký</h2>
                             </div>
                             <div class="w-100">
                                 <p class="social-media d-flex justify-content-end">
@@ -41,19 +48,23 @@
                                 </p>
                             </div>
                         </div>
-                        <form th:object="${accountDto}" th:action="@{/account/login}" th:method="post"
+                        <form th:object="${accountDto}" th:action="@{/account/sigup}" th:method="post"
                               class="signin-form">
                             <div class="form-group mb-3">
-                                <label class="label" for="username">Tên đăng nhập</label>
+                                <label for="username">Tên đăng nhập</label>
                                 <input id="username" th:field="*{username}" type="text" class="form-control" required>
                             </div>
                             <div class="form-group mb-3">
-                                <label class="label" for="password">Mật khẩu</label>
+                                <label for="password">Mật khẩu</label>
                                 <input type="password" th:field="*{password}" id="password" class="form-control" required>
+                            </div>
+                             <div class="form-group mb-3">
+                                <label for="password2">Nhập lại mật khẩu</label>
+                                <input type="password" th:field="*{password}" id="password2" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="form-control btn btn-primary rounded submit px-3">Đăng
-                                    nhập
+                                    ký
                                 </button>
                             </div>
                             <div class="form-group d-md-flex">
@@ -63,13 +74,8 @@
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
-                                <div class="w-50 text-md-right">
-                                    <a href="#">Quên mật khẩu</a>
-                                </div>
                             </div>
                         </form>
-                        <p class="text-center">Không phải thành viên? <a data-toggle="tab" href="#signup">Đăng kí</a>
-                        </p>
                     </div>
                 </div>
             </div>
