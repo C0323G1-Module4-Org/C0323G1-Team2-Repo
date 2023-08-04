@@ -11,26 +11,27 @@
         body {
             font-family: "Source Code Pro";
         }
+
         #next {
-            font-size: 1.5em;
+            font-size: 1em;
             color: #333;
             transition: font-size 0.2s ease-in-out;
             margin-right: 5px;
         }
 
         #next:hover {
-            font-size: 2em;
+            font-size: 1.5em;
             color: #007bff;
         }
 
         #next1 {
-            font-size: 1.5em;
+            font-size: 1em;
             color: #333;
             transition: font-size 0.2s ease-in-out;
         }
 
         #next1:hover {
-            font-size: 2em;
+            font-size: 1.5em;
             color: #007bff;
         }
     </style>
@@ -52,6 +53,7 @@
                                 <i class="fa-solid fa-plus"></i></button>
                         </a>
                     </div>
+                    <!--Thanh tìm kiếm-->
                     <form class="navbar-form navbar-right" action="/customer/list" method="get">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Nhập tên tìm kiếm..."
@@ -61,9 +63,17 @@
                     </form>
                 </div>
             </nav>
-            <!--    Hiển thị thông báo -->
-            <div class="alert alert-warning" th:if="${message!=null}">
-                <span th:text="${message}"></span>
+<!--            Hiển thị thông báo-->
+            <div th:if="${message!=null}">
+                <span><strong  th:text="${message}"></strong></span>
+            </div>
+            <div th:if="${message!=null}" class="toast p-0" id="myToast" role="alert"
+                 aria-live="assertive" aria-atomic="true">
+                <div style="margin-left: 20px"
+                     class="toast-header d-flex justify-content-between bg-success text-dark">
+                    <span><strong th:text="${message}"></strong></span>
+                    aria-label="Đóng"></button>
+                </div>
             </div>
             <!--    Hiển thị danh sách-->
             <div class="table-responsive">
@@ -105,7 +115,7 @@
                         </td>
                         <td>
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                    data-bs-target ="#deleteModal" th:data-id="${customer.customerId}"
+                                    data-bs-target="#deleteModal" th:data-id="${customer.customerId}"
                                     th:data-name="${customer.customerName}"
                                     th:onclick="sendInfoToDelete(this.getAttribute('data-id'), this.getAttribute('data-name'))">
                                 <i class="fa-regular fa-trash-can"></i>
@@ -123,7 +133,7 @@
                 <a id="next" th:if="${customerPage.hasPrevious()}"
                    th:href="@{/customer/list(page=${customerPage.number-1}, searchName=${searchName})}"><i
                         class="fas fa-backward"></i></a>
-<!--                <span th:text="${customerPage.number+1}"></span>/<span th:text="${customerPage.totalPages}"></span>-->
+                <span th:text="${customerPage.number+1}"></span>/<span th:text="${customerPage.totalPages}"></span>
                 <a id="next1" th:if="${customerPage.hasNext()}"
                    th:href="@{/customer/list(page=${customerPage.number+1},searchName=${searchName})}"><i
                         class="fas fa-forward"></i></a>
@@ -143,7 +153,8 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
                             <a id="idDelete">
-                                <button type="button" class="btn btn-primary">Có</button>
+
+                                <button type="button" class="btn btn-primary" id="myToastBtn">Có</button>
                             </a>
                         </div>
                     </div>
@@ -157,8 +168,17 @@
         src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
 <script>
     function sendInfoToDelete(id, name) {
-        document.getElementById('nameDelete').innerText = name;
-        document.getElementById('idDelete').href = '/customer/' + id + '/delete';
+        document.getElementById('nameDelete').innerText = name
+        document.getElementById('idDelete').href = '/customer/' + id + '/delete'
+    }
+
+    const toastTrigger = document.getElementById('myToastBtn')
+    const toastLive = document.getElementById('myToast')
+    if (toastTrigger) {
+        const toast = bootstrap.Toast.getOrCreateInstance(toastLive);
+        toastTrigger.addEventListener('click', () => {
+            toast.show()
+        })
     }
 </script>
 </body>

@@ -61,7 +61,7 @@
                                 </tr>
                                 <tr>
                                     <th>Số điện thoại</th>
-                                    <td><input class="form-control" type="number" th:field="*{customerPhoneNumber}">
+                                    <td><input class="form-control" type="text" th:field="*{customerPhoneNumber}">
                                         <small th:if="${#fields.hasErrors('customerPhoneNumber')}"
                                                th:errors="*{customerPhoneNumber}" style="color: red"></small>
                                     </td>
