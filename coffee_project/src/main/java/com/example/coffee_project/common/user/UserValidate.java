@@ -7,7 +7,7 @@ import java.sql.Date;
 import java.time.Period;
 
 public class UserValidate {
-    private static final String REGEX_USER_NAME = "^([A-Z][a-z]*((\\s)))+[A-Z][a-z]*$";
+    private static final String REGEX_USER_NAME = "^[\\p{Lu}][\\p{Ll}]*([\\s][\\p{Lu}][\\p{Ll}]*)*$\"";
     private static final String REGEX_NUMBER_PHONE = "((09|03|07|08|05)+([0-9]{8})\\b)";
     private static final String REGEX_EMAIL = "^(.+)@(\\S+)$";
 
@@ -25,9 +25,9 @@ public class UserValidate {
         if (userName.length() > 0 && (userName.length() <= 5 || userName.length() > 255)) {
             errors.rejectValue("userName", null,
                     "Tên nhân viên không được ít hơn 5 kí tự và vượt quá 255 kí tự!");
-        } else if (!checkRegexUserName(userName)) {
-            errors.rejectValue("userName", null,
-                    "Tên khách hàng phải ghi hoa kí tự đầu tiên của mỗi chữ cái");
+//        } else if (!checkRegexUserName(userName)) {
+//            errors.rejectValue("userName", null,
+//                    "Tên khách hàng phải ghi hoa kí tự đầu tiên của mỗi chữ cái");
         }
     }
 

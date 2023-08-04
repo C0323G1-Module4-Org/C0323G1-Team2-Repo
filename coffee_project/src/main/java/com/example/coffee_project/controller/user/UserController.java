@@ -66,7 +66,7 @@ public class UserController {
         }
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
-
+        user.setUserSalary(0D);
         userService.saveUser(user);
         redirectAttributes.addAttribute("success",
                 "Thêm thông tin cho tài khoản " + user.getAccount() + " thành công");
@@ -102,5 +102,24 @@ public class UserController {
         User user = userService.findByID(id);
         modelAndView.addObject("user",user);
         return modelAndView;
+    }
+    @PostMapping("/update")
+    public String updateUser(@Valid @ModelAttribute UserDto userDto,
+                             BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes,
+                             Model model) {
+        new UserDto().validate(userDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("userDto", userDto);
+            model.addAttribute("employeeTypeList", employeeTypeService.findAll());
+            return "/user/update";
+        }
+        User user = new User();
+        BeanUtils.copyProperties(userDto, user);
+
+        userService.saveUser(user);
+        redirectAttributes.addAttribute("success",
+                "Sửa tài khoản " + user.getAccount() + " thành công");
+        return "redirect:/user/list";
     }
 }
