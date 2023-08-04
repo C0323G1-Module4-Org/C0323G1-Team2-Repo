@@ -2,10 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Chi tiết nhân viên</title>
     <style th:insert="/layout::style"></style>
     <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
           href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
 
 </head>
 <body>
@@ -18,58 +20,64 @@
             <!-------------------------------CODE--------------------------------------------------->
 
             <h1>Thông Tin Chi Tiết Nhân Viên</h1>
+            <div class="row">
+                <div class="col-4">
+                    <div id="dnd" class="preview" style="margin-top: 15px">
+                        <img th:src="${user.userImagePath}" style="height: 300px; width: 200px;">
+                    </div>
+                </div>
+                <div class="col-8">
+                    <table>
 
-            <div id="dnd" class="preview" style="margin-top: 15px">
-                <img th:src="${user.userImagePath}" style="height: 300px; width: 200px;">
+                        <tr>
+                            <th>Tên:</th>
+                            <td th:text="${user.userName}"></td>
+                        </tr>
+                        <tr>
+                            <th>Ngày Sinh:</th>
+                            <td th:text="${#dates.format(user.userBirthday, 'dd-MM-yyyy')}"></td>
+                        </tr>
+                        <tr>
+                            <th>Số điện thoại:</th>
+                            <td th:text="${user.userPhoneNumber}"></td>
+
+                        </tr>
+                        <tr>
+                            <th>Email:</th>
+                            <td th:text="${user.userEmail}"></td>
+
+                        </tr>
+                        <tr>
+                            <th>Căn cước công dân:</th>
+                            <td th:text="${user.userIdCard}"></td>
+
+                        </tr>
+                        <tr>
+                            <th>Lương:</th>
+                            <td th:text="${#numbers.formatDecimal(user.userSalary, 0, 'COMMA', 0, 'POINT')} + ' VND'">
+                                đ
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <th>Địa chỉ:</th>
+                            <td th:text="${user.userAddress}"></td>
+
+                        </tr>
+                        <tr>
+                            <th>Ca làm việc:</th>
+                            <td th:text="${user.employeeType.employeeTypeName}"></td>
+
+                        </tr>
+                        <tr>
+                            <th>Tên đăng nhập:</th>
+                            <td th:text="${user.account.accountName}"></td>
+
+                        </tr>
+
+                    </table>
+                </div>
             </div>
-
-            <table>
-
-                <tr>
-                    <th>Tên:</th>
-                    <td th:text="${user.userName}"></td>
-                </tr>
-                <tr>
-                    <th>Ngày Sinh:</th>
-                    <td th:text="${#dates.format(user.userBirthday, 'dd-MM-yyyy')}"></td>
-                </tr>
-                <tr>
-                    <th>Số điện thoại:</th>
-                    <td th:text="${user.userPhoneNumber}"></td>
-
-                </tr>
-                <tr>
-                    <th>Email:</th>
-                    <td th:text="${user.userEmail}"></td>
-
-                </tr>
-                <tr>
-                    <th>Căn cước công dân:</th>
-                    <td th:text="${user.userIdCard}"></td>
-
-                </tr>
-                <tr>
-                    <th>Lương:</th>
-                    <td th:text="${#numbers.formatDecimal(user.userSalary, 0, 'COMMA', 0, 'POINT')} + ' VND'">đ</td>
-
-                </tr>
-                <tr>
-                    <th>Địa chỉ:</th>
-                    <td th:text="${user.userAddress}"></td>
-
-                </tr>
-                <tr>
-                    <th>Ca làm việc:</th>
-                    <td th:text="${user.employeeType.employeeTypeName}"></td>
-
-                </tr>
-                <tr>
-                    <th>Tên đăng nhập:</th>
-                    <td th:text="${user.account.accountName}"></td>
-
-                </tr>
-
-            </table>
             <!-------------------------------END CODE--------------------------------------------------->
         </div>
     </div>
