@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng kí thông tin nhân viên</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <style th:insert="/layout::style"></style>
+    <!--                    //File css Img-->
+    <style>
+        td {
+            padding-right: 30px;
+        }
+
+        #dnd {
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-items: center;
+            justify-content: left;
+            margin: 0 auto 2rem;
+            border: 2px dashed #ccc;
+            width: 200px;
+        }
+
+
+        .preview-img {
+            width: 100%;
+            height: 100%;
+            padding: 0.5em;
+            display: inline-block;
+        }
+
+        #form-create {
+            padding-left: 4rem;
+        }
+
+        #form-create .form-check-input {
+            width: 16px;
+            height: 16px;
+        }
+
+        #form-create input,
+        #form-create select {
+            width: 350px;
+            margin-left: 20px;
+        }
+
+        small {
+            margin-left: 20px;
+        }
+
+
+    </style>
+    <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
+          href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
+</head>
+<body>
+<div th:replace="layout::nav"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="layout::content1"></div>
+        <div class="col-sm-10" style="background-color: #FEFAE0;min-height: 700px">
+
+
+            <!---------------BODY---------------------------------------------------------------------------------------->
+            <div class="row" style="margin-top: 15px;margin-bottom: 20px">
+
+                <h1 class="col-10" style="text-align: center">Đăng Kí Thông Tin Nhân Viên</h1>
+                <a th:href="@{/user/list}" style="text-decoration: none"
+                   class="col-2 d-flex justify-content-center">
+                    <button class="btn btn-primary "><i class="fa-solid fa-circle-arrow-left"></i></button>
+                </a>
+
+            </div>
+            <form th:object="${userDto}" method="post" th:action="@{/user/create}">
+
+
+                <!---------//Drag and Drop------------------------------>
+
+                <div class="row d-flex ">
+                    <div class="col-4">
+                        <div id="dnd" class="preview" style="margin-top: 5px">
+
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div>
+                            <div>Thả ảnh 4x6 vào đây</div>
+                            <progress id="uploader" style="width: 100%" value="0" max="100">0%</progress>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-----------------------//Table đăng kí thông tin------------------------->
+
+                    <div class="col-8" id="form-create">
+                        <table class="table-responsive">
+                            <input id="thumbnailURL" hidden="hidden" th:field="*{userImagePath}">
+
+                            <tr>
+                                <th>Tên nhân viên<span style="color: red">*</span>
+                                    <div style=" height: 20px"></div>
+                                </th>
+                                <td>
+                                    <div><input class="form-control" th:field="*{userName}"
+                                                th:value="${userDto.userName}"></div>
+                                    <div style=" height: 20px"><small style="color: red"
+                                                                      th:if="${#fields.hasErrors('userName')}"
+                                                                      th:errors="*{userName}"></small></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>Giới tính<span style="color: red">*</span>
+                                    <div style=" height: 20px"></div>
+                                </th>
+                                <td><input class="form-check-input" type="radio" name="gender"
+                                           th:field="*{userGender}"
+                                           th:value="true">&nbsp;<span>Nam</span>
+                                    <input class="form-check-input" type="radio" name="gender"
+                                           th:field="*{userGender}"
+                                           th:value="false">&nbsp;<span>Nữ</span>
+                                    <div style=" height: 20px"><small style="color: red"
+                                                                      th:if="${#fields.hasErrors('userGender')}"
+                                                                      th:errors="*{userGender}"></small></div>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <th>Ngày sinh<span style="color: red">*</span>
+                                    <div style="height: 20px"></div>
+                                </th>
+                                <td><input class="form-control" type="date"
+                                           th:field="*{userBirthday}">
+                                    <div style=" height: 20px"><small style="color: red"
+                                                                      th:if="${#fields.hasErrors('userBirthday')}"
+                                                                      th:errors="*{userBirthday}"></small></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>Điện thoại<span style="color: red">*</span>
+                                    <div style=" height: 20px"></div>
+                                </th>
+                                <td><input class="form-control" th:field="*{userPhoneNumber}">
+                                    <div style=" height: 20px"><small style="color: red"
+                                                                      th:if="${#fields.hasErrors('userPhoneNumber')}"
+                                                                      th:errors="*{userPhoneNumber}"></small></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>Mail<span style="color: red">*</span>
+                                    <div style=" height: 20px"></div>
+                                </th>
+                                <td><input class="form-control" th:field="*{userEmail}">
+                                    <div style=" height: 20px"><small style="color: red"
+                                                                      th:if="${#fields.hasErrors('userEmail')}"
+                                                                      th:errors="*{userEmail}"></small></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>Căn cước<span style="color: red">*</span>
+                                    <div style=" height: 20px"></div>
+                                </th>
+                                <td><input class="form-control" th:field="*{userIdCard}">
+                                    <div style=" height: 20px"><small style="color: red"
+                                                                      th:if="${#fields.hasErrors('userIdCard')}"
+                                                                      th:errors="*{userIdCard}"></small></div>
+                                </td>
+                            </tr>
+
+<!--                            <tr>-->
+<!--                                <th>Lương<span style="color: red">*</span>-->
+<!--                                    <div style=" height: 20px"></div>-->
+<!--                                </th>-->
+<!--                                <td><input class="form-control" th:field="*{userSalary}" type="number">-->
+<!--                                    <div style=" height: 20px"><small style="color: red"-->
+<!--                                                                      th:if="${#fields.hasErrors('userSalary')}"-->
+<!--                                                                      th:errors="*{userSalary}"></small></div>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+
+                            <tr>
+                                <th>Địa chỉ<span style="color: red">*</span>
+                                    <div style=" height: 20px"></div>
+                                </th>
+                                <td><input class="form-control" id="a" th:field="*{userAddress}">
+                                    <div style=" height: 20px"><small style="color: red"
+                                                                      th:if="${#fields.hasErrors('userAddress')}"
+                                                                      th:errors="*{userAddress}"></small></div>
+                                </td>
+                            </tr>
+
+<!--                            <tr>-->
+<!--                                <th>Ca làm việc<span style="color: red">*</span>-->
+<!--                                    <div style=" height: 20px"></div>-->
+<!--                                </th>-->
+<!--                                <td><select id="disabledSelect" class="form-select" th:field="*{employeeType}">-->
+<!--                                    <option th:each="employeeType :${employeeTypeList}"-->
+<!--                                            th:value="${employeeType.employeeTypeId}"-->
+<!--                                            th:text="${employeeType.employeeTypeName}"></option>-->
+<!--                                </select>-->
+<!--                                    <div style=" height: 20px"></div>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+
+                            <tr>
+
+                                <td colspan="2">
+                                    <button style="margin-top:20px; width: 100%" id="submit" class="btn btn-primary">
+                                        Đăng kí
+                                    </button>
+                                </td>
+
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!---------------END BODY---------------------------------------------------------------------------------------->
+    </div>
+</div>
+<div th:replace="layout::footer"></div>
+<script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
+        src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
+
+<!--                    //file Js Img-->
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
+<script>
+
+
+    const dndElement = document.querySelector('#dnd')
+    const resultElement = document.querySelector('.preview')
+    const validImageTypes = ['image/gif', 'image/jpeg', 'image/png']
+
+    dndElement.addEventListener('dragover', function (e) {
+        e.preventDefault()
+        this.classList.add('drag-over')
+    })
+
+    dndElement.addEventListener('dragleave', function (e) {
+        e.preventDefault()
+        this.classList.remove('drag-over')
+    })
+
+    dndElement.addEventListener('drop', function (e) {
+        e.preventDefault()
+        this.classList.remove('drag-over')
+        const files = e.dataTransfer.files;
+        const file = files[0];
+        renderPreviewImage(file)
+
+    })
+
+    function renderPreviewImage(file) {
+        const fileType = file['type']
+
+        if (!validImageTypes.includes(fileType)) {
+            resultElement.insertAdjacentHTML('beforeend',
+                '<span class="preview-img">Chọn ảnh đi :3</span>'
+            )
+            return
+        }
+
+        const fileReader = new FileReader()
+        fileReader.readAsDataURL(file)
+
+        fileReader.onload = function () {
+            const url = fileReader.result;
+            resultElement.innerHTML = `<img src="${url}" alt="${file.name}" class="preview-img" />`;
+            pushImage(file)
+        }
+
+    }
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDFIFtviHbm8hKCtidU9nVSlcD9fcQSvN4",
+        authDomain: "employeecasestudy.firebaseapp.com",
+        projectId: "employeecasestudy",
+        storageBucket: "employeecasestudy.appspot.com",
+        messagingSenderId: "562015708192",
+        appId: "1:562015708192:web:07cf40d25a6339b95d0845",
+        measurementId: "G-CGWJ0KZSJM"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    function pushImage(file) {
+
+        let storageRef = firebase.storage().ref('img/' + file.name);
+        let task = storageRef.put(file);
+        task.on('state_changed', function progress(snapshot) {
+            let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            uploader.value = percentage;
+            //  lúc chưa load xong thì thì ko cho submit
+            if (percentage === 100) {
+                document.getElementById('submit').removeAttribute('disabled');
+            } else {
+                document.getElementById('submit').setAttribute('disabled', 'disabled');
+            }
+        });
+        //   getDownloadURL() để lấy URL của file đã được lưu trữ trên Firebase Storage.
+        task.then(snapshot => snapshot.ref.getDownloadURL())
+            .then(url => {
+                document.getElementById('thumbnailURL').value = url;
+            });
+    }
+
+
+</script>
+
+</body>
+</html>

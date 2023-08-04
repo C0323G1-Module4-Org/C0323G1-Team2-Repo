@@ -8,7 +8,6 @@
         * {
             font-style: italic;
         }
-
         .content-left:hover {
             background-color: #D4A373;
             border-radius: 10px;
@@ -18,7 +17,7 @@
           href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-sm top-0" style="background-color: #CCD5AE;height: 100px" th:fragment="nav">
+<nav class="navbar navbar-expand-sm top-0" style="background-color: #1B2223 ;height: 50px" th:fragment="nav">
     <div class="container-fluid">
         <ul class="navbar-nav w-100">
             <li class="nav-item col-2">
@@ -26,46 +25,43 @@
                                                                         width="30px"
                                                                         class="rounded mx-auto d-block"></a>
             </li>
-            <li class="nav-item display-5 col-8">
-                Chào mừng đến với hệ thống Queen Coffee
+            <li class="nav-item display-5 col-8" style="color: white;font-size:30px;text-align: center" >
+                <strong>Chào mừng đến với hệ thống Queen Coffee</strong>
             </li>
-            <li class="nav-item display-5 col-2">
-                <div class="float-end">Tài khoản</div>
+            <li class="nav-item display-5 col-2" style="color: white">
+                <div class="float-end" style="color: white;font-size:30px;text-align: center">Tài khoản</div>
             </li>
         </ul>
     </div>
 </nav>
-
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-2" style="background-color: #E9EDC9" th:fragment="content1">
-            <h2>Queen Coffee</h2>
+        <div class="col-sm-2" style="background-color: #3A4F50" th:fragment="content1">
+            <h2 class="text-light">Queen Coffee</h2>
             <ul class="nav nav-pills flex-column">
                 <li class="nav-item content-left">
-                    <a class="nav-link text-dark " href="#">Đặt sản phẩm</a>
+                    <a class="nav-link text-light " href="#">Đặt sản phẩm</a>
                 </li>
                 <li class="nav-item content-left">
-                    <a class="nav-link text-dark" href="#">Đăng kí customer</a>
+                    <a class="nav-link text-light" href="#">Đăng kí customer</a>
                 </li>
                 <li class="nav-item content-left">
-                    <a class="nav-link text-dark" href="#">Đăng kí nhân viên</a>
+                    <a class="nav-link text-light" href="#">Đăng kí nhân viên</a>
                 </li>
                 <li class="nav-item content-left">
-                    <a class="nav-link text-dark" href="#">Thêm sản phẩm</a>
+                    <a class="nav-link text-light" href="#">Thêm sản phẩm</a>
                 </li>
             </ul>
             <hr class="d-sm-none">
         </div>
         <div class="col-sm-10" style="background-color: #FEFAE0;min-height: 700px">
-
         </div>
     </div>
 </div>
-
-<div class="p-4 text-white text-center top-0" style="background-color: #CCD5AE" th:fragment="footer">
-    <div class="text-center p-3 text-dark" style="background-color: #CCD5AE;">
+<div class="p-3 text-white text-center top-0" style="background-color: #1B2223" th:fragment="footer">
+    <div class="text-center p-0 text-light" style="background-color: #1B2223;">
         © 2023 Coding:
-        <a class="text-dark" href="/">QueenCoffee</a>
+        <a class="text-light" href="/">QueenCoffee</a>
     </div>
 </div>
 <script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
