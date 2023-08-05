@@ -2,30 +2,30 @@ package com.example.coffee_project.dto.account;
 
 
 public class AccountDto {
-    private String username;
-    private String password;
+    private String accountName;
+    private String accountPassword;
 
     public AccountDto() {
     }
 
     public AccountDto(String username, String password) {
-        this.username = username;
-        this.password = password;
+        this.accountName = username;
+        this.accountPassword = password;
     }
 
-    public String getUsername() {
-        return username;
+    public String getAccountName() {
+        return accountName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getAccountPassword() {
+        return accountPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setAccountPassword(String accountPassword) {
+        this.accountPassword = accountPassword;
     }
 }
