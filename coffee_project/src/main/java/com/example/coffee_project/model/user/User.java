@@ -1,11 +1,9 @@
 package com.example.coffee_project.model.user;
 
 import com.example.coffee_project.model.account.Account;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-import java.sql.Date;
-
+import java.util.Date;
 
 @Entity
 @Table(name = "user")
@@ -44,7 +42,6 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "employee_type_id", referencedColumnName = "employee_type_id")
     private EmployeeType employeeType;
-    @JsonBackReference
     @OneToOne
     @JoinColumn(name = "account_name", referencedColumnName = "account_name", unique = true, nullable = false)
     private Account account;

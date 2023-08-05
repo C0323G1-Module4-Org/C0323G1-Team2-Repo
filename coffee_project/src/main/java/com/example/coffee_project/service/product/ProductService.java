@@ -7,6 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Service
 public class ProductService implements IProductService {
@@ -30,7 +33,9 @@ public class ProductService implements IProductService {
                 maxPrice = new String(priceRange[1]);
             }
         }
-        return productRepository.search(pageable,name, productType, minPrice, maxPrice );
+        String newStr = minPrice.replaceAll(",", "");
+        String newStr2 = maxPrice.replaceAll(",", "");
+        return productRepository.search(pageable,name, productType, newStr, newStr2 );
     }
 
     @Override

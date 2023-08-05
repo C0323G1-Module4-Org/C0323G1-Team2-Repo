@@ -194,7 +194,7 @@
                 <div style="text-align: center">
                     <a id="next" th:if="${products.hasPrevious()}" th:href="@{/product/(page=${products.number-1})}"><i
                             class="fas fa-backward"></i></a>
-                    <!--            <span th:text="${products.number+1}"></span>/ <span th:text="${products.totalPages}"></span>-->
+                                <span th:text="${products.number+1}"></span>/ <span th:text="${products.totalPages}"></span>
                     <a id="next1" th:if="${products.hasNext()}" th:href="@{/product/(page=${products.number+1})}"><i
                             class="fas fa-forward"></i></a>
                 </div>

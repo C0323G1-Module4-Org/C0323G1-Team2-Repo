@@ -1,5 +1,7 @@
 package com.example.coffee_project.model.product;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -13,6 +15,7 @@ public class ProductType {
 
     @Column(name = "product_type_name", nullable = false,unique = true)
     private String productTypeName;
+    @JsonBackReference
     @OneToMany(mappedBy = "productType")
     private Set<Product> productSet;
 
