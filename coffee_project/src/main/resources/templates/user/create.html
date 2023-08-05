@@ -98,7 +98,7 @@
                             <input id="thumbnailURL" hidden="hidden" th:field="*{userImagePath}">
 
                             <tr>
-                                <th>Tên nhân viên<span style="color: red">*</span>
+                                <th>Tên nhân viên <span style="color: red">*</span>
                                     <div style=" height: 20px"></div>
                                 </th>
                                 <td>
@@ -111,7 +111,7 @@
                             </tr>
 
                             <tr>
-                                <th>Giới tính<span style="color: red">*</span>
+                                <th>Giới tính <span style="color: red">*</span>
                                     <div style=" height: 20px"></div>
                                 </th>
                                 <td><input class="form-check-input" type="radio" name="gender"
@@ -128,7 +128,7 @@
                             </tr>
 
                             <tr>
-                                <th>Ngày sinh<span style="color: red">*</span>
+                                <th>Ngày sinh <span style="color: red">*</span>
                                     <div style="height: 20px"></div>
                                 </th>
                                 <td><input class="form-control" type="date"
@@ -140,7 +140,7 @@
                             </tr>
 
                             <tr>
-                                <th>Điện thoại<span style="color: red">*</span>
+                                <th>Điện thoại <span style="color: red">*</span>
                                     <div style=" height: 20px"></div>
                                 </th>
                                 <td><input class="form-control" th:field="*{userPhoneNumber}">
@@ -151,7 +151,7 @@
                             </tr>
 
                             <tr>
-                                <th>Mail<span style="color: red">*</span>
+                                <th>Mail <span style="color: red">*</span>
                                     <div style=" height: 20px"></div>
                                 </th>
                                 <td><input class="form-control" th:field="*{userEmail}">
@@ -162,7 +162,7 @@
                             </tr>
 
                             <tr>
-                                <th>Căn cước<span style="color: red">*</span>
+                                <th>Căn cước <span style="color: red">*</span>
                                     <div style=" height: 20px"></div>
                                 </th>
                                 <td><input class="form-control" th:field="*{userIdCard}">
@@ -172,19 +172,19 @@
                                 </td>
                             </tr>
 
-<!--                            <tr>-->
-<!--                                <th>Lương<span style="color: red">*</span>-->
-<!--                                    <div style=" height: 20px"></div>-->
-<!--                                </th>-->
-<!--                                <td><input class="form-control" th:field="*{userSalary}" type="number">-->
-<!--                                    <div style=" height: 20px"><small style="color: red"-->
-<!--                                                                      th:if="${#fields.hasErrors('userSalary')}"-->
-<!--                                                                      th:errors="*{userSalary}"></small></div>-->
-<!--                                </td>-->
-<!--                            </tr>-->
+                            <tr>
+                                <th>Lương <span style="color: red">*</span>
+                                    <div style=" height: 20px"></div>
+                                </th>
+                                <td><input class="form-control" th:field="*{userSalary}" type="number">
+                                    <div style=" height: 20px"><small style="color: red"
+                                                                      th:if="${#fields.hasErrors('userSalary')}"
+                                                                      th:errors="*{userSalary}"></small></div>
+                                </td>
+                            </tr>
 
                             <tr>
-                                <th>Địa chỉ<span style="color: red">*</span>
+                                <th>Địa chỉ <span style="color: red">*</span>
                                     <div style=" height: 20px"></div>
                                 </th>
                                 <td><input class="form-control" id="a" th:field="*{userAddress}">
@@ -194,19 +194,28 @@
                                 </td>
                             </tr>
 
-<!--                            <tr>-->
-<!--                                <th>Ca làm việc<span style="color: red">*</span>-->
-<!--                                    <div style=" height: 20px"></div>-->
-<!--                                </th>-->
-<!--                                <td><select id="disabledSelect" class="form-select" th:field="*{employeeType}">-->
-<!--                                    <option th:each="employeeType :${employeeTypeList}"-->
-<!--                                            th:value="${employeeType.employeeTypeId}"-->
-<!--                                            th:text="${employeeType.employeeTypeName}"></option>-->
-<!--                                </select>-->
-<!--                                    <div style=" height: 20px"></div>-->
-<!--                                </td>-->
+                            <tr>
+                                <th>Ca làm việc <span style="color: red">*</span>
+                                    <div style=" height: 20px"></div>
+                                </th>
+                                <td><select id="disabledSelect" class="form-select" th:field="*{employeeType}">
+                                    <option th:each="employeeType :${employeeTypeList}"
+                                            th:value="${employeeType.employeeTypeId}"
+                                            th:text="${employeeType.employeeTypeName}"></option>
+                                </select>
+                                    <div style=" height: 20px"></div>
+                                </td>
 <!--                            </tr>-->
-
+                            <tr>
+                                <th>Tài khoản <span style="color: red">*</span>
+                                    <div style=" height: 20px"></div>
+                                </th>
+                                <td><input class="form-control"  th:field="*{account.accountName}">
+                                    <div style=" height: 20px"><small style="color: red"
+                                                                      th:if="${#fields.hasErrors('userAddress')}"
+                                                                      th:errors="*{userAddress}"></small></div>
+                                </td>
+                            </tr>
                             <tr>
 
                                 <td colspan="2">
@@ -229,10 +238,39 @@
         src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
 
 <!--                    //file Js Img-->
-<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
+<!--<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>-->
+<!--<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>-->
+<script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+
+<script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+// ...
+
+<script defer src="./init-firebase.js"></script>
 <script>
 
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "firebase/app";
+    import { getAnalytics } from "firebase/analytics";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyArCw60QkeuUk0Q-fRBWkAIcMkmxz9awxc",
+        authDomain: "queen-coffee.firebaseapp.com",
+        projectId: "queen-coffee",
+        storageBucket: "queen-coffee.appspot.com",
+        messagingSenderId: "144351029903",
+        appId: "1:144351029903:web:7b55364e67c5561d525efa",
+        measurementId: "G-P32N8HSB6N"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
 
     const dndElement = document.querySelector('#dnd')
     const resultElement = document.querySelector('.preview')
@@ -278,15 +316,15 @@
 
     }
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyDFIFtviHbm8hKCtidU9nVSlcD9fcQSvN4",
-        authDomain: "employeecasestudy.firebaseapp.com",
-        projectId: "employeecasestudy",
-        storageBucket: "employeecasestudy.appspot.com",
-        messagingSenderId: "562015708192",
-        appId: "1:562015708192:web:07cf40d25a6339b95d0845",
-        measurementId: "G-CGWJ0KZSJM"
-    };
+    // const firebaseConfig = {
+    //     apiKey: "AIzaSyDFIFtviHbm8hKCtidU9nVSlcD9fcQSvN4",
+    //     authDomain: "employeecasestudy.firebaseapp.com",
+    //     projectId: "employeecasestudy",
+    //     storageBucket: "employeecasestudy.appspot.com",
+    //     messagingSenderId: "562015708192",
+    //     appId: "1:562015708192:web:07cf40d25a6339b95d0845",
+    //     measurementId: "G-CGWJ0KZSJM"
+    // };
     firebase.initializeApp(firebaseConfig);
 
     function pushImage(file) {

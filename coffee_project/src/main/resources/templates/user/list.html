@@ -46,7 +46,7 @@
                              aria-live="assertive" aria-atomic="true">
                             <div style="margin-left: 20px"
                                  class="toast-header d-flex justify-content-between bg-success text-dark">
-                                <span> <strong>Đã xoá thành công!</strong></span>
+                                <span> <strong id="delete">Đã xoá thành công!</strong></span>
                                 <button type="button" class="btn-close float-end" data-bs-dismiss="toast"
                                         aria-label="Đóng"></button>
                             </div>
@@ -84,8 +84,7 @@
                                 <div th:if="${user.userGender == null}">Khác</div>
                                 <div th:if="${user.userGender}">Nam</div>
                                 <div th:if="${!user.userGender}">Nữ</div>
-
-                            </td>
+                         </td>
                             <td th:text="${user.account.accountName}">
                             <td th:text="${#numbers.formatDecimal(user.userSalary, 0, 'COMMA', 0, 'POINT') + ' VND'}"></td>
                             <td th:text="${user.employeeType.employeeTypeName}">
@@ -206,17 +205,17 @@
 
                         <div>Ca làm việc: <span id="employeeTypeName"></span></div>
 
-
-
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
             </div>
         </div>
     </div>
 </div>
+
+
 <!-------End Modal Detail---------------------------------->
 <!--//code-->
 
@@ -225,7 +224,6 @@
 <script>
     //User Detail
     function showDetail(id) {
-        console.log(id)
         $.ajax({
             contentType: "application/json",
             method: "GET",
@@ -262,7 +260,7 @@
 
 </script>
 
-    //Toast Delete Successfully
+<!--    //Toast Delete Successfully-->
 <script th:if="${deleteSuccess}">
     window.onload = (event) => {
         let myAlert = document.querySelectorAll('.toast')[0];

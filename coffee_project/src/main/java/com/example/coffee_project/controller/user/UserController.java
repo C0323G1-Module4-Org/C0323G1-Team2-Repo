@@ -33,7 +33,7 @@ public class UserController {
     public ModelAndView showListUser(@RequestParam(defaultValue = "0") Integer page,
                                      @RequestParam(defaultValue = "") String search) {
         ModelAndView modelAndView = new ModelAndView("/user/list");
-        Pageable pageable = PageRequest.of(page, 10,
+        Pageable pageable = PageRequest.of(page, 3,
                 Sort.by("userName").ascending().and(Sort.by("userSalary").ascending()));
 
         Page<User> userPage = userService.findAll(pageable, search);
