@@ -1,5 +1,7 @@
 package com.example.coffee_project.model.account;
 
+import com.example.coffee_project.model.user.User;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,6 +16,8 @@ public class Account {
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "role_id",nullable = false)
     private Role role;
+    @OneToOne(mappedBy = "account")
+    private User user;
 
     public Account() {
     }
