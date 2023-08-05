@@ -97,7 +97,7 @@
                         <table class="table-responsive" style="width: 70%">
 
                             <tr>
-                                <th>Tên nhân viên<span style="color: red">*</span>
+                                <th>Tên nhân viên <span style="color: red">*</span>
                                     <div style=" height: 20px"></div>
                                 </th>
                                 <td>
@@ -111,7 +111,7 @@
                             </tr>
 
                             <tr>
-                                <th>Giới tính<span style="color: red">*</span>
+                                <th>Giới tính <span style="color: red">*</span>
                                     <div style=" height: 20px"></div>
                                 </th>
                                 <td>
@@ -131,7 +131,7 @@
                             </tr>
 
                             <tr>
-                                <th>Ngày sinh<span style="color: red">*</span>
+                                <th>Ngày sinh <span style="color: red">*</span>
                                     <div style=" height: 20px"></div>
                                 </th>
                                 <td>
@@ -146,7 +146,7 @@
                             </tr>
 
                             <tr>
-                                <th>Điện thoại<span style="color: red">*</span>
+                                <th>Điện thoại <span style="color: red">*</span>
                                     <div style=" height: 20px"></div>
                                 </th>
                                 <td><input class="form-control " th:field="*{userPhoneNumber}">
@@ -157,7 +157,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>Mail<span style="color: red">*</span>
+                                <th>Mail <span style="color: red">*</span>
                                     <div style=" height: 20px"></div>
                                 </th>
                                 <td>
@@ -169,7 +169,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>Căn cước<span style="color: red">*</span>
+                                <th>Căn cước <span style="color: red">*</span>
                                     <div style=" height: 20px"></div>
                                 </th>
                                 <td><input class="form-control" th:field="*{userIdCard}">
@@ -179,22 +179,22 @@
                                     </div>
                                 </td>
                             </tr>
-<!--                            <tr>-->
-<!--                                <th>Lương<span style="color: red">*</span>-->
-<!--                                    <div style=" height: 20px"></div>-->
-<!--                                </th>-->
-<!--                                <td>-->
-<!--                                    <input class="form-control" th:field="*{userSalary}" type="number"-->
-<!--                                           id="salary">-->
-<!--                                    <div style=" height: 20px">-->
-<!--                                        <small style="color: red" th:if="${#fields.hasErrors('userSalary')}"-->
-<!--                                               th:errors="*{userSalary}"></small>-->
-<!--                                    </div>-->
-<!--                                </td>-->
-<!--                            </tr>-->
+                            <tr>
+                                <th>Lương <span style="color: red">*</span>
+                                    <div style=" height: 20px"></div>
+                                </th>
+                                <td>
+                                    <input class="form-control" th:field="*{userSalary}" type="number"
+                                           id="salary">
+                                    <div style=" height: 20px">
+                                        <small style="color: red" th:if="${#fields.hasErrors('userSalary')}"
+                                               th:errors="*{userSalary}"></small>
+                                    </div>
+                                </td>
+                            </tr>
 
                             <tr>
-                                <th>Địa chỉ<span style="color: red">*</span>
+                                <th>Địa chỉ <span style="color: red">*</span>
                                     <div style=" height: 20px"></div>
                                 </th>
                                 <td><input class="form-control" id="a" th:field="*{userAddress}">
@@ -205,18 +205,18 @@
                                 </td>
                             </tr>
 
-<!--                            <tr>-->
-<!--                                <th>Ca làm việc<span style="color: red">*</span>-->
-<!--                                    <div style=" height: 20px"></div>-->
-<!--                                </th>-->
-<!--                                <td><select class="form-select" th:field="*{employeeType}">-->
-<!--                                    <option th:each="employeeType :${employeeTypeList}"-->
-<!--                                            th:value="${employeeType.employeeTypeId}"-->
-<!--                                            th:text="${employeeType.employeeTypeName}"></option>-->
-<!--                                </select>-->
-<!--                                    <div style=" height: 20px"></div>-->
-<!--                                </td>-->
-<!--                            </tr>-->
+                            <tr>
+                                <th>Ca làm việc <span style="color: red">*</span>
+                                    <div style=" height: 20px"></div>
+                                </th>
+                                <td><select class="form-select" th:field="*{employeeType}">
+                                    <option th:each="employeeType :${employeeTypeList}"
+                                            th:value="${employeeType.employeeTypeId}"
+                                            th:text="${employeeType.employeeTypeName}"></option>
+                                </select>
+                                    <div style=" height: 20px"></div>
+                                </td>
+                            </tr>
                             <tr>
 
                                 <td colspan="2">
@@ -246,8 +246,6 @@
 <!--                    //file Js Img-->
 <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-storage.js"></script>
-
-
 <script>
     formatSalary()
 

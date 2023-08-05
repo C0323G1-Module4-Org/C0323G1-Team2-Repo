@@ -1,5 +1,6 @@
 package com.example.coffee_project.dto.customer;
 
+import com.example.coffee_project.common.customer.custom.CustomerValidate;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -95,24 +96,23 @@ public class CustomerDto implements Validator {
         } else if (customerDto.getCustomerName().length() > 255) {
             errors.rejectValue("customerName", null, "Tên quá dài! Không nhập quá 255 ký tự!");
         } else if (!customerDto.getCustomerName().matches("^[\\p{Lu}][\\p{Ll}]*([\\s][\\p{Lu}][\\p{Ll}]*)*$")) {
-            errors.rejectValue("customerName", null,"Tên phải viết hoa chữ cái đầu và không được chứa ký tự đặc biệt!");
+            errors.rejectValue("customerName", null, "Tên phải viết hoa chữ cái đầu và không được chứa ký tự đặc biệt!");
         }
         // Check gender
         if (customerDto.getCustomerGender() == null) {
-            errors.rejectValue("customerGender",null,"Không được để trống giới tính!");
+            errors.rejectValue("customerGender", null, "Không được để trống giới tính!");
         }
         // Check birthday
-        if (customerDto.getCustomerBirthday()==null) {
-            errors.rejectValue("customerBirthday",null,"Không được để trống ngày sinh!");
-//        } else if (!customerDto.getCustomerBirthday().toString().matches("^(0?[1-9]|[12][0-9]|3[01])[\\/\\-](0?[1-9]|1[012])[\\/\\-]\\d{4}$")) {
-//            errors.rejectValue("customerBirthday",null,"Bạn nhập sai định dạng ngày!");
+        if (customerDto.getCustomerBirthday() == null) {
+            errors.rejectValue("customerBirthday", null, "Không được để trống ngày sinh!");
+        } else if (CustomerValidate.checkValidateBirthday(customerDto.getCustomerBirthday())) {
+            errors.rejectValue("customerBirthday", null, "Thời gian bạn nhập không hợp lệ!");
         }
         // Check number phone
         if (customerDto.getCustomerPhoneNumber().trim().equals("")) {
-            errors.rejectValue("customerPhoneNumber",null,"Không được để trống số điện thoại");
-        } else if (customerDto.getCustomerPhoneNumber().matches("^[(84|0[3|5|7|8|9])+([0-9]{8})\b)]$")){
-            errors.rejectValue("customerPhoneNumber",null,"Bạn nhập sai định dạng số điện thoại!");
+            errors.rejectValue("customerPhoneNumber", null, "Không được để trống số điện thoại");
+        } else if (!customerDto.getCustomerPhoneNumber().matches("^(84|0[3|5|7|8|9])+([0-9]{8})\\b$")) {
+            errors.rejectValue("customerPhoneNumber", null, "Bạn nhập sai định dạng số điện thoại!");
         }
-
     }
 }
