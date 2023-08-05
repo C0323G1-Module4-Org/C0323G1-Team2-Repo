@@ -1,4 +1,8 @@
 package com.example.coffee_project.repository.oder;
 
-public interface IOrderRepository {
+import com.example.coffee_project.model.oder.Order;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface IOrderRepository extends JpaRepository<Order, Integer> {
+    Order findByOrderId(int orderId);
 }
