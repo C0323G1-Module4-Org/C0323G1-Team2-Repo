@@ -7,17 +7,11 @@
     <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
           href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
     <style>
-        .form {
-            width: 70%;
-            position: relative;
-            left: 50%;
-            transform: translateX(-50%);
+        body {
+            font-family: "Source Code Pro";
         }
         th {
             text-align: left;
-        }
-        td {
-            text-align: center;
         }
     </style>
 </head>
@@ -28,7 +22,7 @@
         <div th:replace="layout::content1"></div>
         <div class="col-sm-10" style="background-color: #FEFAE0;min-height: 700px">
             <div class="detail">
-                <div><h1>Thông tin khách hàng</h1></div>
+                <div style="text-align: center"><h1><b>Thông tin khách hàng</b></h1></div>
                 <div class="table">
                     <table class="table table-hover">
                         <tr>
@@ -38,7 +32,8 @@
                         </tr>
                         <tr>
                             <th>Giới tính</th>
-                            <td th:text="${customer.customerGender}"></td>
+                            <td th:if="${customer.customerGender}" th:text="Nam"></td>
+                            <td th:if="${!customer.customerGender}" th:text="Nữ"></td>
                         </tr>
                         <tr>
                             <th>Ngày sinh</th>
@@ -55,7 +50,8 @@
                         <tr>
                             <td></td>
                             <td>
-                                <button type="submit" class="btn btn-primary" th:action="@{/customer/list}"></button>
+                                <a th:href="@{/customer/list}"><button type="button" class="btn btn-primary">Quay lại
+                                </button></a>
                             </td>
                         </tr>
                     </table>

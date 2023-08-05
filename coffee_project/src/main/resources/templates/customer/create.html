@@ -8,6 +8,10 @@
           href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
     <style>
+        body {
+            font-family: "Source Code Pro";
+        }
+
         .form {
             width: 70%;
             position: relative;
@@ -25,14 +29,15 @@
             <div class="form">
                 <form class="form-group" th:action="@{/customer/save}" th:object="${customerDto}" method="post">
                     <fieldset>
-                        <legend style="text-align: center"><h2>FORM ĐĂNG KÝ THÔNG TIN KHÁCH HÀNG</h2></legend>
+                        <legend style="text-align: center"><h1><b>Đăng ký khách hàng</b></h1></legend>
                         <div class="table">
                             <table class="table table-hover">
                                 <tr>
                                     <th>Tên khách hàng</th>
                                     <td>
                                         <input class="form-control" type="text" th:field="*{customerName}">
-                                        <small th:if="${#fields.hasErrors('customerName')}" th:errors="*{customerName}" style="color: red"></small>
+                                        <small th:if="${#fields.hasErrors('customerName')}" th:errors="*{customerName}"
+                                               style="color: red"></small>
                                     </td>
                                 </tr>
                                 <tr>
@@ -43,29 +48,32 @@
                                         <input type="radio" th:field="*{customerGender}" th:value="false">
                                         <span th:text="Nữ"></span>
                                         </br>
-                                        <small th:if="${#fields.hasErrors('customerGender')}" th:errors="*{customerGender}" style="color: red"></small>
+                                        <small th:if="${#fields.hasErrors('customerGender')}"
+                                               th:errors="*{customerGender}" style="color: red"></small>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Ngày sinh</th>
                                     <td><input class="form-control" type="date" th:field="*{customerBirthday}">
-                                        <small th:if="${#fields.hasErrors('customerBirthday')}" th:errors="*{customerBirthday}" style="color: red"></small>
+                                        <small th:if="${#fields.hasErrors('customerBirthday')}"
+                                               th:errors="*{customerBirthday}" style="color: red"></small>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Số điện thoại</th>
-                                    <td><input class="form-control" type="number" th:field="*{customerPhoneNumber}">
-                                        <small th:if="${#fields.hasErrors('customerPhoneNumber')}" th:errors="*{customerPhoneNumber}" style="color: red"></small>
+                                    <td><input class="form-control" type="text" th:field="*{customerPhoneNumber}">
+                                        <small th:if="${#fields.hasErrors('customerPhoneNumber')}"
+                                               th:errors="*{customerPhoneNumber}" style="color: red"></small>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <th>Điểm</th>
-                                    <td><input class="form-control" type="number" th:field="*{customerPoint}"></td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <a th:href="@{/customer/list}">
+                                            <button type="button" class="btn btn-primary">Quay lại
+                                            </button>
+                                        </a>
+                                        <button type="submit" class="btn btn-primary">Thêm mới</button>
                                     </td>
                                 </tr>
                             </table>
