@@ -9,4 +9,5 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface IAccountService extends UserDetailsService {
     Page<Account> getAllAccount(Pageable pageable, String searchName);
     void save(AccountDto accountDto);
+    Account findByUsername(String username);
 }
