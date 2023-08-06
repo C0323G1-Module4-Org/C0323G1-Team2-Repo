@@ -72,7 +72,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/account/login?error=true")  // trang error
                 .usernameParameter("accountName")                      //tham số
                 .passwordParameter("accountPassword")
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login");
+                .and().logout().logoutUrl("/account/logout").logoutSuccessUrl("/account/login");
         //
         http.authorizeRequests().and().rememberMe()
                 .tokenRepository(this.persistentTokenRepository())
