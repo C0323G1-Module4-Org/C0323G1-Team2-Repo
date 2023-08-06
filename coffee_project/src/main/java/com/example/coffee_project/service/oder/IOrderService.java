@@ -4,5 +4,8 @@ import com.example.coffee_project.model.oder.Order;
 
 public interface IOrderService {
     Order findByOrderId(int orderId);
+
     Order save(Order order);
+
+    Order findCurrentOrder(boolean status);
 }
