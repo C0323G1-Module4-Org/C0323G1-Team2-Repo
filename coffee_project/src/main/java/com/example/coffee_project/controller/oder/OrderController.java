@@ -65,7 +65,7 @@ public class OrderController {
 
     @PostMapping("/add-order")
     public String addOrder(@RequestParam(required = false, defaultValue = "-1") int quantity, @RequestParam int idProduct, RedirectAttributes redirectAttributes) {
-        User user = userService.findById(1);
+        User user = userService.findByID(1);
         Order order = orderService.findCurrentOrder(true);
         Product product = productService.findProductById(idProduct);
         if (quantity > 0) {
@@ -120,7 +120,6 @@ public class OrderController {
         for (OrderDetail orderDetail : order.getOrderDetailSet()) {
             totalPrice += (orderDetail.getProductPrice() * orderDetail.getQuantityProduct());
         }
-
         return "redirect:/order/";
     }
 }
