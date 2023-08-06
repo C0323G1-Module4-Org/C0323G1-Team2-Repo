@@ -16,4 +16,9 @@ public class EmployeeTypeService implements IEmployeeTypeService {
     public List<EmployeeType> findAll() {
         return employeeTypeRepository.findAll();
     }
+
+    @Override
+    public EmployeeType findByEmployeeTypeName(String name) {
+        return employeeTypeRepository.findEmployeeTypeByEmployeeTypeName(name);
+    }
 }

@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
@@ -28,7 +29,6 @@ public class UserDto implements Validator {
     private String userEmail;
     @NotBlank(message = "Không được để trống giấy tờ tuỳ thân!")
     private String userIdCard;
-    @ValidDouble(message = "Lương là 1 số lớn hơn 1.000.000")
     private Double userSalary;
     @NotBlank(message = "Không được để trống địa chỉ!")
     private String userAddress;
@@ -39,9 +39,7 @@ public class UserDto implements Validator {
     public UserDto() {
     }
 
-    public UserDto(Integer userId, String userName, Boolean userGender, Date userBirthday,
-                   String userPhoneNumber, String userEmail, String userIdCard, Double userSalary,
-                   String userAddress, String userImagePath, EmployeeType employeeType, Account account) {
+    public UserDto(Integer userId, String userName, Boolean userGender, Date userBirthday, String userPhoneNumber, String userEmail, String userIdCard, Double userSalary, String userAddress, String userImagePath, EmployeeType employeeType, Account account) {
         this.userId = userId;
         this.userName = userName;
         this.userGender = userGender;

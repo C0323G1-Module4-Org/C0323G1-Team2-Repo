@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface IEmployeeTypeService {
     List<EmployeeType> findAll();
+
+    EmployeeType findByEmployeeTypeName(String s);
 }
