@@ -43,6 +43,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/product/search").hasAnyAuthority("admin", "employee")
                 .antMatchers("/product/list").hasAnyAuthority("admin", "employee")
                 .antMatchers("/product/detail/{id}").hasAnyAuthority("admin", "employee")
+                .antMatchers("/user/create-form").hasAnyAuthority("admin", "employee")
+                .antMatchers("/user/create").hasAnyAuthority("admin", "employee")
 
                 //admin
 
@@ -59,8 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .antMatchers("/user/delete").hasAuthority("admin")
                 .antMatchers("/user/list").hasAuthority("admin")
-                .antMatchers("/user/create-form").hasAuthority("admin")
-                .antMatchers("/user/create").hasAuthority("admin")
+
         ;
         //    cấu hình login
         http.authorizeRequests().and()

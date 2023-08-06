@@ -50,7 +50,7 @@ public class AccountService implements IAccountService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = this.accountRepository.findAccountByAccountName(username);
         if (account == null) {
-            throw new UsernameNotFoundException("User " + account + " was not found in the database");
+            throw new UsernameNotFoundException(" tài khoản " + account + " không có ");
         }
         UserDetails userDetails = User.withUsername(account.getAccountName())
                 .password(account.getAccountPassword())

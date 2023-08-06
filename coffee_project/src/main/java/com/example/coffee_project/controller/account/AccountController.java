@@ -69,8 +69,14 @@ public class AccountController {
         modelAndView.addObject("searchName",searchName);
         return modelAndView;
     }
-//    @GetMapping("/403")
-//    public String warring(){
-//
-//    }
+    @GetMapping("/403")
+    public ModelAndView warring(){
+    ModelAndView modelAndView = new ModelAndView("403");
+    return modelAndView;
+    }
+    @GetMapping("/logout")
+    public ModelAndView logout(){
+        ModelAndView modelAndView=new ModelAndView("/login");
+       return modelAndView;
+    }
 }
