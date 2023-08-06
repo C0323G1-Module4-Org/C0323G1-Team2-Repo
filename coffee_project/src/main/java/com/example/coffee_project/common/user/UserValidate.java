@@ -106,8 +106,6 @@ public class UserValidate {
         }
         if (userSalary.isNaN() || userSalary.isInfinite()) {
             errors.rejectValue("userSalary", null, "Nhập lương không đúng định dạng!");
-        } else if (userSalary < 1000000) {
-            errors.rejectValue("userSalary", null, "Lương phải lớn hơn 1000000");
         }
     }
 }

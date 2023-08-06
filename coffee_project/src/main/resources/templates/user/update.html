@@ -92,7 +92,10 @@
                         </div>
                     </div>
                         <!--                    //Table đăng kí thông tin-->
-
+                    <input hidden="hidden" th:field="*{userId}">
+                    <input hidden="hidden" th:field="*{account}">
+                    <input hidden="hidden" th:field="*{employeeType}">
+                    <input hidden="hidden" th:field="*{userSalary}">
                     <div class="col-8" id="form-create">
                         <table class="table-responsive" style="width: 70%">
 
@@ -179,19 +182,19 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>Lương <span style="color: red">*</span>
-                                    <div style=" height: 20px"></div>
-                                </th>
-                                <td>
-                                    <input class="form-control" th:field="*{userSalary}" type="number"
-                                           id="salary">
-                                    <div style=" height: 20px">
-                                        <small style="color: red" th:if="${#fields.hasErrors('userSalary')}"
-                                               th:errors="*{userSalary}"></small>
-                                    </div>
-                                </td>
-                            </tr>
+<!--                            <tr>-->
+<!--                                <th>Lương <span style="color: red">*</span>-->
+<!--                                    <div style=" height: 20px"></div>-->
+<!--                                </th>-->
+<!--                                <td>-->
+<!--                                    <input class="form-control" th:field="*{userSalary}" type="number"-->
+<!--                                           id="salary">-->
+<!--                                    <div style=" height: 20px">-->
+<!--                                        <small style="color: red" th:if="${#fields.hasErrors('userSalary')}"-->
+<!--                                               th:errors="*{userSalary}"></small>-->
+<!--                                    </div>-->
+<!--                                </td>-->
+<!--                            </tr>-->
 
                             <tr>
                                 <th>Địa chỉ <span style="color: red">*</span>
@@ -205,18 +208,18 @@
                                 </td>
                             </tr>
 
-                            <tr>
-                                <th>Ca làm việc <span style="color: red">*</span>
-                                    <div style=" height: 20px"></div>
-                                </th>
-                                <td><select class="form-select" th:field="*{employeeType}">
-                                    <option th:each="employeeType :${employeeTypeList}"
-                                            th:value="${employeeType.employeeTypeId}"
-                                            th:text="${employeeType.employeeTypeName}"></option>
-                                </select>
-                                    <div style=" height: 20px"></div>
-                                </td>
-                            </tr>
+<!--                            <tr>-->
+<!--                                <th>Ca làm việc <span style="color: red">*</span>-->
+<!--                                    <div style=" height: 20px"></div>-->
+<!--                                </th>-->
+<!--                                <td><select class="form-select" th:field="*{employeeType}">-->
+<!--                                    <option th:each="employeeType :${employeeTypeList}"-->
+<!--                                            th:value="${employeeType.employeeTypeId}"-->
+<!--                                            th:text="${employeeType.employeeTypeName}"></option>-->
+<!--                                </select>-->
+<!--                                    <div style=" height: 20px"></div>-->
+<!--                                </td>-->
+<!--                            </tr>-->
                             <tr>
 
                                 <td colspan="2">

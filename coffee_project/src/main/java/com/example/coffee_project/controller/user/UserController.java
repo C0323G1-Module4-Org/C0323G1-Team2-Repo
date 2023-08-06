@@ -2,6 +2,7 @@ package com.example.coffee_project.controller.user;
 
 import com.example.coffee_project.dto.user.UserDto;
 import com.example.coffee_project.model.user.User;
+import com.example.coffee_project.service.account.IAccountService;
 import com.example.coffee_project.service.user.IEmployeeTypeService;
 import com.example.coffee_project.service.user.IUserService;
 import org.springframework.beans.BeanUtils;
@@ -10,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,6 +31,8 @@ public class UserController {
     private IUserService userService;
     @Autowired
     private IEmployeeTypeService employeeTypeService;
+    @Autowired
+    private IAccountService accountService;
 
     @GetMapping("/list")
     public ModelAndView showListUser(@RequestParam(defaultValue = "0") Integer page,
@@ -57,6 +62,12 @@ public class UserController {
                              BindingResult bindingResult,
                              RedirectAttributes redirectAttributes,
                              Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        userDto.setAccount(accountService.findByUsername(authentication.getName()));
+        userDto.setEmployeeType(employeeTypeService.findByEmployeeTypeName("Full-time"));
+        userDto.setUserSalary(0D);
+        System.out.println(userDto.getUserSalary());
+
         new UserDto().validate(userDto, bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("userDto", userDto);
@@ -66,7 +77,6 @@ public class UserController {
         }
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
-        user.setUserSalary(0D);
         userService.saveUser(user);
         redirectAttributes.addAttribute("success",
                 "Thêm thông tin cho tài khoản " + user.getAccount() + " thành công");
@@ -96,13 +106,7 @@ public class UserController {
         model.addAttribute("userDto",userDto);
         return "/user/update";
     }
-    @GetMapping("/detail/{id}")
-    public ModelAndView showUserInfo(@PathVariable Integer id){
-        ModelAndView modelAndView = new ModelAndView("user/detail");
-        User user = userService.findByID(id);
-        modelAndView.addObject("user",user);
-        return modelAndView;
-    }
+
     @PostMapping("/update")
     public String updateUser(@Valid @ModelAttribute UserDto userDto,
                              BindingResult bindingResult,
@@ -116,10 +120,16 @@ public class UserController {
         }
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
-
         userService.saveUser(user);
         redirectAttributes.addAttribute("success",
                 "Sửa tài khoản " + user.getAccount() + " thành công");
         return "redirect:/user/list";
+    }
+    @GetMapping("/detail/{id}")
+    public ModelAndView showUserInfo(@PathVariable Integer id){
+        ModelAndView modelAndView = new ModelAndView("user/detail");
+        User user = userService.findByID(id);
+        modelAndView.addObject("user",user);
+        return modelAndView;
     }
 }
