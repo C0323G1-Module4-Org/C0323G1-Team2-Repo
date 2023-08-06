@@ -9,6 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/account")
 public class AccountController {
+    @ModelAttribute("role")
+    public String showRole(){
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        String role=authentication.getAuthorities().toString();
+        System.out.println(role);
+        return role;
+    }
     @Autowired
     IAccountService accountService;
     @GetMapping("/login")
@@ -49,7 +58,6 @@ public class AccountController {
         accountService.save(accountDto);
         return "redirect:/account/admin";
     }
-    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/admin")
     public  ModelAndView showListAccount(@RequestParam(defaultValue = "0") int page,
                                          @RequestParam(defaultValue = "")String searchName){
@@ -61,4 +69,8 @@ public class AccountController {
         modelAndView.addObject("searchName",searchName);
         return modelAndView;
     }
+//    @GetMapping("/403")
+//    public String warring(){
+//
+//    }
 }

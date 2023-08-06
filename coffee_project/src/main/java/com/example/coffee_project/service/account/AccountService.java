@@ -41,6 +41,11 @@ public class AccountService implements IAccountService {
         accountRepository.save(account);
     }
 
+    public Account findByUsername(String username){
+        return accountRepository.findAccountByAccountName(username);
+    }
+
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = this.accountRepository.findAccountByAccountName(username);
