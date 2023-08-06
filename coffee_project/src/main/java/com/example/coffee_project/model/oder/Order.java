@@ -2,6 +2,7 @@ package com.example.coffee_project.model.oder;
 
 import com.example.coffee_project.model.customer.Customer;
 import com.example.coffee_project.model.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -25,8 +26,9 @@ public class Order {
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
     private Customer customer;
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id",nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     private User user;
+    @JsonBackReference
     @OneToMany(mappedBy = "order")
     private Set<OrderDetail> orderDetailSet;
 
@@ -38,6 +40,12 @@ public class Order {
         this.customer = customer;
         this.user = user;
         this.orderDetailSet = orderDetailSet;
+    }
+
+    public Order(Boolean orderStatus, Timestamp orderDate, User user) {
+        this.orderStatus = orderStatus;
+        this.orderDate = orderDate;
+        this.user = user;
     }
 
     public Set<OrderDetail> getOrderDetailSet() {
@@ -90,5 +98,25 @@ public class Order {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public double getTotalPrice() {
+        double result = 0;
+        for (OrderDetail od : orderDetailSet) {
+            result += od.getProductPrice() * od.getQuantityProduct();
+        }
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", orderStatus=" + orderStatus +
+                ", orderDate=" + orderDate +
+                ", customer=" + customer +
+                ", user=" + user +
+                ", orderDetailSet=" + orderDetailSet +
+                '}';
     }
 }

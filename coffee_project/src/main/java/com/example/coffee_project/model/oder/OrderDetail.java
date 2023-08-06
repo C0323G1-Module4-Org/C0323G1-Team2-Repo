@@ -18,13 +18,22 @@ public class OrderDetail {
     @Column(name = "product_price", nullable = false)
     private Double productPrice;
     @ManyToOne
-    @JoinColumn(name = "product_id", referencedColumnName = "product_id",nullable = false)
+    @JoinColumn(name = "product_id", referencedColumnName = "product_id", nullable = false)
     private Product product;
     @ManyToOne
-    @JoinColumn(name = "order_id", referencedColumnName = "order_id",nullable = false)
+    @JoinColumn(name = "order_id", referencedColumnName = "order_id", nullable = false)
     private Order order;
+
     public OrderDetail() {
     }
+
+    public OrderDetail(Integer quantityProduct, Double productPrice, Product product, Order order) {
+        this.quantityProduct = quantityProduct;
+        this.productPrice = productPrice;
+        this.product = product;
+        this.order = order;
+    }
+
     public OrderDetail(Integer orderDetailId, Integer quantityProduct,
                        Double productPrice, Product product, Order order) {
         this.orderDetailId = orderDetailId;
@@ -33,6 +42,7 @@ public class OrderDetail {
         this.product = product;
         this.order = order;
     }
+
     public Integer getOrderDetailId() {
         return this.orderDetailId;
     }
@@ -73,5 +83,14 @@ public class OrderDetail {
         this.order = order;
     }
 
-
+    @Override
+    public String toString() {
+        return "OrderDetail{" +
+                "orderDetailId=" + orderDetailId +
+                ", quantityProduct=" + quantityProduct +
+                ", productPrice=" + productPrice +
+                ", product=" + product +
+                ", order=" + order +
+                '}';
+    }
 }
