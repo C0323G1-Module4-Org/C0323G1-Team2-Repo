@@ -68,12 +68,23 @@ public class CustomerController {
     //    Chỉnh sửa thông tin khách hàng
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable int id, Model model) {
-        model.addAttribute("customer", customerService.findById(id));
+        Customer customer = customerService.findById(id);
+        CustomerDto customerDto = new CustomerDto();
+        BeanUtils.copyProperties(customer, customerDto);
+        model.addAttribute("customerDto", customerDto);
         return "customer/edit";
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute Customer customer, RedirectAttributes redirectAttributes) {
+    public String update(@Valid @ModelAttribute CustomerDto customerDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+        Customer customer = new Customer();
+        System.out.println(customerDto.getCustomerPoint());
+        new CustomerDto().validate(customerDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("customerDto", customerDto);
+            return "customer/edit";
+        }
+        BeanUtils.copyProperties(customerDto,customer);
         boolean result = customerService.update(customer.getCustomerId(), customer);
         if (result) {
             redirectAttributes.addFlashAttribute("message", "Cập nhật thành công!");
