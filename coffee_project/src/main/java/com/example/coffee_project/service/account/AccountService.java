@@ -40,7 +40,7 @@ public class AccountService implements IAccountService {
         account.setRole(role);
         accountRepository.save(account);
     }
-
+    @Override
     public Account findByUsername(String username){
         return accountRepository.findAccountByAccountName(username);
     }
