@@ -136,13 +136,13 @@
                 <span class="col-4"></span>
                 <form class="col-7" action="/product/search" method="post">
                     <select name="productType">
-                        <option value="" selected>-- Chọn loại sản phẩm --</option>
+                        <option value="" selected>Chọn loại</option>
                         <option th:each="productType : ${productTypes}"
                                 th:value="${productType.productTypeId}"
                                 th:text="${productType.productTypeName}"></option>
                     </select>
                     <select name="price">
-                        <option value="" selected>-- Chọn giá sản phẩm --</option>
+                        <option value="" selected>Chọn giá</option>
                         <option th:each="price : ${prices}" th:value="${price}" th:text="${price}+' VNĐ'"></option>
                     </select>
                     <input type="text" name="name" placeholder="nhập tên sản phẩm ">
@@ -156,10 +156,10 @@
                     <tr>
                         <th>STT</th>
                         <th>Hình ảnh</th>
-                        <th>Tên sản phẩm</th>
-                        <th>Loại sản phẩm</th>
+                        <th>Tên</th>
+                        <th>Loại</th>
                         <th>Giá</th>
-                        <th>Chi tiết</th>
+                        <th>Sửa</th>
                         <th>Xóa</th>
                     </tr>
                     </thead>
@@ -174,8 +174,11 @@
                         </td>
                         <div class="d-flex justify-content-between">
                             <td>
-                                <a th:href="@{/product/detail/{id}(id=${product.productId})}" class="btn btn-primary"><i
-                                        class="fa-solid fa-circle-info"></i></a>
+                                <a style="color: white" th:href="@{/product/edit/{id}(id=${product.productId})}">
+                                    <button class="btn btn-primary">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                </a>
                             </td>
                             <td>
                                 <!-- Button trigger modal -->
@@ -194,7 +197,7 @@
                 <div style="text-align: center">
                     <a id="next" th:if="${products.hasPrevious()}" th:href="@{/product/(page=${products.number-1})}"><i
                             class="fas fa-backward"></i></a>
-                                <span th:text="${products.number+1}"></span>/ <span th:text="${products.totalPages}"></span>
+                                <span th:if="products!=null" th:text="${products.number+1}"></span>/ <span th:text="${products.totalPages}"></span>
                     <a id="next1" th:if="${products.hasNext()}" th:href="@{/product/(page=${products.number+1})}"><i
                             class="fas fa-forward"></i></a>
                 </div>
@@ -213,8 +216,8 @@
                             <div class="modal-body">
                                 <input type="hidden" id="id" name="id">
                                 Bạn có chắc chắn muốn xóa sản phẩm
-                                <span style="color: red" id="name"> </span>
-                                có id là: <span style="color: red" id="idDelete"></span> ?
+                                <span style="color: red" id="name"> </span>?
+<!--                                có id là: <span style="color: red" id="idDelete"></span> ?-->
                                 <p style="color: red">Hoạt động này không thể hoàn tác! </p>
                             </div>
                             <div class="modal-footer">

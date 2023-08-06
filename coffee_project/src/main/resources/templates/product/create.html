@@ -14,15 +14,30 @@
             margin-top: 50px;
             margin-left: 10px;
             width: 800px;
-            height: 520px;
+            height: 550px;
         }
 
         #imagePreview {
-            max-width: 100%;
-            max-height: 100%;
+            max-width: 89%;
+            max-height: 80%;
             object-fit: contain;
             margin-bottom: 10px;
             margin-top: 50px;
+        }
+        @media (max-width: 768px) {
+            .form-container {
+                width: auto;
+                margin-left: 0;
+            }
+        }
+        .card {
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                margin-top: 0;
+            }
         }
     </style>
     <style th:insert="/layout::style"></style>
@@ -37,52 +52,85 @@
         <div class="col-sm-10" style="background-color: #FEFAE0;min-height: 700px">
             <h1 style="text-align: center">Thêm mới sản phẩm</h1>
             <div class="container">
-                <div class="row">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="image-container">
-                                <img id="imagePreview" src="" alt="" class="img-thumbnail">
-                            </div>
-                        </div>
-                        <div class="col-md-9">
-                            <div style="background-color: white" class="form-container">
-                                <form action="/product/create" method="post" th:object="${product}">
+                <div class="">
+                    <div class="">
+                        <form action="/product/create" method="post" th:object="${product}">
+                            <div style="display: grid; grid-template-columns: repeat(1, 2fr 2fr)">
+                                <div class=" " style="justify-content: end;">
+                                    <div >
+                                        <div class="image-container" style="width: 100%">
+                                            <img id="imagePreview" src="" alt="" class="img-thumbnail">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="form-group" style="width: 89%;">
+                                            <label for="btnThumbnailURL" class="form-control">Chọn ảnh</label>
+                                            <input type="hidden" id="thumbnailURL" th:field="*{productImagePath}"/>
+                                            <input id="btnThumbnailURL" type="file" style="display: none;"/>
+                                            <progress id="uploader" value="0" max="100">0%</progress>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            <div class="col-md-9">
+                                <div style="background-color: white" class="form-container">
                                     <div class="form-group">
-                                        <b>Nhập tên sản phẩm: <span style="color: red">*</span></b>
-                                        <input type="text" th:field="*{productName}" id="productName"
-                                               class="form-control">
-                                        <div style=" height: 10px">
-                                            <small style="color: red" th:if="${#fields.hasErrors('productName')}"
-                                                   th:errors="*{productName}"> </small>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <b>Tên sản phẩm<span style="color: red">*</span></b>
+                                            </div>
+                                            <div class="col-8">
+                                                <input type="text" th:field="*{productName}" id="productName"
+                                                       class="form-control">
+                                                <div style=" height: 20px">
+                                                    <small style="color: red"
+                                                           th:if="${#fields.hasErrors('productName')}"
+                                                           th:errors="*{productName}"> </small>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <b>Nhập giá: <span style="color: red">*</span></b>
-                                        <input type="number" th:field="*{productPrice}" id="productPrice"
-                                               class="form-control">
-                                        <div style=" height: 10px">
-                                            <small style="color: red" th:if="${#fields.hasErrors('productPrice')}"
-                                                   th:errors="*{productPrice}"> </small>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <b>Giá<span style="color: red">*</span></b>
+                                            </div>
+                                            <div class="col-8">
+                                                <input type="number" th:field="*{productPrice}" id="salary"
+                                                       class="form-control">
+                                                <div style=" height: 20px">
+                                                    <small style="color: red"
+                                                           th:if="${#fields.hasErrors('productPrice')}"
+                                                           th:errors="*{productPrice}"> </small>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <b>Nhập mô tả:</b>
-                                        <input type="text" th:field="*{productDescription}" id="productDescription"
-                                               class="form-control">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <b>Mô tả</b>
+                                            </div>
+                                            <div class="col-8">
+                                                <textarea type="text" th:field="*{productDescription}"
+                                                          id="productDescription"
+                                                          class="form-control"></textarea>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-group">
-                                        <b>Chọn ảnh:</b>
-                                        <input type="hidden" id="thumbnailURL" th:field="*{productImagePath}"/>
-                                        <input id="btnThumbnailURL" type="file" class="form-control"/>
-                                        <progress id="uploader" value="0" max="100">0%</progress>
-                                    </div>
-                                    <div class="form-group">
-                                        <b>Chọn loại sản phẩm:</b>
-                                        <select th:field="*{productType}" id="productType" class="form-control">
-                                            <option th:each="productType : ${productTypes}"
-                                                    th:value="${productType.productTypeId}"
-                                                    th:text="${productType.productTypeName}"></option>
-                                        </select>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <b>Chọn loại sản phẩm</b>
+                                            </div>
+                                            <div class="col-8">
+                                                <select th:field="*{productType}" id="productType" class="form-control">
+                                                    <option th:each="productType : ${productTypes}"
+                                                            th:value="${productType.productTypeId}"
+                                                            th:text="${productType.productTypeName}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary">Thêm mới</button>
@@ -90,9 +138,10 @@
                                             <button type="button" class="btn btn-secondary">Hủy</button>
                                         </a>
                                     </div>
-                                </form>
+                                </div>
                             </div>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
