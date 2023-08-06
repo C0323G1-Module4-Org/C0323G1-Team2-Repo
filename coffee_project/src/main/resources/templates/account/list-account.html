@@ -137,18 +137,19 @@
         <div class="modal-content">
             <form th:object="${accountDto}" th:action="@{/account/signup}" th:method="post">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel1">Bạn muốn xóa tài khoản :</h5>
+                    <h5 class="modal-title" id="exampleModalLabel1">thông báo :</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                        <input hidden="hidden" id="create" th:field="*{accountName}">
+                    Bạn có muốn tạo tài khoản này không ???
+                    <input hidden="hidden" id="create" th:field="*{accountName}">
                     <span id="accountName1"></span>
 
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
-                    <button type="submit" class="btn btn-primary">Xóa</button>
+                    <button type="submit" class="btn btn-primary">Tạo</button>
                 </div>
             </form>
 
