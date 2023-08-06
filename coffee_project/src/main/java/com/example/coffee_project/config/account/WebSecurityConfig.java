@@ -63,6 +63,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/list").hasAuthority("admin")
 
         ;
+        //
+        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/account/403");
         //    cấu hình login
         http.authorizeRequests().and()
                 .formLogin()
