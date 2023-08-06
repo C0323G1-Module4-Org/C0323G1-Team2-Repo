@@ -25,7 +25,7 @@
     <div th:replace="layout::content1"></div>
     <div class="col-sm-10" style="background-color: #FEFAE0;min-height: 700px">
       <div class="form">
-        <form class="form-group" th:action="@{/customer/update}" th:object="${customer}" method="post">
+        <form class="form-group" th:action="@{/customer/update}" th:object="${customerDto}" method="post">
           <fieldset>
             <legend style="text-align: center"><h1><b>Chỉnh sửa thông tin khách hàng</b></h1></legend>
             <div class="table">
@@ -59,7 +59,7 @@
                 </tr>
                 <tr>
                   <th>Điểm</th>
-                  <td th:text="${customer.customerPoint}"></td>
+                  <td><input class="form-control" th:field="*{customerPoint}" readonly></td>
                 </tr>
                 <tr>
                   <td></td>
