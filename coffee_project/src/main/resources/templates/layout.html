@@ -12,26 +12,43 @@
             background-color: #D4A373;
             border-radius: 10px;
         }
+
     </style>
     <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
           href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-sm top-0" style="background-color: #1B2223 ;height: 50px" th:fragment="nav">
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark" th:fragment="nav">
     <div class="container-fluid">
-        <ul class="navbar-nav w-100">
-            <li class="nav-item col-2">
-                <a class="nav-link text-dark float-start" href="#"><img src="/templates/btpnlhuf.png" height="30px"
-                                                                        width="30px"
-                                                                        class="rounded mx-auto d-block"></a>
-            </li>
-            <li class="nav-item display-5 col-8" style="color: white;font-size:30px;text-align: center" >
-                <strong>Chào mừng đến với hệ thống Queen Coffee</strong>
-            </li>
-            <li class="nav-item display-5 col-2" style="color: white">
-                <div class="float-end" style="color: white;font-size:30px;text-align: center">Tài khoản</div>
-            </li>
-        </ul>
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <div class="navbar-nav me-auto text-light">
+                Logo
+            </div>
+        </div>
+        <div class="mx-auto order-0">
+            <span class="navbar-brand mx-auto">Chào mừng đến với Queen Coffee</span>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".dual-collapse2">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <div class="navbar-nav ms-auto text-light">
+                <div class="dropdown">
+                    <button class="btn btn-success" type="button" aria-expanded="false" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        <i class="fa-regular fa-user"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="#">Thông tin</a></li>
+                        <li><a class="dropdown-item" href="#">Đăng nhập</a></li>
+                        <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </nav>
 <div class="container-fluid">
@@ -54,16 +71,22 @@
             </ul>
             <hr class="d-sm-none">
         </div>
-        <div class="col-sm-10" style="background-color: #FEFAE0;min-height: 700px">
+        <div class="col-sm-10" style="background-color: #F4FEFD;min-height: 700px">
+            ewve
         </div>
     </div>
 </div>
-<div class="p-3 text-white text-center top-0" style="background-color: #1B2223" th:fragment="footer">
-    <div class="text-center p-0 text-light" style="background-color: #1B2223;">
-        © 2023 Coding:
-        <a class="text-light" href="/">QueenCoffee</a>
+
+
+<footer class=" text-light text-center text-lg-start" style="background-color: black" th:fragment="footer">
+    <!-- Copyright -->
+    <div class="text-center p-3">
+        © 2023 Copyright: Team 2
+        <a class="text-light" href="http://localhost:8080/">Queen Coffee</a>
+
     </div>
-</div>
+    <!-- Copyright -->
+</footer>
 <script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
         src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
 </body>
