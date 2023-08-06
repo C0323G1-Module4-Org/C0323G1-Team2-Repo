@@ -238,17 +238,17 @@
         src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
 
 
+
 <!--                    //file Js Img-->
+<script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js"></script>
+<script src="www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js"></script>
+
 
 <script>
-    // Import the functions you need from the SDKs you need
-    import {initializeApp} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
-    import {getAnalytics} from "https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
+    const dndElement = document.querySelector('#dnd')
+    const resultElement = document.querySelector('.preview')
+    const validImageTypes = ['image/gif', 'image/jpeg', 'image/png']
 
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
     const firebaseConfig = {
         apiKey: "AIzaSyArCw60QkeuUk0Q-fRBWkAIcMkmxz9awxc",
         authDomain: "queen-coffee.firebaseapp.com",
@@ -259,60 +259,44 @@
         measurementId: "G-6CXNQ9TXLK"
     };
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-
-
-    const dndElement = document.querySelector('#dnd')
-    const resultElement = document.querySelector('.preview')
-    const validImageTypes = ['image/gif', 'image/jpeg', 'image/png']
 
     dndElement.addEventListener('dragover', function (e) {
         e.preventDefault()
         this.classList.add('drag-over')
     })
-
     dndElement.addEventListener('dragleave', function (e) {
         e.preventDefault()
         this.classList.remove('drag-over')
     })
-
     dndElement.addEventListener('drop', function (e) {
         e.preventDefault()
         this.classList.remove('drag-over')
         const files = e.dataTransfer.files;
         const file = files[0];
         renderPreviewImage(file)
-
     })
-
     function renderPreviewImage(file) {
         const fileType = file['type']
-
         if (!validImageTypes.includes(fileType)) {
             resultElement.insertAdjacentHTML('beforeend',
                 '<span class="preview-img">Chọn ảnh đi :3</span>'
             )
             return
         }
-
         const fileReader = new FileReader()
         fileReader.readAsDataURL(file)
-
         fileReader.onload = function () {
             const url = fileReader.result;
             resultElement.innerHTML = `<img src="${url}" alt="${file.name}" class="preview-img" />`;
             pushImage(file)
         }
-
     }
-
     firebase.initializeApp(firebaseConfig);
 
     function pushImage(file) {
 
         let storageRef = firebase.storage().ref('img/' + file.name);
+        console.log(111)
         let task = storageRef.put(file);
         task.on('state_changed', function progress(snapshot) {
             let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -330,8 +314,6 @@
                 document.getElementById('thumbnailURL').value = url;
             });
     }
-
-
 </script>
 
 </body>
