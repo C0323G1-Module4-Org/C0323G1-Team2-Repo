@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style th:insert="/layout::style"></style>
+    <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
+          href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
+    <style>
+        body {
+            font-family: "Source Code Pro";
+        }
+        th {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="layout::nav"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="layout::content1"></div>
+        <div class="col-sm-10" style="background-color: #FEFAE0;min-height: 700px">
+            <div class="detail">
+                <div style="text-align: center"><h1><b>Thông tin khách hàng</b></h1></div>
+                <div class="table">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>Tên khách hàng</th>
+                            <td th:text="${customer.customerName}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Giới tính</th>
+                            <td th:if="${customer.customerGender}" th:text="Nam"></td>
+                            <td th:if="${!customer.customerGender}" th:text="Nữ"></td>
+                        </tr>
+                        <tr>
+                            <th>Ngày sinh</th>
+                            <td th:text="${customer.customerBirthday}"></td>
+                        </tr>
+                        <tr>
+                            <th>Số điện thoại</th>
+                            <td th:text="${customer.customerPhoneNumber}"></td>
+                        </tr>
+                        <tr>
+                            <th>Điểm</th>
+                            <td th:text="${customer.customerPoint}"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <a th:href="@{/customer/list}"><button type="button" class="btn btn-primary">Quay lại
+                                </button></a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="layout::footer"></div>
+<script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
+        src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
+</body>
+</html>

@@ -1,5 +1,7 @@
 package com.example.coffee_project.model.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -13,6 +15,7 @@ public class EmployeeType {
 
     @Column(name = "employee_type_name", nullable = false,unique = true)
     private String employeeTypeName;
+    @JsonBackReference
     @OneToMany(mappedBy = "employeeType")
     private Set<User> userSet;
     public EmployeeType() {

@@ -19,10 +19,7 @@ public class CustomerService implements ICustomerService{
     @Override
     public boolean save(Customer customer) {
         Customer customer1 = customerRepository.save(customer);
-        if(customer1 == null) {
-            return false;
-        }
-        return true;
+        return customer1 != null;
     }
 
     @Override

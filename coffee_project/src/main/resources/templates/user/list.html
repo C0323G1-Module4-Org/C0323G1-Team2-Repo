@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh Sách Nhân Viên</title>
+    <style th:insert="/layout::style"></style>
+    <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
+          href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <script src="/js/jquery-3.7.0.min.js"></script>
+    <style>
+        .modal-backdrop {
+            z-index: 1040 !important;
+        }
+    </style>
+
+</head>
+<body>
+<div th:replace="layout::nav"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="layout::content1"></div>
+
+        <div class="col-sm-10" style="background-color: #FEFAE0;min-height: 700px">
+
+            <!-----------------------//CODE------------------------------------------------------------>
+            <h1 style="text-align: center; margin-bottom: 20px">Danh Sách Nhân Viên</h1>
+
+            <div class="justify-content-center" style="margin-bottom: 20px">
+
+                <div class="row">
+                    <div class="col-1">
+
+                        <a style="text-decoration: none" href="/user/create-form">
+                            <button title="Thêm mới sản phẩm"
+                                    class="btn btn-primary">
+                                <i class="fa-solid fa-plus"></i></button>
+                        </a>
+
+                    </div>
+
+                    <div class="col-4">
+                        <!--//Toast hiển thị thông báo đã xoá thành công-->
+                        <div th:if="${deleteSuccess}" class="toast p-0" id="myToast" role="alert"
+                             aria-live="assertive" aria-atomic="true">
+                            <div style="margin-left: 20px"
+                                 class="toast-header d-flex justify-content-between bg-success text-dark">
+                                <span> <strong id="delete">Đã xoá thành công!</strong></span>
+                                <button type="button" class="btn-close float-end" data-bs-dismiss="toast"
+                                        aria-label="Đóng"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-7">
+                        <form th:action="@{/user/list}" th:method="get">
+                            <label style="float: right">
+                                <input style="width: 400px;display: inline-block" type="text"
+                                       id="disabledTextInput" class="form-control"
+                                       th:name="search" placeholder="Nhập tên nhân viên" th:value="${search}">
+                                <button style="margin-bottom: 5px" class="btn btn-primary" type="submit"><i
+                                        class="fas fa-search"></i></button>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="table-responsive" style="margin-top: 20px">
+                    <table class="table table-hover">
+                        <thead>
+                        <th scope="col">STT</th>
+                        <th scope="col">Tên</th>
+                        <th scope="col">Giới tính</th>
+                        <th scope="col">Tài khoản</th>
+                        <th scope="col">Lương</th>
+                        <th scope="col">Vị trí</th>
+                        <th scope="col" style="text-align: center">Chi tiết</th>
+                        <th scope="col" style="text-align: center">Xoá</th>
+                        </thead>
+                        <tr th:each="user, status :${userPage}">
+                            <th th:text="${status.count}">
+                            <td th:text="${user.userName}">
+                            <td>
+                                <div th:if="${user.userGender == null}">Khác</div>
+                                <div th:if="${user.userGender}">Nam</div>
+                                <div th:if="${!user.userGender}">Nữ</div>
+                         </td>
+                            <td th:text="${user.account.accountName}">
+                            <td th:text="${#numbers.formatDecimal(user.userSalary, 0, 'COMMA', 0, 'POINT') + ' VND'}"></td>
+                            <td th:text="${user.employeeType.employeeTypeName}">
+                            <td style="text-align: center">
+
+                                <!-- Button trigger detail modal -->
+                                <button type="button" class="btn btn-primary"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal1"
+                                        th:attr="onclick=|showDetail(${user.userId})|">
+                                    <i class="fa-solid fa-circle-info"></i>
+                                </button>
+                            </td>
+                            <td style="text-align: center">
+                                <button style="text-align: center" type="button" class="btn btn-danger"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal"
+                                        th:attr="onclick=|showInfo(${user.userId},'${user.userName}')|">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-4"></div>
+
+
+                    <div class="col-1">
+                        <a style="text-decoration: none" th:if="${userPage.hasPrevious()}"
+                           th:href="@{/user/list(page=${userPage.number-1},search=${search})}">
+                            <button class="btn btn-primary">Previous</button>
+                        </a>
+                    </div>
+                    <!----------------------//số trang--------------------------------------------------------------------------------->
+                    <div class="col-2 d-flex justify-content-center">
+                        <span th:text="${userPage.number +1}"></span>
+                        &nbsp;
+                        /
+                        &nbsp;
+                        <span th:text="${userPage.totalPages}"></span>
+                    </div>
+                    <!----------------------------------------------------------------------------------------------------------------->
+                    <div class="col-1">
+                        <a style="text-decoration: none" th:if="${userPage.hasNext()}"
+                           th:href="@{/user/list(page=${userPage.number+1},search=${search})}">
+                            <button class="btn btn-primary">Next</button>
+                        </a>
+                    </div>
+                    <div class="col-4"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Button trigger modal -->
+
+<!-- Modal Delete-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/user/delete" method="post">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel"><strong>Xoá nhân viên</strong></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input id="userId" hidden="hidden" name="userId">
+                    <input name="userName" id="userName" hidden="hidden">
+                    <div>Bạn có xác nhận xoá người dùng có tên là: <span id="userNameDisplay"></span></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
+                    <button type="submit" class="btn btn-primary">Xác nhận</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-------Modal Detail---------------------------------->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel1">Thông tin chi tiết</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-4">
+                        <div id="dnd" class="preview" style="margin-top: 15px">
+                            <img id="imgPath" style="height: 150px; width: 100px;">
+                        </div>
+                    </div>
+                    <div class="col-8">
+
+                        <div>Tên: <span id="userNameDetail"></span></div>
+
+                        <div>Giới tính: <span id="userGender"></span></div>
+
+                        <div>Ngày Sinh: <span id="userBirthday"></span></div>
+
+                        <div>Điện thoại: <span id="userPhoneNumber"></span></div>
+
+                        <div>Email: <span id="userEmail"></span></div>
+
+                        <div>Căn cước : <span id="userIdCard"></span></div>
+
+                        <div>Lương: <span id="userSalary"></span></div>
+
+                        <div>Địa chỉ: <span id="userAddress"></span></div>
+
+                        <div>Ca làm việc: <span id="employeeTypeName"></span></div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-------End Modal Detail---------------------------------->
+<!--//code-->
+
+
+<div th:replace="layout::footer"></div>
+<script>
+    //User Detail
+    function showDetail(id) {
+        $.ajax({
+            contentType: "application/json",
+            method: "GET",
+            dataType: "json",
+            url: "http://localhost:8080/api/user/detail/" + id,
+            success: function (data) {
+                let gender = "";
+                if(data.userGender){
+                    gender = "Nam";
+                }else {
+                    gender = "Nữ";
+                }
+                $("#userNameDetail").text(data.userName);
+                $("#userGender").text(gender);
+                $("#userBirthday").text(data.userBirthday);
+                $("#userPhoneNumber").text(data.userPhoneNumber);
+                $("#userEmail").text(data.userEmail);
+                $("#userIdCard").text(data.userIdCard);
+                $("#userSalary").text(data.userSalary.toLocaleString('en-US'));
+                $("#userAddress").text(data.userAddress);
+                $("#employeeTypeName").text(data.employeeType.employeeTypeName);
+                $("#imgPath").attr("src",data.userImagePath);
+                $("#exampleModal1").show();
+            }
+        })
+    }
+
+    //Show Delete Modal
+    function showInfo(id, name) {
+        document.getElementById("userId").value = id;
+        document.getElementById("userName").value = name;
+        document.getElementById("userNameDisplay").innerText = name
+    }
+
+</script>
+
+<!--    //Toast Delete Successfully-->
+<script th:if="${deleteSuccess}">
+    window.onload = (event) => {
+        let myAlert = document.querySelectorAll('.toast')[0];
+        if (myAlert) {
+            let bsAlert = new bootstrap.Toast(myAlert);
+            bsAlert.show();
+        }
+    };
+</script>
+
+<script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
+        src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
+</body>
+</html>

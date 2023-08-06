@@ -1,69 +1,185 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Customer list</title>
+    <title>Title</title>
+    <style th:insert="/layout::style"></style>
+    <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
+          href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <style>
+        body {
+            font-family: "Source Code Pro";
+        }
+
+        #next {
+            font-size: 1em;
+            color: #333;
+            transition: font-size 0.2s ease-in-out;
+            margin-right: 5px;
+        }
+
+        #next:hover {
+            font-size: 1.5em;
+            color: #007bff;
+        }
+
+        #next1 {
+            font-size: 1em;
+            color: #333;
+            transition: font-size 0.2s ease-in-out;
+        }
+
+        #next1:hover {
+            font-size: 1.5em;
+            color: #007bff;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <h1 style="text-align: center"><b>DANH SÁCH KHÁCH HÀNG</b></h1>
-    <!--    Thanh công cụ-->
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-form navbar-left">
-                <a class="btn btn-primary" th:href="@{/customer/showCreateForm}">Add new blog</a>
+<div th:replace="layout::nav"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="layout::content1"></div>
+        <div class="col-sm-10" style="background-color: #FEFAE0;min-height: 700px">
+            <h1 style="text-align: center"><b>Danh sách khách hàng</b></h1>
+            <!--    Thanh công cụ-->
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-form navbar-left">
+                        <a th:href="@{/customer/showCreateForm}">
+                            <button title="Thêm mới sản phẩm"
+                                    class="btn btn-primary">
+                                <i class="fa-solid fa-plus"></i></button>
+                        </a>
+                    </div>
+                    <!--Thanh tìm kiếm-->
+                    <form class="navbar-form navbar-right" action="/customer/list" method="get">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Nhập tên tìm kiếm..."
+                                   th:name="searchName" th:value="${searchName}">
+                            <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </nav>
+<!--            Hiển thị thông báo-->
+            <div th:if="${message!=null}">
+                <span><strong  th:text="${message}"></strong></span>
             </div>
-            <form class="navbar-form navbar-right" action="/customer/list" method="get">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Nhập tên tìm kiếm..." th:name="searchName" th:value="${searchName}">
-                    <div class="input-group-btn">
-                        <button class="btn btn-default" type="submit">
-                            <i class="glyphicon glyphicon-search"></i>
-                        </button>
+            <div th:if="${message!=null}" class="toast p-0" id="myToast" role="alert"
+                 aria-live="assertive" aria-atomic="true">
+                <div style="margin-left: 20px"
+                     class="toast-header d-flex justify-content-between bg-success text-dark">
+                    <span><strong th:text="${message}"></strong></span>
+                    aria-label="Đóng"></button>
+                </div>
+            </div>
+            <!--    Hiển thị danh sách-->
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Họ và tên</th>
+                        <th scope="col">Giới tính</th>
+                        <th scope="col">Ngày sinh</th>
+                        <th scope="col">Số điện thoại</th>
+                        <th scope="col">Điểm</th>
+                        <th scope="col">Chi tiết</th>
+                        <th scope="col">Sửa</th>
+                        <th scope="col">Xóa</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="customer, status: ${customerPage}">
+                        <td scope="row" th:text="${status.count}"></td>
+                        <td th:text="${customer.customerName}"></td>
+                        <td th:switch="${customer.customerGender}">
+                            <span th:case="true" th:text="Nam"></span>
+                            <span th:case="false" th:text="Nữ"></span>
+                            <span th:case="*" th:utext="${'<h3>N/A</h3>'}"></span>
+                        </td>
+                        <td th:text="${#dates.format(customer.customerBirthday,'dd-MM-yyyy')}"></td>
+                        <td th:text="${customer.customerPhoneNumber}"></td>
+                        <td th:text="${customer.customerPoint}"></td>
+                        <td><a th:href="@{/customer/{id}/view(id=${customer.getCustomerId()})}" class="btn btn-primary">
+                            <i
+                                    class="fa-solid fa-circle-info"></i></a></td>
+                        <td>
+                            <a th:href="@{/customer/{id}/edit(id=${customer.getCustomerId()})}">
+                                <button class="btn btn-primary">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                            </a>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal" th:data-id="${customer.customerId}"
+                                    th:data-name="${customer.customerName}"
+                                    th:onclick="sendInfoToDelete(this.getAttribute('data-id'), this.getAttribute('data-name'))">
+                                <i class="fa-regular fa-trash-can"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <!--    Phân trang-->
+
+            <div style="text-align: center ; gap: 1rem">
+                <a id="next" th:if="${customerPage.hasPrevious()}"
+                   th:href="@{/customer/list(page=${customerPage.number-1}, searchName=${searchName})}"><i
+                        class="fas fa-backward"></i></a>
+                <span th:text="${customerPage.number+1}"></span>/<span th:text="${customerPage.totalPages}"></span>
+                <a id="next1" th:if="${customerPage.hasNext()}"
+                   th:href="@{/customer/list(page=${customerPage.number+1},searchName=${searchName})}"><i
+                        class="fas fa-forward"></i></a>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Hộp thoại</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Không"></button>
+                        </div>
+                        <div class="modal-body">
+                            Bạn có chắc chắn muốn xóa <strong id="nameDelete"></strong> ?</span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
+                            <a id="idDelete">
+
+                                <button type="button" class="btn btn-primary" id="myToastBtn">Có</button>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
-    </nav>
-<!--    Hiển thị thông báo -->
-    <div class="alert alert-warning" th:if="${message!=null}">
-        <span th:text="${message}"></span>
     </div>
-<!--    Hiển thị danh sách-->
-    <div>
-        <table class="table table-hover">
-            <tr>
-                <th>STT</th>
-                <th>Họ và tên</th>
-                <th>Giới tính</th>
-                <th>Ngày sinh</th>
-                <th>Số điện thoại</th>
-                <th>Điểm</th>
-                <th colspan="3">Thao tác</th>
-            </tr>
-            <tr th:each="customer, status: ${customerPage}">
-                <td th:text="${status.count}"></td>
-                <td th:text="${customer.customerName}"></td>
-                <td th:switch="${customer.customerGender}">
-                    <span th:case="0" th:text="Nam"></span>
-                    <span th:case="1" th:text="Nữ"></span>
-                    <span th:case="*" th:utext="${'<h3>N/A</h3>'}"></span>
-                </td>
-                <td th:text="${customer.customerBirthday}"></td>
-                <td th:text="${customer.customerPhoneNumber}"></td>
-                <td th:text="${customer.customerPoint}"></td>
-                <td><a class="btn btn-primary" th:href="@{/{id}/edit(id=${customer.getCustomerId()})}">Chỉnh sửa</a></td>
-                <td><a class="btn btn-danger" th:href="@{/{id}/delete(id=${customer.getCustomerId()})}">Xóa</a></td>
-                <td><a class="btn btn-primary" th:href="@{/{id}/view(id=${customer.getCustomerId()})}">Chi tiết</a></td>
-            </tr>
-        </table>
-    </div>
-<!--    Phân trang-->
-    <a th:if="${customerPage.hasPrevious()}" th:href="@{/customer/list(page=${customerPage.number-1}, searchName=${searchName})}">Prev</a>
-    <span th:text="${customerPage.number+1}"></span>/<span th:text="${customerPage.totalPages}"></span>
-    <a th:if="${customerPage.hasNext()}" th:href="@{/customer/list(page=${customerPage.number+1},searchName=${searchName})}">Next</a>
 </div>
+<div th:replace="layout::footer"></div>
+<script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
+        src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
+<script>
+    function sendInfoToDelete(id, name) {
+        document.getElementById('nameDelete').innerText = name
+        document.getElementById('idDelete').href = '/customer/' + id + '/delete'
+    }
 
-
+    const toastTrigger = document.getElementById('myToastBtn')
+    const toastLive = document.getElementById('myToast')
+    if (toastTrigger) {
+        const toast = bootstrap.Toast.getOrCreateInstance(toastLive);
+        toastTrigger.addEventListener('click', () => {
+            toast.show()
+        })
+    }
+</script>
 </body>
 </html>
