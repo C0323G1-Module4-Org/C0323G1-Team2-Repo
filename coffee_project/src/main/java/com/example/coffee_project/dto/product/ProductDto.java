@@ -14,7 +14,7 @@ public class ProductDto implements Validator {
     private String productDescription;
     private String productImagePath;
     @NotBlank(message = "không được để trống")
-    @Pattern(regexp = "^[\\\\p{Lu}][\\\\p{Ll}]{1,8}(\\\\s([\\\\p{Lu}]|[\\\\p{Lu}][\\\\p{Ll}]{1,10})){0,5}$",message = "Tên sản phẩm phải đúng định dạng ")
+    @Pattern(regexp = "^[\\p{Lu}][\\p{Ll}]{1,8}(\\s([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,10})){0,5}$",message = "Tên sản phẩm phải đúng định dạng ")
     private String productName;
 //    @NotEmpty(message = "Không được để trống")
     @Min(value = 1,message = "giá phải là số dương ")
