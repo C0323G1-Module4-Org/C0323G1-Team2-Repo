@@ -8,6 +8,7 @@
         * {
             font-style: italic;
         }
+
         .content-left:hover {
             background-color: #D4A373;
             border-radius: 10px;
@@ -42,9 +43,9 @@
                         <i class="fa-regular fa-user"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Thông tin</a></li>
-                        <li><a class="dropdown-item" href="#">Đăng nhập</a></li>
-                        <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+                        <li><a class="dropdown-item" href="/user/update-form">Thông tin</a></li>
+                        <li><a class="dropdown-item" href="/account/login">Đăng nhập</a></li>
+                        <li><a class="dropdown-item" href="/account/logout">Đăng xuất</a></li>
                     </ul>
                 </div>
             </div>
@@ -57,16 +58,19 @@
             <h2 class="text-light">Queen Coffee</h2>
             <ul class="nav nav-pills flex-column">
                 <li class="nav-item content-left">
-                    <a class="nav-link text-light " href="#">Đặt sản phẩm</a>
+                    <a class="nav-link text-light " href="/order/">Đặt sản phẩm</a>
                 </li>
                 <li class="nav-item content-left">
-                    <a class="nav-link text-light" href="#">Đăng kí customer</a>
+                    <a class="nav-link text-light" href="/customer/list">Quản lí khách hàng</a>
                 </li>
                 <li class="nav-item content-left">
-                    <a class="nav-link text-light" href="#">Đăng kí nhân viên</a>
+                    <a class="nav-link text-light" href="/user/list">Quản lí nhân viên</a>
                 </li>
                 <li class="nav-item content-left">
-                    <a class="nav-link text-light" href="#">Thêm sản phẩm</a>
+                    <a class="nav-link text-light" href="/product">Quản lí sản phẩm</a>
+                </li>
+                <li class="nav-item content-left">
+                    <a class="nav-link text-light" href="/account/admin">Quản lí tài khoản</a>
                 </li>
             </ul>
             <hr class="d-sm-none">

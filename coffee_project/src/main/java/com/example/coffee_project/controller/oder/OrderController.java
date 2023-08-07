@@ -1,11 +1,13 @@
 package com.example.coffee_project.controller.oder;
 
 import com.example.coffee_project.dto.oder.OrderDetailDto;
+import com.example.coffee_project.model.account.Account;
 import com.example.coffee_project.model.customer.Customer;
 import com.example.coffee_project.model.oder.Order;
 import com.example.coffee_project.model.oder.OrderDetail;
 import com.example.coffee_project.model.product.Product;
 import com.example.coffee_project.model.user.User;
+import com.example.coffee_project.service.account.IAccountService;
 import com.example.coffee_project.service.customer.ICustomerService;
 import com.example.coffee_project.service.oder.IOrderDetailService;
 import com.example.coffee_project.service.oder.IOrderService;
@@ -16,12 +18,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,6 +45,8 @@ public class OrderController {
     IOrderService orderService;
     @Autowired
     IOrderDetailService orderDetailService;
+    @Autowired
+    IAccountService accountService;
 
     @GetMapping(value = "/")
     public ModelAndView home(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "") String name) {
@@ -66,7 +73,8 @@ public class OrderController {
 
     @PostMapping("/add-order")
     public String addOrder(@RequestParam(required = false, defaultValue = "-1") int quantity, @RequestParam int idProduct, RedirectAttributes redirectAttributes) {
-        User user = userService.findByID(1);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findByName(authentication.getName());
         Order order = orderService.findCurrentOrder(true);
         Product product = productService.findProductById(idProduct);
         if (quantity > 0) {
@@ -117,6 +125,7 @@ public class OrderController {
     @PostMapping("/confirm-payment")
     public String confirmPayment(@RequestParam String phoneNumber, @RequestParam int sale) {
         Order order = orderService.findCurrentOrder(true);
+        order.setOrderDate(new Timestamp(new Date().getTime()));
         Customer customer = customerService.findByCustomerPhoneNumber(phoneNumber);
         if (customer != null) {
             double totalPrice = 0;
