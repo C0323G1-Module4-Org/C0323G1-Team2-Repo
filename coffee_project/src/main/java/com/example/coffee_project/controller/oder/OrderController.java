@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -114,12 +115,32 @@ public class OrderController {
     }
 
     @PostMapping("/confirm-payment")
-    public String confirmPayment(@RequestParam String phoneNumber) {
+    public String confirmPayment(@RequestParam String phoneNumber, @RequestParam int sale) {
         Order order = orderService.findCurrentOrder(true);
-        double totalPrice = 0;
-        for (OrderDetail orderDetail : order.getOrderDetailSet()) {
-            totalPrice += (orderDetail.getProductPrice() * orderDetail.getQuantityProduct());
+        Customer customer = customerService.findByCustomerPhoneNumber(phoneNumber);
+        if (customer != null) {
+            double totalPrice = 0;
+            for (OrderDetail orderDetail : order.getOrderDetailSet()) {
+                totalPrice += (orderDetail.getProductPrice() * orderDetail.getQuantityProduct());
+            }
+            if (totalPrice >= 500000)
+                customer.setCustomerPoint(customer.getCustomerPoint() + 100);
+            else if (totalPrice >= 200000)
+                customer.setCustomerPoint(customer.getCustomerPoint() + 30);
+            if (totalPrice > 100000)
+                customer.setCustomerPoint(customer.getCustomerPoint() + 10);
+            if (sale <= customer.getCustomerPoint()) {
+                customer.setCustomerPoint(customer.getCustomerPoint() - sale);
+                customerService.save(customer);
+            } else {
+                customerService.save(customer);
+            }
+        } else {
+            order.setOrderStatus(false);
+            orderService.save(order);
         }
+        order.setOrderStatus(false);
+        orderService.save(order);
         return "redirect:/order/";
     }
 }
