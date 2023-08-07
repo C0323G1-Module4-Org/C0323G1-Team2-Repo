@@ -86,7 +86,7 @@
                                             <form action="/order/add-order" method="post">
                                                 <div class="form-outline my-2" style="width:50%;">
                                                     <input value="1" type="number" name="quantity" min="1"
-                                                            class="form-control"/>
+                                                           class="form-control"/>
                                                 </div>
 
                                                 <input type="hidden" name="idProduct" id="idProduct"
@@ -135,20 +135,6 @@
                 </div>
             </div>
         </div>
-
-
-        <div class="position-fixed bottom-0 end-0 p-3" tabindex="11">
-            <div id="liveToast1" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header">
-                    <strong class="me-auto">Tin nhắn</strong>
-                    <small>Bây giờ</small>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-                <div class="toast-body text-info" th:text="${msg1}">
-                </div>
-            </div>
-        </div>
-
 
     </div>
     <div class="col-12 position-fixed top-50 bottom-50" style="z-index: 2;">
@@ -268,35 +254,31 @@
 
 <script>
     document.cookie = 'JESESSIONID=; Max-Age=0;'
+
+    function update() {
+        let totalPrice = 0;
+        $('.orderDetail').each(function () {
+            totalPrice += parseInt($(this).find('.num').val()) * parseInt($(this).find('.price').val());
+        });
+        $('#totalPrice').html("Tổng tiền là :" + totalPrice.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
+    }
+
     $(document).ready(function () {
         $('.plus').click(function () {
             $(this).parents('.wrapper').find('.num').val(parseInt($(this).parents('.wrapper').find('.num').val()) + 1);
-            let totalPrice = 0;
-            $('.orderDetail').each(function () {
-                totalPrice += parseInt($(this).find('.num').val()) * parseInt($(this).find('.price').val());
-            });
-            $('#totalPrice').html("Tổng tiền là :" + totalPrice + " VND");
+            update(this);
         });
         $('.minus').click(function () {
             if ($(this).parents('.wrapper').find('.num').val() < 2)
                 return;
             $(this).parents('.wrapper').find('.num').val($(this).parents('.wrapper').find('.num').val() - 1);
-            let totalPrice = 0;
-            $('.orderDetail').each(function () {
-                totalPrice += parseInt($(this).find('.num').val()) * parseInt($(this).find('.price').val());
-            });
-            $('#totalPrice').html("Tổng tiền là :" + totalPrice + " VND");
+            update(this);
+        });
+        $('.num').change(function () {
+            update(this);
         });
     });
 </script>
-<script th:if="${msg1}">
-    window.onload = function () {
-        var myAlert = document.getElementById('liveToast1');//select id of toast
-        var bsAlert = new bootstrap.Toast(myAlert);//inizialize it
-        bsAlert.show();//show it
-    }
-</script>
-
 <script th:if="${msg}">
     window.onload = function () {
         var myAlert = document.getElementById('liveToast');//select id of toast

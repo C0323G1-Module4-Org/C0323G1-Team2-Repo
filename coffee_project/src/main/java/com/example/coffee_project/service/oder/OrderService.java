@@ -1,6 +1,7 @@
 package com.example.coffee_project.service.oder;
 
 import com.example.coffee_project.model.oder.Order;
+import com.example.coffee_project.model.user.User;
 import com.example.coffee_project.repository.oder.IOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public Order findCurrentOrder(boolean status) {
-        return orderRepository.findByOrderStatus(status);
+    public Order findCurrentOrder(boolean status, User user) {
+        return orderRepository.findByOrderStatusAndAndUser(status, user);
     }
 }

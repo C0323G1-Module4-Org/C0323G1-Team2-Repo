@@ -1,13 +1,11 @@
 package com.example.coffee_project.controller.oder;
 
 import com.example.coffee_project.dto.oder.OrderDetailDto;
-import com.example.coffee_project.model.account.Account;
 import com.example.coffee_project.model.customer.Customer;
 import com.example.coffee_project.model.oder.Order;
 import com.example.coffee_project.model.oder.OrderDetail;
 import com.example.coffee_project.model.product.Product;
 import com.example.coffee_project.model.user.User;
-import com.example.coffee_project.service.account.IAccountService;
 import com.example.coffee_project.service.customer.ICustomerService;
 import com.example.coffee_project.service.oder.IOrderDetailService;
 import com.example.coffee_project.service.oder.IOrderService;
@@ -26,8 +24,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.Valid;
-import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,15 +42,15 @@ public class OrderController {
     IOrderService orderService;
     @Autowired
     IOrderDetailService orderDetailService;
-    @Autowired
-    IAccountService accountService;
 
     @GetMapping(value = "/")
     public ModelAndView home(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "") String name) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findByName(authentication.getName());
+        Order order = orderService.findCurrentOrder(true, user);
         Pageable pageable = PageRequest.of(page, 6, Sort.by("productName").ascending());
         Page<Product> listProduct = productService.searchByName(pageable, name);
         ModelAndView modelAndView = new ModelAndView("oder/index");
-        Order order = orderService.findCurrentOrder(true);
         if (listProduct.getTotalPages() > 0) {
             List<Integer> pageNumbers = new ArrayList<>();
             for (int i = 1; i <= listProduct.getTotalPages(); i++) {
@@ -76,7 +72,7 @@ public class OrderController {
     public String addOrder(@RequestParam(required = false, defaultValue = "-1") int quantity, @RequestParam int idProduct, RedirectAttributes redirectAttributes) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findByName(authentication.getName());
-        Order order = orderService.findCurrentOrder(true);
+        Order order = orderService.findCurrentOrder(true, user);
         Product product = productService.findProductById(idProduct);
         if (quantity > 0) {
             if (order == null) {
@@ -99,7 +95,9 @@ public class OrderController {
 
     @GetMapping("/delete/{id}")
     public String deleteOrderDetail(@PathVariable int id, RedirectAttributes redirectAttributes) {
-        Order order = orderService.findCurrentOrder(true);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findByName(authentication.getName());
+        Order order = orderService.findCurrentOrder(true, user);
         if (order != null) {
             orderDetailService.remove(id);
             redirectAttributes.addFlashAttribute("msg1", "Đã xóa thành công sản phẩm");
@@ -110,11 +108,13 @@ public class OrderController {
 
     @PostMapping("/payment")
     public String Payment(@ModelAttribute OrderDetailDto orderDetailDto, Model model) {
-        Order order = orderService.findCurrentOrder(true);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findByName(authentication.getName());
+        Order order = orderService.findCurrentOrder(true, user);
         List<Customer> listCustomer = customerService.findListCustomer();
         if (orderDetailDto != null) {
             for (OrderDetail o : orderDetailDto.getOrderDetailList()) {
-                if (o.getQuantityProduct() == null)
+                if (o.getQuantityProduct() == null || o.getQuantityProduct() < 1)
                     return "redirect:/order/";
                 orderDetailService.save(o);
             }
@@ -126,8 +126,10 @@ public class OrderController {
     }
 
     @PostMapping("/confirm-payment")
-    public String confirmPayment(@RequestParam String phoneNumber, @RequestParam int sale) {
-        Order order = orderService.findCurrentOrder(true);
+    public String confirmPayment(@RequestParam String phoneNumber, @RequestParam int sale, RedirectAttributes redirectAttributes) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findByName(authentication.getName());
+        Order order = orderService.findCurrentOrder(true, user);
         order.setOrderDate(new Timestamp(new Date().getTime()));
         Customer customer = customerService.findByCustomerPhoneNumber(phoneNumber);
         if (customer != null) {
@@ -151,8 +153,10 @@ public class OrderController {
             order.setOrderStatus(false);
             orderService.save(order);
         }
+        order.setOrderDate(new Timestamp(new Date().getTime()));
         order.setOrderStatus(false);
         orderService.save(order);
+        redirectAttributes.addFlashAttribute("msg", "Đã thanh toán");
         return "redirect:/order/";
     }
 }
