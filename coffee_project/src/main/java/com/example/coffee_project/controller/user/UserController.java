@@ -21,8 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
-import java.time.Period;
+
 
 @Controller
 @RequestMapping("/user")
@@ -49,12 +48,18 @@ public class UserController {
     }
 
     @GetMapping("/create-form")
-    public ModelAndView showCreateForm() {
-        ModelAndView modelAndView = new ModelAndView("user/create");
+    public String showCreateForm(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User checkUser = userService.findByName(authentication.getName());
+        if (checkUser != null) {
+            return "redirect:/user/update-form";
+        }
+
         UserDto userDto = new UserDto();
-        modelAndView.addObject("userDto", userDto);
-        modelAndView.addObject("employeeTypeList", employeeTypeService.findAll());
-        return modelAndView;
+        userDto.setUserImagePath("https://phongreviews.com/wp-content/uploads/2022/11/avatar-facebook-mac-dinh-8.jpg");
+        model.addAttribute("userDto", userDto);
+        model.addAttribute("employeeTypeList", employeeTypeService.findAll());
+        return "user/create";
     }
 
     @PostMapping("/create")
@@ -66,15 +71,15 @@ public class UserController {
         userDto.setAccount(accountService.findByUsername(authentication.getName()));
         userDto.setEmployeeType(employeeTypeService.findByEmployeeTypeName("Full-time"));
         userDto.setUserSalary(0D);
-        System.out.println(userDto.getUserSalary());
 
         new UserDto().validate(userDto, bindingResult);
+        userService.checkUniqueAttribute(userDto,bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("userDto", userDto);
-
             model.addAttribute("employeeTypeList", employeeTypeService.findAll());
             return "/user/create";
         }
+
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
         userService.saveUser(user);
@@ -93,17 +98,17 @@ public class UserController {
         return "redirect:/user/list";
     }
 
-    @GetMapping("/update-form/{id}")
-    public String showUpdateUserForm(@PathVariable Integer id,
-                                     Model model){
-        User user = userService.findByID(id);
-        if(user == null){
+
+    @GetMapping("/update-form")
+    public String showUpdateUserForm(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findByName(authentication.getName());
+        if (user == null) {
             return "redirect:/user/create-form";
         }
-        model.addAttribute("employeeTypeList", employeeTypeService.findAll());
         UserDto userDto = new UserDto();
-        BeanUtils.copyProperties(user,userDto);
-        model.addAttribute("userDto",userDto);
+        BeanUtils.copyProperties(user, userDto);
+        model.addAttribute("userDto", userDto);
         return "/user/update";
     }
 
@@ -115,7 +120,6 @@ public class UserController {
         new UserDto().validate(userDto, bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("userDto", userDto);
-            model.addAttribute("employeeTypeList", employeeTypeService.findAll());
             return "/user/update";
         }
         User user = new User();
@@ -125,11 +129,5 @@ public class UserController {
                 "Sửa tài khoản " + user.getAccount() + " thành công");
         return "redirect:/user/list";
     }
-    @GetMapping("/detail/{id}")
-    public ModelAndView showUserInfo(@PathVariable Integer id){
-        ModelAndView modelAndView = new ModelAndView("user/detail");
-        User user = userService.findByID(id);
-        modelAndView.addObject("user",user);
-        return modelAndView;
-    }
+
 }

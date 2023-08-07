@@ -81,7 +81,7 @@
                 <div class="row d-flex ">
                     <div class="col-4">
                         <div id="dnd" class="preview" style="margin-top: 5px">
-
+                            <img id="img" src="" class="preview-img"/>
                         </div>
                         <div class="d-flex justify-content-center">
                             <div>
@@ -181,39 +181,6 @@
                                 </td>
                             </tr>
 
-                            <!--                            <tr>-->
-                            <!--                                <th>Lương <span style="color: red">*</span>-->
-                            <!--                                    <div style=" height: 20px"></div>-->
-                            <!--                                </th>-->
-                            <!--                                <td><input class="form-control" th:field="*{userSalary}" type="number">-->
-                            <!--                                    <div style=" height: 20px"><small style="color: red"-->
-                            <!--                                                                      th:if="${#fields.hasErrors('userSalary')}"-->
-                            <!--                                                                      th:errors="*{userSalary}"></small></div>-->
-                            <!--                                </td>-->
-                            <!--                            </tr>-->
-
-                            <!--                            <tr>-->
-                            <!--                                <th>Ca làm việc <span style="color: red">*</span>-->
-                            <!--                                    <div style=" height: 20px"></div>-->
-                            <!--                                </th>-->
-                            <!--                                <td><select id="disabledSelect" class="form-select" th:field="*{employeeType}">-->
-                            <!--                                    <option th:each="employeeType :${employeeTypeList}"-->
-                            <!--                                            th:value="${employeeType.employeeTypeId}"-->
-                            <!--                                            th:text="${employeeType.employeeTypeName}"></option>-->
-                            <!--                                </select>-->
-                            <!--                                    <div style=" height: 20px"></div>-->
-                            <!--                                </td>-->
-                            <!--                            </tr>-->
-                            <!--                            <tr>-->
-                            <!--                                <th>Tài khoản <span style="color: red">*</span>-->
-                            <!--                                    <div style=" height: 20px"></div>-->
-                            <!--                                </th>-->
-                            <!--                                <td><input class="form-control"  th:field="*{account.accountName}">-->
-                            <!--                                    <div style=" height: 20px"><small style="color: red"-->
-                            <!--                                                                      th:if="${#fields.hasErrors('userAddress')}"-->
-                            <!--                                                                      th:errors="*{userAddress}"></small></div>-->
-                            <!--                                </td>-->
-                            <!--                            </tr>-->
                             <tr>
 
                                 <td colspan="2">
@@ -238,26 +205,21 @@
         src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
 
 
-
 <!--                    //file Js Img-->
-<script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js"></script>
-<script src="www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-analytics.js"></script>
+<script type="module">
 
+    function renderBaseImg() {
+        let path = document.getElementById("thumbnailURL").value;
+        document.getElementById("img").src = path;
+        document.getElementById("img").alt = "img";
+    }
 
-<script>
+    renderBaseImg();
     const dndElement = document.querySelector('#dnd')
     const resultElement = document.querySelector('.preview')
     const validImageTypes = ['image/gif', 'image/jpeg', 'image/png']
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyArCw60QkeuUk0Q-fRBWkAIcMkmxz9awxc",
-        authDomain: "queen-coffee.firebaseapp.com",
-        projectId: "queen-coffee",
-        storageBucket: "queen-coffee.appspot.com",
-        messagingSenderId: "144351029903",
-        appId: "1:144351029903:web:71596e7404248d4f525efa",
-        measurementId: "G-6CXNQ9TXLK"
-    };
 
 
     dndElement.addEventListener('dragover', function (e) {
@@ -287,16 +249,29 @@
         fileReader.readAsDataURL(file)
         fileReader.onload = function () {
             const url = fileReader.result;
-            resultElement.innerHTML = `<img src="${url}" alt="${file.name}" class="preview-img" />`;
+            // resultElement.innerHTML = `<img src="${url}" alt="${file.name}" class="preview-img" />`;
+            document.getElementById("img").src = url;
+            document.getElementById("img").alt = file.name;
             pushImage(file)
         }
     }
+
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyAzFisiEuPoL-tzq3kdo3faLimcBYOyKf4",
+        authDomain: "coffee-team2-project.firebaseapp.com",
+        projectId: "coffee-team2-project",
+        storageBucket: "coffee-team2-project.appspot.com",
+        messagingSenderId: "18924172599",
+        appId: "1:18924172599:web:d27940351fb0cafc0516b2"
+    };
+    // const app = initializeApp(firebaseConfig);
     firebase.initializeApp(firebaseConfig);
 
     function pushImage(file) {
-
-        let storageRef = firebase.storage().ref('img/' + file.name);
-        console.log(111)
+        let random = Math.random().toString(36).substring(7);
+        let storageRef = firebase.storage().ref("user/"+random);
         let task = storageRef.put(file);
         task.on('state_changed', function progress(snapshot) {
             let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;

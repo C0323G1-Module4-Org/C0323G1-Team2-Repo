@@ -236,9 +236,11 @@
                 }else {
                     gender = "Nữ";
                 }
+                let birthday = data.userBirthday.split("-").reverse().join("-");
+
                 $("#userNameDetail").text(data.userName);
                 $("#userGender").text(gender);
-                $("#userBirthday").text(data.userBirthday);
+                $("#userBirthday").text(birthday);
                 $("#userPhoneNumber").text(data.userPhoneNumber);
                 $("#userEmail").text(data.userEmail);
                 $("#userIdCard").text(data.userIdCard);

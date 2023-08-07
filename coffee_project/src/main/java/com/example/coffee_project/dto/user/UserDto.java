@@ -5,7 +5,10 @@ import com.example.coffee_project.common.user.custom.ValidDouble;
 import com.example.coffee_project.common.user.custom.ValidSQLDate;
 import com.example.coffee_project.model.account.Account;
 import com.example.coffee_project.model.user.EmployeeType;
+import com.example.coffee_project.service.user.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -14,13 +17,14 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
 
+
 public class UserDto implements Validator {
     private Integer userId;
     @NotBlank(message = "Không được để trống tên!")
     private String userName;
     @NotNull(message = "Không được để trống giới tính!")
     private Boolean userGender;
-    @ValidSQLDate(message = "Không được để trống ngày sinh!")
+    @ValidSQLDate(message = "Sai định dạng ngày tháng!")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date userBirthday;
     @NotBlank(message = "Không được để trống số điện thoại!")
@@ -35,6 +39,7 @@ public class UserDto implements Validator {
     private String userImagePath;
     private EmployeeType employeeType;
     private Account account;
+
 
     public UserDto() {
     }
@@ -158,11 +163,11 @@ public class UserDto implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         UserDto userDto = (UserDto) target;
-        UserValidate.checkValidateUserName(userDto.getUserName(),errors);
-        UserValidate.checkValidateUserBirthday(userDto.getUserBirthday(),errors);
-        UserValidate.checkValidateUserPhoneNumber(userDto.getUserPhoneNumber(),errors);
-        UserValidate.checkValidateUserEmail(userDto.getUserEmail(),errors);
-        UserValidate.checkValidateUserIdCard(userDto.getUserIdCard(),errors);
-        UserValidate.checkValidateUserUserSalary(userDto.getUserSalary(),errors);
+        UserValidate.checkValidateUserName(userDto.getUserName(), errors);
+        UserValidate.checkValidateUserBirthday(userDto.getUserBirthday(), errors);
+        UserValidate.checkValidateUserPhoneNumber(userDto.getUserPhoneNumber(), errors);
+        UserValidate.checkValidateUserEmail(userDto.getUserEmail(), errors);
+        UserValidate.checkValidateUserIdCard(userDto.getUserIdCard(), errors);
+        UserValidate.checkValidateUserUserSalary(userDto.getUserSalary(), errors);
     }
 }
