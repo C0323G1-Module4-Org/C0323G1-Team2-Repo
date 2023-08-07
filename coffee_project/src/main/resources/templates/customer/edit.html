@@ -38,11 +38,11 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Tên khách hàng</th>
+                                    <th>Tên khách hàng <span style="color: red">*</span></th>
                                     <td><input class="form-control" type="text" th:field="*{customerName}"></td>
                                 </tr>
                                 <tr>
-                                    <th>Giới tính</th>
+                                    <th>Giới tính <span style="color: red">*</span></th>
                                     <td>
                                         <input type="radio" th:field="*{customerGender}" th:value="true">
                                         <span th:text="Nam"></span>
@@ -51,16 +51,16 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Ngày sinh</th>
+                                    <th>Ngày sinh <span style="color: red">*</span></th>
                                     <td><input class="form-control" type="date" th:field="*{customerBirthday}"></td>
                                 </tr>
                                 <tr>
-                                    <th>Số điện thoại</th>
+                                    <th>Số điện thoại <span style="color: red">*</span></th>
                                     <td><input class="form-control" type="number" th:field="*{customerPhoneNumber}">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Điểm</th>
+                                    <th>Điểm <span style="color: red">*</span></th>
                                     <td><input class="form-control" th:field="*{customerPoint}" readonly></td>
                                 </tr>
                                 <tr>
