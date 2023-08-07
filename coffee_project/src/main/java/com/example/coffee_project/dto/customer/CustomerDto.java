@@ -1,6 +1,7 @@
 package com.example.coffee_project.dto.customer;
 
 import com.example.coffee_project.common.customer.custom.CustomerValidate;
+import com.example.coffee_project.model.customer.Customer;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -13,6 +14,8 @@ public class CustomerDto implements Validator {
     private Date customerBirthday;
     private String customerPhoneNumber;
     private Integer customerPoint;
+
+    private Customer customer;
 
     public CustomerDto() {
     }
@@ -32,6 +35,14 @@ public class CustomerDto implements Validator {
         this.customerBirthday = customerBirthday;
         this.customerPhoneNumber = customerPhoneNumber;
         this.customerPoint = customerPoint;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public Integer getCustomerId() {
@@ -83,6 +94,18 @@ public class CustomerDto implements Validator {
     }
 
     @Override
+    public String toString() {
+        return "CustomerDto{" +
+                "customerId=" + customerId +
+                ", customerName='" + customerName + '\'' +
+                ", customerGender=" + customerGender +
+                ", customerBirthday=" + customerBirthday +
+                ", customerPhoneNumber='" + customerPhoneNumber + '\'' +
+                ", customerPoint=" + customerPoint +
+                '}';
+    }
+
+    @Override
     public boolean supports(Class<?> clazz) {
         return false;
     }
@@ -113,6 +136,8 @@ public class CustomerDto implements Validator {
             errors.rejectValue("customerPhoneNumber", null, "Không được để trống số điện thoại");
         } else if (!customerDto.getCustomerPhoneNumber().matches("^(84|0[3|5|7|8|9])+([0-9]{8})\\b$")) {
             errors.rejectValue("customerPhoneNumber", null, "Bạn nhập sai định dạng số điện thoại!");
+        } else if (customerDto.getCustomer() != null) {
+            errors.rejectValue("customerPhoneNumber", null, "Số điện thoại bạn nhập đã tồn tại!");
         }
     }
 }

@@ -12,7 +12,10 @@ import org.springframework.stereotype.Service;
 public class ProductService implements IProductService {
     @Autowired
     private IProductRepository productRepository;
-
+    @Override
+    public Page<Product> searchByName(Pageable pageable, String name) {
+        return productRepository.findAllByProductNameContaining(pageable, name);
+    }
 
     @Override
     public Page<Product> display(Pageable pageable) {
@@ -30,7 +33,9 @@ public class ProductService implements IProductService {
                 maxPrice = new String(priceRange[1]);
             }
         }
-        return productRepository.search(pageable,name, productType, minPrice, maxPrice );
+        String newStr = minPrice.replaceAll(",", "");
+        String newStr2 = maxPrice.replaceAll(",", "");
+        return productRepository.search(pageable, name, productType, newStr, newStr2);
     }
 
     @Override

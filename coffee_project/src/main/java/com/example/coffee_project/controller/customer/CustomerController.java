@@ -2,6 +2,7 @@ package com.example.coffee_project.controller.customer;
 
 import com.example.coffee_project.dto.customer.CustomerDto;
 import com.example.coffee_project.model.customer.Customer;
+import com.example.coffee_project.service.customer.CustomerService;
 import com.example.coffee_project.service.customer.ICustomerService;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.BeanUtils;
@@ -35,6 +36,9 @@ public class CustomerController {
         Pageable pageable = PageRequest.of(page, 5, Sort.by("customerName").ascending());
         Page<Customer> customerPage = customerService.findAll(pageable, searchName);
         ModelAndView modelAndView = new ModelAndView("customer/list");
+        if (customerPage.isEmpty()) {
+            modelAndView.addObject("message", "Khách hàng bạn tìm kiếm không tồn tại!");
+        }
         modelAndView.addObject("customerPage", customerPage);
         modelAndView.addObject("searchName", searchName);
         return modelAndView;
@@ -50,13 +54,17 @@ public class CustomerController {
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute CustomerDto customerDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         Customer customer = new Customer();
+        Customer customer1 = customerService.findByCustomerPhoneNumber(customerDto.getCustomerPhoneNumber());
+        customerDto.setCustomer(customer1);
         new CustomerDto().validate(customerDto, bindingResult);
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("customerDto", customerDto);
             return "customer/create";
         }
         customerDto.setCustomerPoint(0);
         BeanUtils.copyProperties(customerDto, customer);
+        System.out.println(customer.getCustomerPhoneNumber());
         boolean check = customerService.save(customer);
         if (check) {
             redirectAttributes.addFlashAttribute("message", "Thêm mới thành công!");
@@ -78,13 +86,12 @@ public class CustomerController {
     @PostMapping("/update")
     public String update(@Valid @ModelAttribute CustomerDto customerDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         Customer customer = new Customer();
-        System.out.println(customerDto.getCustomerPoint());
         new CustomerDto().validate(customerDto, bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("customerDto", customerDto);
             return "customer/edit";
         }
-        BeanUtils.copyProperties(customerDto,customer);
+        BeanUtils.copyProperties(customerDto, customer);
         boolean result = customerService.update(customer.getCustomerId(), customer);
         if (result) {
             redirectAttributes.addFlashAttribute("message", "Cập nhật thành công!");

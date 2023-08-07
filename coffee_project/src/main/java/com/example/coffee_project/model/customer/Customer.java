@@ -24,7 +24,7 @@ public class Customer {
     @Column(name = "customer_birthday")
     private Date customerBirthday;
 
-    @Column(name = "customer_phone_number", nullable = false,unique = true)
+    @Column(name = "customer_phone_number", nullable = false, unique = true)
     private String customerPhoneNumber;
 
     @Column(name = "customer_point")
@@ -100,5 +100,18 @@ public class Customer {
 
     public void setCustomerPoint(Integer customerPoint) {
         this.customerPoint = customerPoint;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "customerId=" + customerId +
+                ", customerName='" + customerName + '\'' +
+                ", customerGender=" + customerGender +
+                ", customerBirthday=" + customerBirthday +
+                ", customerPhoneNumber='" + customerPhoneNumber + '\'' +
+                ", customerPoint=" + customerPoint +
+                ", orderSet=" + orderSet +
+                '}';
     }
 }

@@ -12,4 +12,5 @@ public interface IProductService {
     void delete(int id);
     Product findProductById(int id);
     void edit(Product product);
+    Page<Product> searchByName(Pageable pageable, String name);
 }

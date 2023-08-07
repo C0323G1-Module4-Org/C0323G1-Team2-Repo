@@ -20,8 +20,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
 
-
         http.authorizeRequests().antMatchers("/account/login").anonymous();
+        http.authorizeRequests().antMatchers("/account/forgot-password","/account/reset-password").permitAll();
+
         http.authorizeRequests()
                 // any role admin and employee
                 //customer
@@ -45,6 +46,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/product/detail/{id}").hasAnyAuthority("admin", "employee")
                 .antMatchers("/user/create-form").hasAnyAuthority("admin", "employee")
                 .antMatchers("/user/create").hasAnyAuthority("admin", "employee")
+
+               //order
+                .antMatchers("/order/").hasAnyAuthority("admin", "employee")
+                .antMatchers("/order/add-order").hasAnyAuthority("admin", "employee")
+                .antMatchers("/order/delete/{id}").hasAnyAuthority("admin", "employee")
+                .antMatchers("/order/payment").hasAnyAuthority("admin", "employee")
+                .antMatchers("/order/confirm-payment").hasAnyAuthority("admin", "employee")
 
                 //admin
 
@@ -70,7 +78,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginProcessingUrl("/j_spring_security_check") // liên kết từ trang login
                 .loginPage("/account/login")                           //trang login
-                .defaultSuccessUrl("/product")                         //login thành công
+                .defaultSuccessUrl("/order/")                         //login thành công
                 .failureUrl("/account/login?error=true")  // trang error
                 .usernameParameter("accountName")                      //tham số
                 .passwordParameter("accountPassword")
