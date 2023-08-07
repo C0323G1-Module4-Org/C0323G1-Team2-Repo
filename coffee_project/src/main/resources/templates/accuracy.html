@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login 04</title>
+    <title>Quên mật khẩu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -16,11 +16,13 @@
     <style>
         body {
             background: #f1f0ee;
+            /*background: #927055;*/
         }
-
-        @font-face {
-            font-family: "Fira Code Light";
-            src: url("https://fonts.google.com/specimen/Fira+Sans");
+       div,form,h2,label{
+            color: #6694a1;
+        }
+        .label{
+            color: #6694a1;
         }
     </style>
 </head>
@@ -35,7 +37,7 @@
                     <div style="background: #fefae0" class="login-wrap p-4 p-md-5">
                         <div class="d-flex">
                             <div class="w-100">
-                                <h2 class="mb-4" style="color: #6694a1  ">Đăng Nhập</h2>
+                                <h2 class="mb-4">Quên mật khẩu</h2>
                             </div>
                             <div class="w-100">
                                 <p class="social-media d-flex justify-content-end">
@@ -46,37 +48,25 @@
                                 </p>
                             </div>
                         </div>
-                        <div th:if="${#request.getParameter('error')=='true'}"
-                             style="color: red;margin: 10px 0">
-
-                        </div>
-                        <form th:object="${accountDto}" th:action="@{/j_spring_security_check}" method="POST"
+                        <form th:method="post" th:object="${account}"
                               class="signin-form">
+                            <input th:field="*{accountName}" hidden="hidden">
                             <div class="form-group mb-3">
-                                <label style="color: #6694a1"  for="username">Tên đăng nhập</label>
-                                <input id="username" th:field="*{accountName}" type="text" class="form-control" required>
+                                <label for="password">Mật khẩu mới</label>
+                                <input id="password" name="password"  type="text" class="form-control" required>
                             </div>
                             <div class="form-group mb-3">
-                                <label style="color: #6694a1" for="password">Mật khẩu</label>
-                                <input type="password" th:field="*{accountPassword}" id="password" class="form-control"
-                                       required>
+                                <label for="password2">Nhập lại mật khẩu mới</label>
+                                <input type="email" name="password2" id="password2" class="form-control" required>
+                            </div>
+                             <div class="form-group mb-3">
+                                <label for="emailCode">Nhập mã</label>
+                                <input type="email" name="emailCode" id="emailCode" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="form-control btn btn-primary rounded submit px-3">Đăng
-                                    nhập
+                                <button type="submit" class="form-control btn btn-primary rounded submit px-3">
+                                   Xác nhận
                                 </button>
-                            </div>
-                            <div class="form-group d-md-flex">
-                                <div class="w-50 text-left">
-                                    <label style="color: #6694a1" class="checkbox-wrap checkbox-primary mb-0">Nhớ thông
-                                        tin
-                                        <input type="checkbox" checked name="remember-me">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                <div class="w-50 text-md-right">
-                                    <a href="/account/forgot-password">Quên mật khẩu</a>
-                                </div>
                             </div>
                         </form>
                     </div>
@@ -85,5 +75,6 @@
         </div>
     </div>
 </section>
+
 </body>
 </html>

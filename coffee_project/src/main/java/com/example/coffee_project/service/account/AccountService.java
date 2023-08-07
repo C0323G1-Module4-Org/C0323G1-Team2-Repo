@@ -8,6 +8,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,14 +17,21 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.util.Random;
+
+
 @Service
 public class AccountService implements IAccountService {
     @Autowired
     private IAccountRepository accountRepository;
-
+    @Autowired
+    private JavaMailSender javaMailSender;
     @Autowired
     private IRoleService roleService;
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
     @Override
     public Page<Account> getAllAccount(Pageable pageable, String searchName) {
         return accountRepository.findAllByAccountNameContaining(pageable, searchName);
@@ -40,9 +49,45 @@ public class AccountService implements IAccountService {
         account.setRole(role);
         accountRepository.save(account);
     }
+
     @Override
-    public Account findByUsername(String username){
+    public Account findByUsername(String username) {
         return accountRepository.findAccountByAccountName(username);
+    }
+
+    @Override
+    public void sendEmail(String to, String subject, String body) {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(body, true);
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public String sendEmailAndReturnCode(String to){
+        // Sinh mã ngẫu nhiên
+        String code = generateRandomCode(6); // Mã có độ dài 6
+        // Tạo nội dung email
+        String body = "Mã xác nhận của bạn là: " + code +" .Bạn vui lòng lấy mã để tại lại mật khẩu";
+        // Cấu hình subject
+        String subject="Queen Coffee gửi mã xác thực ta khoản của bạn";
+        sendEmail(to,subject,body);
+        return code;
+    }
+
+    private String generateRandomCode(int length) {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder code = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(characters.length());
+            code.append(characters.charAt(index));
+        }
+        return code.toString();
     }
 
 
