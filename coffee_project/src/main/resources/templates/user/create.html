@@ -67,7 +67,7 @@
             <div class="row" style="margin-top: 15px;margin-bottom: 20px">
 
                 <h1 class="col-10" style="text-align: center">Đăng Kí Thông Tin Nhân Viên</h1>
-                <a th:href="@{/user/list}" style="text-decoration: none"
+                <a href="/order/}" style="text-decoration: none"
                    class="col-2 d-flex justify-content-center">
                     <button class="btn btn-primary "><i class="fa-solid fa-circle-arrow-left"></i></button>
                 </a>
@@ -94,7 +94,7 @@
                     <!-----------------------//Table đăng kí thông tin------------------------->
 
                     <div class="col-8" id="form-create">
-                        <table class="table-responsive">
+                        <table class="table table-hover table-responsive">
                             <input id="thumbnailURL" hidden="hidden" th:field="*{userImagePath}">
                             <tr>
                                 <th>Tên nhân viên <span style="color: red">*</span>
