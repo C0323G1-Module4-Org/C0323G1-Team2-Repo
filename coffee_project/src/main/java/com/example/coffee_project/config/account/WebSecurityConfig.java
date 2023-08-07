@@ -47,6 +47,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/create-form").hasAnyAuthority("admin", "employee")
                 .antMatchers("/user/create").hasAnyAuthority("admin", "employee")
 
+               //order
+                .antMatchers("/order/").hasAnyAuthority("admin", "employee")
+                .antMatchers("/order/add-order").hasAnyAuthority("admin", "employee")
+                .antMatchers("/order/delete/{id}").hasAnyAuthority("admin", "employee")
+                .antMatchers("/order/payment").hasAnyAuthority("admin", "employee")
+                .antMatchers("/order/confirm-payment").hasAnyAuthority("admin", "employee")
+
                 //admin
 
                 .antMatchers("/account/admin").hasAuthority("admin")
