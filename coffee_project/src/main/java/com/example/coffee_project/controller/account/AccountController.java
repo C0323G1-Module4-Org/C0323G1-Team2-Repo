@@ -2,13 +2,14 @@ package com.example.coffee_project.controller.account;
 
 import com.example.coffee_project.dto.account.AccountDto;
 import com.example.coffee_project.model.account.Account;
+import com.example.coffee_project.model.user.User;
 import com.example.coffee_project.service.account.IAccountService;
+import com.example.coffee_project.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,9 @@ public class AccountController {
         return role;
     }
     @Autowired
-    IAccountService accountService;
+    private IAccountService accountService;
+    @Autowired
+    private IUserService userService;
     @GetMapping("/login")
     public ModelAndView login(Model model) {
         ModelAndView modelAndView = new ModelAndView("/login");
@@ -37,16 +40,9 @@ public class AccountController {
         modelAndView.addObject("accountDto",accountDto);
         return modelAndView;
     }
-    //    @PostMapping("/login")
-//    public ModelAndView loginAccount(@ModelAttribute AccountDto accountDto) {
-//     if (accountService.equals(accountDto)){
-//
-//     }
-//     return new ModelAndView("/login");
-//    }
     @GetMapping("/signup")
     public ModelAndView signup(){
-        ModelAndView modelAndView =new ModelAndView("signup");
+        ModelAndView modelAndView =new ModelAndView("forgot");
         AccountDto accountDto=new AccountDto();
         modelAndView.addObject("accountDto",accountDto);
         return modelAndView;
@@ -74,9 +70,16 @@ public class AccountController {
     ModelAndView modelAndView = new ModelAndView("403");
     return modelAndView;
     }
-    @GetMapping("/logout")
-    public ModelAndView logout(){
-        ModelAndView modelAndView=new ModelAndView("/login");
+    @GetMapping("/forgot-password")
+    public ModelAndView forgot(@ModelAttribute String username,
+                               @ModelAttribute String email){
+        ModelAndView modelAndView=new ModelAndView("/forgot");
+
+       return modelAndView;
+    }@GetMapping("/reset-password")
+    public ModelAndView reset(){
+        ModelAndView modelAndView=new ModelAndView("/config");
+        modelAndView.addObject("message","Đăng xuất thành công");
        return modelAndView;
     }
 }
