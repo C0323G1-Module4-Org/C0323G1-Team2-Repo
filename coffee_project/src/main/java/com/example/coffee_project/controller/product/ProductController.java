@@ -50,33 +50,36 @@ public class ProductController {
         return "product/card";
     }
 
-    @PostMapping("/search")
-    public String search(@PageableDefault(size = 8, sort = "product_price") Pageable pageable, Model model,
+    @GetMapping("")
+    public String search(@PageableDefault(size = 4, sort = "product_price") Pageable pageable, Model model,
                          RedirectAttributes redirectAttributes,
                          @RequestParam(value = "name", defaultValue = "") String name,
                          @RequestParam(defaultValue = "") String productType, @RequestParam(defaultValue = "")
                          String price) {
         String[] prices = {"10,000-50,000", "50,000-100,000", "100,000-150,000", "150,000-200,000"};
         model.addAttribute("prices", prices);
+        model.addAttribute("name", name);
+        model.addAttribute("productType", productType);
+        model.addAttribute("price", price);
         model.addAttribute("productTypes", productTypeService.display());
         Page<Product> products = productService.search(pageable, name, productType, price);
-        if (products.getSize()==0){
+        if (products.isEmpty()){
             redirectAttributes.addFlashAttribute("msg","Danh sách trống");
-            return "forward:/product";
+            return "redirect:/product";
         }
         model.addAttribute("products", products);
         return "product/list";
     }
 
-    @GetMapping("")
-    public String display(@PageableDefault(size = 4, sort = "productPrice") Pageable pageable, Model model) {
-        model.addAttribute("productTypes", productTypeService.display());
-        String[] prices = {"10,000-50,000", "50,000-100,000", "100,000-150,000", "150,000-200,000"};
-        model.addAttribute("prices", prices);
-        Page<Product> products = productService.display(pageable);
-        model.addAttribute("products", products);
-        return "product/list";
-    }
+//    @GetMapping("")
+//    public String display(@PageableDefault(size = 4, sort = "productPrice") Pageable pageable, Model model) {
+//        model.addAttribute("productTypes", productTypeService.display());
+//        String[] prices = {"10,000-50,000", "50,000-100,000", "100,000-150,000", "150,000-200,000"};
+//        model.addAttribute("prices", prices);
+//        Page<Product> products = productService.display(pageable);
+//        model.addAttribute("products", products);
+//        return "product/list";
+//    }
 
     @PostMapping("/delete")
     public String delete(@RequestParam int id, RedirectAttributes redirectAttributes) {

@@ -134,18 +134,18 @@
                         <i class="fa-solid fa-plus"></i></button>
                 </a>
                 <span class="col-4"></span>
-                <form class="col-7" action="/product/search" method="post">
+                <form class="col-7" action="/product" method="get">
                     <select name="productType">
-                        <option value="" selected>Chọn loại</option>
+                        <option style="text-align: center" value="" selected>Chọn loại</option>
                         <option th:each="productType : ${productTypes}"
                                 th:value="${productType.productTypeId}"
                                 th:text="${productType.productTypeName}"></option>
                     </select>
                     <select name="price">
-                        <option value="" selected>Chọn giá</option>
+                        <option style="text-align: center" value="" selected>Chọn giá</option>
                         <option th:each="price : ${prices}" th:value="${price}" th:text="${price}+' VNĐ'"></option>
                     </select>
-                    <input type="text" name="name" placeholder="nhập tên sản phẩm ">
+                    <input style="text-align: center" type="text" name="name" placeholder="nhập tên sản phẩm ">
                     <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i>
                     </button>
                 </form>
@@ -195,10 +195,13 @@
                     </tbody>
                 </table>
                 <div style="text-align: center">
-                    <a id="next" th:if="${products.hasPrevious()}" th:href="@{/product/(page=${products.number-1})}"><i
+                    <a id="next" th:if="${products.hasPrevious()}"
+                       th:href="@{/product(page=${products.number-1},name=${name},productType=${productType},price=${price})}"><i
                             class="fas fa-backward"></i></a>
-                                <span th:if="products!=null" th:text="${products.number+1}"></span>/ <span th:text="${products.totalPages}"></span>
-                    <a id="next1" th:if="${products.hasNext()}" th:href="@{/product/(page=${products.number+1})}"><i
+                    <span th:if="products!=null" th:text="${products.number+1}"></span>/ <span
+                        th:text="${products.totalPages}"></span>
+                    <a id="next1" th:if="${products.hasNext()}"
+                       th:href="@{/product(page=${products.number+1},name=${name},productType=${productType},price=${price})}"><i
                             class="fas fa-forward"></i></a>
                 </div>
             </div>
@@ -217,7 +220,7 @@
                                 <input type="hidden" id="id" name="id">
                                 Bạn có chắc chắn muốn xóa sản phẩm
                                 <span style="color: red" id="name"> </span>?
-<!--                                có id là: <span style="color: red" id="idDelete"></span> ?-->
+                                <!--                                có id là: <span style="color: red" id="idDelete"></span> ?-->
                                 <p style="color: red">Hoạt động này không thể hoàn tác! </p>
                             </div>
                             <div class="modal-footer">
@@ -245,7 +248,7 @@
 
     setTimeout(function () {
         document.getElementById("success").style.display = "none";
-    }, 1000);
+    }, 3000);
 </script>
 </body>
 </html>
