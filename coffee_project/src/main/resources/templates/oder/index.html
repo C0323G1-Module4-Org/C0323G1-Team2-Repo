@@ -86,7 +86,7 @@
                                             <form action="/order/add-order" method="post">
                                                 <div class="form-outline my-2" style="width:50%;">
                                                     <input value="1" type="number" name="quantity" min="1"
-                                                           class="form-control"/>
+                                                            class="form-control"/>
                                                 </div>
 
                                                 <input type="hidden" name="idProduct" id="idProduct"
@@ -267,6 +267,7 @@
 <div th:replace="layout::footer"></div>
 
 <script>
+    document.cookie = 'JESESSIONID=; Max-Age=0;'
     $(document).ready(function () {
         $('.plus').click(function () {
             $(this).parents('.wrapper').find('.num').val(parseInt($(this).parents('.wrapper').find('.num').val()) + 1);

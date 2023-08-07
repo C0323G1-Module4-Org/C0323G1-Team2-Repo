@@ -12,4 +12,6 @@ public interface IUserService {
     void removeUser(Integer userId);
 
     User findByID(Integer id);
+
+    User findByName(String name);
 }

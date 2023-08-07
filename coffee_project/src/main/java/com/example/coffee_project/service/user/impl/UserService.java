@@ -31,4 +31,9 @@ public class UserService implements IUserService {
     public User findByID(Integer id) {
         return userRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public User findByName(String name) {
+        return userRepository.findUserByAccountAccountName(name);
+    }
 }

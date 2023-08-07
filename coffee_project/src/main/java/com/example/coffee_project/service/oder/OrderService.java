@@ -19,4 +19,9 @@ public class OrderService implements IOrderService {
     public Order save(Order order) {
         return orderRepository.save(order);
     }
+
+    @Override
+    public Order findCurrentOrder(boolean status) {
+        return orderRepository.findByOrderStatus(status);
+    }
 }

@@ -60,7 +60,8 @@
                                     <p th:text="${orderDetail.product.productName}">Tên sản phẩm</p>
                                 </div>
                                 <div class="col-xl-2">
-                                    <p th:text="${#numbers.formatDecimal(orderDetail.productPrice, 0, 'COMMA', 0, 'POINT')} + ' VND'">Giá</p>
+                                    <p th:text="${#numbers.formatDecimal(orderDetail.productPrice, 0, 'COMMA', 0, 'POINT')} + ' VND'">
+                                        Giá</p>
                                 </div>
                                 <div class="col-xl-2">
                                     <p th:text="${orderDetail.quantityProduct}">Số lượng
@@ -68,7 +69,8 @@
                                 </div>
                                 <div class="col-xl-2">
                                     <p class="float-end"
-                                       th:text="${#numbers.formatDecimal(orderDetail.productPrice*orderDetail.quantityProduct, 0, 'COMMA', 0, 'POINT')} + ' VND'">Tổng giá
+                                       th:text="${#numbers.formatDecimal(orderDetail.productPrice*orderDetail.quantityProduct, 0, 'COMMA', 0, 'POINT')} + ' VND'">
+                                        Tổng giá
                                     </p>
                                 </div>
                                 <hr>
@@ -78,33 +80,60 @@
                         <div class="row text-black">
 
                             <div class="col-xl-12">
-                                <p class="float-end fw-bold mx-1" th:text="${#numbers.formatDecimal(order.getTotalPrice(), 0, 'COMMA', 0, 'POINT')} + ' VND'">Total: $10.00
+                                <p class="float-end fw-bold mx-1 " id="totalPrice"
+                                   th:text="${#numbers.formatDecimal(order.getTotalPrice(), 0, 'COMMA', 0, 'POINT')} + ' VND'">
+                                    Total: $100000
                                 </p>
                             </div>
                             <hr style="border: 2px solid black;">
                         </div>
-                        <div class="row" style="margin-top: 50px;">
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <p class="float-start"><span class="text-danger">*</span>Hóa đơn trên 100.000 VND thì
+                                    được cộng 10 điểm</p>
+                                <p class="float-start"><span class="text-danger">*</span>Hóa đơn trên 500.000 VND thì
+                                    được cộng 100 điểm</p>
+                                <p class="float-start"><span class="text-danger">*</span>Hóa đơn trên 200.000 VND thì
+                                    được cộng 30 điểm</p>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="row">
+                                    <p class="float-end align-content-end col-xl-12">Giảm giá: <span
+                                            id="sale">-0 VND</span>
+                                    </p>
+                                    <p class="float-end col-xl-12">Tiền thực trả: <span id="net"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <form action="" class="row" style="margin-top: 50px;">
                             <div class="col-md-6">
-                                <label for="inputEmail2" class="form-label">Số điện thoại</label>
-                                <label for="inputEmail2" class="form-label float-end">Email</label>
-                                <input type="email" class="form-control" id="inputEmail2">
+                                <label for="input-phone-number" class="form-label">Số điện thoại</label>
+                                <span class="form-label float-end text-info" id="result"></span>
+                                <div th:each="customer:${listCustomer}" class="customer">
+                                    <input type="text" hidden="hidden" th:value="${customer.customerPhoneNumber}"
+                                           class="phoneNumber">
+                                    <input type="text" hidden="hidden" th:value="${customer.customerName}"
+                                           class="name">
+                                    <input type="text" hidden="hidden" th:value="${customer.customerPoint}"
+                                           class="point">
+                                </div>
+                                <input type="text" class="form-control input" id="input-phone-number">
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">Dùng điểm thưởng</label>
-                                <select class="form-select" aria-label="Default select example">
-                                    <option selected>Không dùng điểm thưởng</option>
-                                    <option value="1">10% Với 10 điểm thưởng</option>
-                                    <option value="2">20% Với 50 điểm thưởng</option>
-                                    <option value="3">50% Với 300 điểm thưởng</option>
+                                <select class="form-select" id="select" aria-label="Default select example">
+                                    <option selected value="0">Không dùng điểm thưởng</option>
+                                    <option value="10">10% Với 30 điểm thưởng</option>
+                                    <option value="20">20% Với 50 điểm thưởng</option>
+                                    <option value="50">50% Với 100 điểm thưởng</option>
                                 </select>
                             </div>
                             <div class="col-md-2 py-4">
-                                <button class="btn btn-primary float-end">
+                                <button type="button" class="btn btn-primary float-end">
                                     <i class="fa-solid fa-cash-register"></i>
                                 </button>
                             </div>
-                        </div>
-
+                        </form>
                     </div>
                 </div>
             </div>
@@ -112,6 +141,33 @@
     </div>
 </div>
 <div th:replace="layout::footer"></div>
+<script>
+
+    $(document).ready(function () {
+        $('#net').html($('#totalPrice').text());
+        $('#select').change(function updatePrice() {
+            let point = parseInt($('#result').text().replace(/[^0-9]/gi, ''));
+            if ($('#input-phone-number').val() == "" || $('#result').text() === 'Không có')
+                return;
+            let totalPrice = parseInt($('#totalPrice').text().replace(/[^0-9]/gi, ''));
+            let sale = (totalPrice * parseInt($(this).val())) / 100;
+            totalPrice = totalPrice - sale;
+            $('#sale').html("- " + sale.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
+            $('#net').html(totalPrice.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
+        });
+        $('#input-phone-number').change(function updatePhoneNumber() {
+            let phoneNumber = $(this).val();
+            let oldContent = $('#result').text();
+            $('.phoneNumber').each(function () {
+                if ($(this).val() == phoneNumber) {
+                    $('#result').html($(this).parents('.customer').find(".name").val() + " " + $(this).parents('.customer').find(".point").val() + " điểm");
+                }
+            });
+            if (oldContent == $('#result').text())
+                $('#result').html("Không có");
+        });
+    });
+</script>
 <script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
         src="../../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
 </body>
