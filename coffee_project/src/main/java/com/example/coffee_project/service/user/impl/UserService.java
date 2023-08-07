@@ -1,5 +1,6 @@
 package com.example.coffee_project.service.user.impl;
 
+import com.example.coffee_project.dto.user.UserDto;
 import com.example.coffee_project.model.user.User;
 import com.example.coffee_project.repository.user.IUserRepository;
 import com.example.coffee_project.service.user.IUserService;
@@ -7,14 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 
 @Service
 public class UserService implements IUserService {
     @Autowired
     private IUserRepository userRepository;
+
     @Override
     public Page<User> findAll(Pageable pageable, String search) {
-        return userRepository.findUserByUserNameContaining(pageable,search);
+        return userRepository.findUserByUserNameContaining(pageable, search);
     }
 
     @Override
@@ -35,5 +39,33 @@ public class UserService implements IUserService {
     @Override
     public User findByName(String name) {
         return userRepository.findUserByAccountAccountName(name);
+    }
+
+    @Override
+    public User findByPhoneNumber(String userPhoneNumber) {
+        return userRepository.findUserByUserPhoneNumber(userPhoneNumber);
+    }
+
+    @Override
+    public User findByEmail(String userEmail) {
+        return userRepository.findUserByUserEmail(userEmail);
+    }
+
+    @Override
+    public User findByIdCard(String userIdCard) {
+        return userRepository.findUserByUserIdCard(userIdCard);
+    }
+
+    @Override
+    public void checkUniqueAttribute(UserDto userDto, Errors errors) {
+        if (findByPhoneNumber(userDto.getUserPhoneNumber()) != null) {
+            errors.rejectValue("userPhoneNumber", null, "Số điện thoại này đã được đăng kí!");
+        }
+        if (findByEmail(userDto.getUserEmail()) != null) {
+            errors.rejectValue("userEmail", null, "Email này đã được đăng kí!");
+        }
+        if (findByIdCard(userDto.getUserIdCard()) != null) {
+            errors.rejectValue("userIdCard", null, "Căn cước này đã được đăng kí!");
+        }
     }
 }

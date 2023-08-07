@@ -91,10 +91,10 @@
                             <div class="col-xl-6">
                                 <p class="float-start"><span class="text-danger">*</span>Hóa đơn trên 100.000 VND thì
                                     được cộng 10 điểm</p>
-                                <p class="float-start"><span class="text-danger">*</span>Hóa đơn trên 500.000 VND thì
-                                    được cộng 100 điểm</p>
                                 <p class="float-start"><span class="text-danger">*</span>Hóa đơn trên 200.000 VND thì
                                     được cộng 30 điểm</p>
+                                <p class="float-start"><span class="text-danger">*</span>Hóa đơn trên 500.000 VND thì
+                                    được cộng 100 điểm</p>
                             </div>
                             <div class="col-xl-6">
                                 <div class="row">
@@ -102,10 +102,12 @@
                                             id="sale">-0 VND</span>
                                     </p>
                                     <p class="float-end col-xl-12">Tiền thực trả: <span id="net"></span></p>
+                                    <span class="float-end col-xl-12 text-danger" id="error"></span>
                                 </div>
                             </div>
                         </div>
-                        <form action="" class="row" style="margin-top: 50px;">
+                        <form action="/order/confirm-payment" class="row" method="post"
+                              style="margin-top: 50px;">
                             <div class="col-md-6">
                                 <label for="input-phone-number" class="form-label">Số điện thoại</label>
                                 <span class="form-label float-end text-info" id="result"></span>
@@ -117,19 +119,20 @@
                                     <input type="text" hidden="hidden" th:value="${customer.customerPoint}"
                                            class="point">
                                 </div>
-                                <input type="text" class="form-control input" id="input-phone-number">
+                                <input type="text" class="form-control input" name="phoneNumber"
+                                       id="input-phone-number">
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label">Dùng điểm thưởng</label>
-                                <select class="form-select" id="select" aria-label="Default select example">
+                                <select class="form-select" name="sale" id="select" aria-label="Default select example">
                                     <option selected value="0">Không dùng điểm thưởng</option>
-                                    <option value="10">10% Với 30 điểm thưởng</option>
-                                    <option value="20">20% Với 50 điểm thưởng</option>
-                                    <option value="50">50% Với 100 điểm thưởng</option>
+                                    <option value="30">10% Với 30 điểm thưởng</option>
+                                    <option value="50">20% Với 50 điểm thưởng</option>
+                                    <option value="100">50% Với 100 điểm thưởng</option>
                                 </select>
                             </div>
                             <div class="col-md-2 py-4">
-                                <button type="button" class="btn btn-primary float-end">
+                                <button type="submit" class="btn btn-primary float-end">
                                     <i class="fa-solid fa-cash-register"></i>
                                 </button>
                             </div>
@@ -142,30 +145,65 @@
 </div>
 <div th:replace="layout::footer"></div>
 <script>
-
+    let totalPrice = parseInt($('#totalPrice').text().replace(/[^0-9]/gi, ''));
     $(document).ready(function () {
         $('#net').html($('#totalPrice').text());
-        $('#select').change(function updatePrice() {
-            let point = parseInt($('#result').text().replace(/[^0-9]/gi, ''));
-            if ($('#input-phone-number').val() == "" || $('#result').text() === 'Không có')
+    });
+
+    function updatePoint() {
+        let point = parseInt($('#result').text().replace(/[^0-9]/gi, ''));
+        if (
+            $('#input-phone-number').val() == ""
+            || $('#result').text() === 'Không có'
+        ) {
+            return;
+        } else {
+            let pointTotal = 0;
+            if (totalPrice >= 500000)
+                pointTotal += 100;
+            else if (totalPrice >= 200000)
+                pointTotal += 30;
+            else if (totalPrice >= 100000)
+                pointTotal += 10;
+            pointTotal += point;
+            if (parseInt($(this).val()) > pointTotal) {
+                $('#error').html('Có thể không đủ điểm');
                 return;
-            let totalPrice = parseInt($('#totalPrice').text().replace(/[^0-9]/gi, ''));
-            let sale = (totalPrice * parseInt($(this).val())) / 100;
-            totalPrice = totalPrice - sale;
-            $('#sale').html("- " + sale.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
+            }
+
+        }
+        $('#error').html('');
+
+        let sale = 0;
+        if (parseInt($(this).val()) == 100)
+            sale = (totalPrice * 50) / 100;
+        else if (parseInt($(this).val()) == 50)
+            sale = (totalPrice * 20) / 100;
+        else if (parseInt($(this).val()) == 30)
+            sale = (totalPrice * 10) / 100;
+        let netPrice = totalPrice - sale;
+        $('#sale').html("- " + sale.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
+        $('#net').html(netPrice.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
+    };
+
+    $('#select').change(updatePoint);
+
+    $('#input-phone-number').change(function () {
+        let phoneNumber = $(this).val();
+        let oldContent = $('#result').text();
+        $('.phoneNumber').each(function () {
+            if ($(this).val() == phoneNumber) {
+                $('#result').html($(this).parents('.customer').find(".name").val() + " " + $(this).parents('.customer').find(".point").val() + " điểm");
+            }
+        });
+        if (oldContent == $('#result').text()) {
+            $('#result').html("Không có");
+            $('#error').html('');
+            $('#totalPrice').html(totalPrice.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
+            $('#sale').html("-0 VND");
             $('#net').html(totalPrice.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
-        });
-        $('#input-phone-number').change(function updatePhoneNumber() {
-            let phoneNumber = $(this).val();
-            let oldContent = $('#result').text();
-            $('.phoneNumber').each(function () {
-                if ($(this).val() == phoneNumber) {
-                    $('#result').html($(this).parents('.customer').find(".name").val() + " " + $(this).parents('.customer').find(".point").val() + " điểm");
-                }
-            });
-            if (oldContent == $('#result').text())
-                $('#result').html("Không có");
-        });
+        }
+        updatePoint.call($('#select'));
     });
 </script>
 <script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
