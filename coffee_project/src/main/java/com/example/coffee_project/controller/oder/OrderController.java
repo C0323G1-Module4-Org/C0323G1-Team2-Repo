@@ -21,6 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -108,18 +109,20 @@ public class OrderController {
     }
 
     @PostMapping("/payment")
-    public ModelAndView Payment(@ModelAttribute OrderDetailDto orderDetailDto) {
-        ModelAndView modelAndView = new ModelAndView("oder/payment");
+    public String Payment(@ModelAttribute OrderDetailDto orderDetailDto, Model model) {
         Order order = orderService.findCurrentOrder(true);
         List<Customer> listCustomer = customerService.findListCustomer();
         if (orderDetailDto != null) {
             for (OrderDetail o : orderDetailDto.getOrderDetailList()) {
+                if (o.getQuantityProduct() == null)
+                    return "redirect:/order/";
                 orderDetailService.save(o);
             }
+            model.addAttribute("listCustomer", listCustomer);
+            model.addAttribute("order", order);
+            return "oder/payment";
         }
-        modelAndView.addObject("listCustomer", listCustomer);
-        modelAndView.addObject("order", order);
-        return modelAndView;
+        return "redirect:/order/";
     }
 
     @PostMapping("/confirm-payment")
