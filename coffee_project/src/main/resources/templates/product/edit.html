@@ -49,6 +49,7 @@
             <form action="/product/edit" method="post" th:object="${product}">
                 <div class="container">
                     <form action="/product/edit" method="post" th:object="${product}">
+                        <input type="hidden" th:field="*{productId}">
                         <div style="display: inline-flex;">
                             <div class="col-md-4">
                                 <div class="image-container" style="width: 100%">
