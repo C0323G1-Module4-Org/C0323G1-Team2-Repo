@@ -40,46 +40,62 @@ public class AccountController {
         modelAndView.addObject("accountDto",accountDto);
         return modelAndView;
     }
-    @GetMapping("/signup")
-    public ModelAndView signup(){
-        ModelAndView modelAndView =new ModelAndView("forgot");
-        AccountDto accountDto=new AccountDto();
-        modelAndView.addObject("accountDto",accountDto);
-        return modelAndView;
-    }
 
     @PostMapping("/signup")
     public String signupAccount(@ModelAttribute AccountDto accountDto,
                                 RedirectAttributes redirectAttributes) {
         accountService.save(accountDto);
+        redirectAttributes.addFlashAttribute("message", "đăng ký thành công");
         return "redirect:/account/admin";
     }
     @GetMapping("/admin")
     public  ModelAndView showListAccount(@RequestParam(defaultValue = "0") int page,
-                                         @RequestParam(defaultValue = "")String searchName){
-        Pageable pageable= PageRequest.of(page, 10,Sort.by("role.roleId").ascending());
-        Page<Account> accountPage=accountService.getAllAccount(pageable,searchName);
-        ModelAndView modelAndView=new ModelAndView("/account/list-account");
-        modelAndView.addObject("accountDto",new AccountDto());
-        modelAndView.addObject("accountPage",accountPage);
-        modelAndView.addObject("searchName",searchName);
+                                         @RequestParam(defaultValue = "") String searchName) {
+        Pageable pageable = PageRequest.of(page, 10, Sort.by("role.roleId").ascending());
+        Page<Account> accountPage = accountService.getAllAccount(pageable, searchName);
+        ModelAndView modelAndView = new ModelAndView("/account/list-account");
+        modelAndView.addObject("accountDto", new AccountDto());
+        modelAndView.addObject("accountPage", accountPage);
+        modelAndView.addObject("searchName", searchName);
         return modelAndView;
     }
-    @GetMapping("/403")
-    public ModelAndView warring(){
-    ModelAndView modelAndView = new ModelAndView("403");
-    return modelAndView;
-    }
-    @GetMapping("/forgot-password")
-    public ModelAndView forgot(@ModelAttribute String username,
-                               @ModelAttribute String email){
-        ModelAndView modelAndView=new ModelAndView("/forgot");
 
-       return modelAndView;
-    }@GetMapping("/reset-password")
-    public ModelAndView reset(){
-        ModelAndView modelAndView=new ModelAndView("/config");
-        modelAndView.addObject("message","Đăng xuất thành công");
-       return modelAndView;
+    @GetMapping("/403")
+    public ModelAndView warring() {
+        ModelAndView modelAndView = new ModelAndView("403");
+        return modelAndView;
+    }
+
+    @GetMapping("/forgot-password")
+    public ModelAndView showFormForgot() {
+        ModelAndView modelAndView = new ModelAndView("forgot");
+        return modelAndView;
+    }
+
+    @PostMapping("/forgot-password")
+    public ModelAndView forgot(@RequestParam String username,
+                               @RequestParam String email) {
+        ModelAndView modelAndView = new ModelAndView("accuracy");
+        User user = userService.findByName(username);
+        System.out.println(user.getAccount().getAccountName());
+        if (user != null) {
+            if (user.getUserEmail().equals(email)) {
+                System.out.println(email);
+                Account account = accountService.findByUsername(username);
+                System.out.println(account.getAccountName());
+                modelAndView.addObject("account", account);
+                return modelAndView;
+            } else {
+
+            }
+        }
+        return new ModelAndView("/forgot", "message", "tài khoản không tồn tại trong hệ thống");
+    }
+
+    @PostMapping("/reset-password")
+    public ModelAndView reset(@RequestParam String password,
+                              @RequestParam String password2) {
+        ModelAndView modelAndView = new ModelAndView("/accuracy");
+        return modelAndView;
     }
 }

@@ -20,8 +20,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
 
-
         http.authorizeRequests().antMatchers("/account/login").anonymous();
+        http.authorizeRequests().antMatchers("/account/forgot-password","/account/reset-password").permitAll();
+
         http.authorizeRequests()
                 // any role admin and employee
                 //customer

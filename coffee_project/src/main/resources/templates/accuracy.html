@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login 04</title>
+    <title>Quên mật khẩu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -48,8 +48,9 @@
                                 </p>
                             </div>
                         </div>
-                        <form th:href="@{}" th:method="post"
+                        <form th:method="post" th:object="${account}"
                               class="signin-form">
+                            <input th:field="*{accountName}" hidden="hidden">
                             <div class="form-group mb-3">
                                 <label for="password">Mật khẩu mới</label>
                                 <input id="password" name="password"  type="text" class="form-control" required>
@@ -74,5 +75,6 @@
         </div>
     </div>
 </section>
+
 </body>
 </html>
