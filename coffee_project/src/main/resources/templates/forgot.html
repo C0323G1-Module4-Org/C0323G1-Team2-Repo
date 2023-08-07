@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login 04</title>
+    <title>Quên mật khẩu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -48,28 +48,20 @@
                                 </p>
                             </div>
                         </div>
-                        <form th:object="${accountDto}" th:action="@{/account/sigup}" th:method="post"
+                        <form  action="/account/forgot-password" method="post"
                               class="signin-form">
                             <div class="form-group mb-3">
                                 <label for="username">Tên đăng nhập</label>
-                                <input id="username"  type="text" class="form-control" required>
+                                <input id="username" name="username" type="text" class="form-control" required>
                             </div>
                             <div class="form-group mb-3">
-                                <label for="password">Email</label>
-                                <input type="email"  id="password" class="form-control" required>
+                                <label for="email">Email</label>
+                                <input type="email" name="email" id="email" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="form-control btn btn-primary rounded submit px-3">
+                                <button type="submit" id="button" class="form-control btn btn-primary rounded submit px-3">
                                     Lấy mã
                                 </button>
-                            </div>
-                            <div class="form-group d-md-flex">
-                                <div class="w-50 text-left">
-                                    <label class="checkbox-wrap checkbox-primary mb-0">Nhớ thông tin
-                                        <input type="checkbox" checked>
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
                             </div>
                         </form>
                     </div>
@@ -78,5 +70,10 @@
         </div>
     </div>
 </section>
+<script>
+    function submit(){
+
+    }
+</script>
 </body>
 </html>

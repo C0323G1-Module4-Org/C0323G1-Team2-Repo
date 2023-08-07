@@ -71,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginProcessingUrl("/j_spring_security_check") // liên kết từ trang login
                 .loginPage("/account/login")                           //trang login
-                .defaultSuccessUrl("/product")                         //login thành công
+                .defaultSuccessUrl("/order/")                         //login thành công
                 .failureUrl("/account/login?error=true")  // trang error
                 .usernameParameter("accountName")                      //tham số
                 .passwordParameter("accountPassword")
