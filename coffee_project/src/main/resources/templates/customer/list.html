@@ -11,6 +11,7 @@
         body {
             font-family: "Source Code Pro";
         }
+
         #next {
             font-size: 1em;
             color: #333;
@@ -41,13 +42,13 @@
     <div class="row">
         <div th:replace="layout::content1"></div>
         <div class="col-sm-10" style="background-color: #FEFAE0;min-height: 700px">
-            <h1 style="text-align: center; margin-top: 2rem"><b>Danh sách khách hàng</b></h1>
+            <h1 style="text-align: center; margin-top: 2rem"><b>Quản Lý Khách Hàng</b></h1>
             <!--    Thanh công cụ-->
             <nav class="navbar navbar-inverse">
                 <div class="container-fluid">
                     <div class="navbar-form navbar-left">
                         <a th:href="@{/customer/showCreateForm}">
-                            <button title="Thêm mới sản phẩm"
+                            <button title="Thêm mới khách hàng"
                                     class="btn btn-primary">
                                 <i class="fa-solid fa-plus"></i></button>
                         </a>
@@ -55,7 +56,7 @@
                     <!--Thanh tìm kiếm-->
                     <form class="navbar-form navbar-right" action="/customer/list" method="get">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Nhập tên tìm kiếm..."
+                            <input type="text" class="form-control" placeholder="Nhập tên khách hàng..."
                                    th:name="searchName" th:value="${searchName}">
                             <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
                         </div>
