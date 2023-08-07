@@ -56,6 +56,7 @@ public class UserController {
         }
 
         UserDto userDto = new UserDto();
+        userDto.setUserImagePath("https://phongreviews.com/wp-content/uploads/2022/11/avatar-facebook-mac-dinh-8.jpg");
         model.addAttribute("userDto", userDto);
         model.addAttribute("employeeTypeList", employeeTypeService.findAll());
         return "user/create";
@@ -70,15 +71,15 @@ public class UserController {
         userDto.setAccount(accountService.findByUsername(authentication.getName()));
         userDto.setEmployeeType(employeeTypeService.findByEmployeeTypeName("Full-time"));
         userDto.setUserSalary(0D);
-        System.out.println(userDto.getUserSalary());
 
         new UserDto().validate(userDto, bindingResult);
+        userService.checkUniqueAttribute(userDto,bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("userDto", userDto);
-
             model.addAttribute("employeeTypeList", employeeTypeService.findAll());
             return "/user/create";
         }
+
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
         userService.saveUser(user);
@@ -128,4 +129,5 @@ public class UserController {
                 "Sửa tài khoản " + user.getAccount() + " thành công");
         return "redirect:/user/list";
     }
+
 }

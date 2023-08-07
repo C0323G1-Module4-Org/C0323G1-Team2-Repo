@@ -1,5 +1,7 @@
 package com.example.coffee_project.common.user;
 
+import com.example.coffee_project.service.user.IUserService;
+
 import org.springframework.validation.Errors;
 
 import java.time.LocalDate;
@@ -8,9 +10,9 @@ import java.time.Period;
 
 public class UserValidate {
     private static final String REGEX_USER_NAME = "^[\\p{Lu}][\\p{Ll}]*([\\s][\\p{Lu}][\\p{Ll}]*)*$\"";
-    private static final String REGEX_NUMBER_PHONE = "((09|03|07|08|05)+([0-9]{8})\\b)";
+    private static final String REGEX_NUMBER_PHONE = "^0\\d{9}$";
     private static final String REGEX_EMAIL = "^(.+)@(\\S+)$";
-
+    private IUserService userService;
     public static boolean checkRegexUserName(String userName) {
         return userName.matches(REGEX_USER_NAME);
     }
@@ -25,14 +27,13 @@ public class UserValidate {
         if (userName.length() > 0 && (userName.length() <= 5 || userName.length() > 255)) {
             errors.rejectValue("userName", null,
                     "Tên nhân viên không được ít hơn 5 kí tự và vượt quá 255 kí tự!");
-//        } else if (!checkRegexUserName(userName)) {
-//            errors.rejectValue("userName", null,
-//                    "Tên khách hàng phải ghi hoa kí tự đầu tiên của mỗi chữ cái");
+
         }
     }
 
     public static void checkValidateUserBirthday(Date userBirthday, Errors errors) {
         if (userBirthday == null) {
+            errors.rejectValue("userBirthday",null,"Không được để trống ngày sinh!");
             return;
         }
         LocalDate current = LocalDate.now();
@@ -62,10 +63,12 @@ public class UserValidate {
                 errors.rejectValue("userPhoneNumber", null, "Số điện thoại phải là 10 chữ số!");
             } else if (!userPhoneNumber.matches(REGEX_NUMBER_PHONE)) {
                 errors.rejectValue("userPhoneNumber", null, "Số điện thoại không đúng định dạng!");
+
             }
         } catch (NumberFormatException numberFormatException) {
             errors.rejectValue("userPhoneNumber", null, "Số điện thoại không được chứa kí tự khác số!");
         }
+
 
     }
 
@@ -101,11 +104,15 @@ public class UserValidate {
     }
 
     public static void checkValidateUserUserSalary(Double userSalary, Errors errors) {
-        if(userSalary == null){
+        if (userSalary == null) {
             return;
         }
         if (userSalary.isNaN() || userSalary.isInfinite()) {
             errors.rejectValue("userSalary", null, "Nhập lương không đúng định dạng!");
+        } else if (userSalary < 0) {
+            errors.rejectValue("userSalary", null, "Lương không được bé hơn 0");
+        } else if (userSalary > 50000000) {
+            errors.rejectValue("userSalary", null, "Lương không được cao hơn 50,000,000 VND");
         }
     }
 }
