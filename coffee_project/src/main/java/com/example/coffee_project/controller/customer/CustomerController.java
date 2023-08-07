@@ -36,6 +36,9 @@ public class CustomerController {
         Pageable pageable = PageRequest.of(page, 5, Sort.by("customerName").ascending());
         Page<Customer> customerPage = customerService.findAll(pageable, searchName);
         ModelAndView modelAndView = new ModelAndView("customer/list");
+        if (customerPage.isEmpty()) {
+            modelAndView.addObject("message", "Khách hàng bạn tìm kiếm không tồn tại!");
+        }
         modelAndView.addObject("customerPage", customerPage);
         modelAndView.addObject("searchName", searchName);
         return modelAndView;
