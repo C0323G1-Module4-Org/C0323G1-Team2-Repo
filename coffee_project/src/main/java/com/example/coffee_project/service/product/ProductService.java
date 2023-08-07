@@ -30,7 +30,9 @@ public class ProductService implements IProductService {
                 maxPrice = new String(priceRange[1]);
             }
         }
-        return productRepository.search(pageable,name, productType, minPrice, maxPrice );
+        String newStr = minPrice.replaceAll(",", "");
+        String newStr2 = maxPrice.replaceAll(",", "");
+        return productRepository.search(pageable,name, productType, newStr, newStr2 );
     }
 
     @Override
