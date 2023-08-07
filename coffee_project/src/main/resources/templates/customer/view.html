@@ -24,7 +24,7 @@
             <div class="detail">
                 <div style="text-align: center; margin-top: 2rem"><h1><b>Thông tin khách hàng</b></h1></div>
                 <div class="table" style="text-align: center;display: flex;justify-content: center; margin-top: 2rem">
-                    <table class="table table-hover" style="width: 80%">
+                    <table class="table table-hover" style="width: 60%">
                         <tr>
                             <th>Tên khách hàng</th>
                             <td th:text="${customer.customerName}">
@@ -37,7 +37,7 @@
                         </tr>
                         <tr>
                             <th>Ngày sinh</th>
-                            <td th:text="${customer.customerBirthday}"></td>
+                            <td th:text="${#dates.format(customer.customerBirthday,'dd-MM-yyyy')}"></td>
                         </tr>
                         <tr>
                             <th>Số điện thoại</th>
