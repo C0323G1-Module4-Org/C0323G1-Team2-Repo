@@ -240,24 +240,16 @@
 
 
 <!--                    //file Js Img-->
-<script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js"></script>
-<script src="www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-analytics.js"></script>
+<script type="module">
+
+    // import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
 
 
-<script>
     const dndElement = document.querySelector('#dnd')
     const resultElement = document.querySelector('.preview')
     const validImageTypes = ['image/gif', 'image/jpeg', 'image/png']
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyArCw60QkeuUk0Q-fRBWkAIcMkmxz9awxc",
-        authDomain: "queen-coffee.firebaseapp.com",
-        projectId: "queen-coffee",
-        storageBucket: "queen-coffee.appspot.com",
-        messagingSenderId: "144351029903",
-        appId: "1:144351029903:web:71596e7404248d4f525efa",
-        measurementId: "G-6CXNQ9TXLK"
-    };
 
 
     dndElement.addEventListener('dragover', function (e) {
@@ -291,12 +283,23 @@
             pushImage(file)
         }
     }
+
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyAzFisiEuPoL-tzq3kdo3faLimcBYOyKf4",
+        authDomain: "coffee-team2-project.firebaseapp.com",
+        projectId: "coffee-team2-project",
+        storageBucket: "coffee-team2-project.appspot.com",
+        messagingSenderId: "18924172599",
+        appId: "1:18924172599:web:d27940351fb0cafc0516b2"
+    };
+    // const app = initializeApp(firebaseConfig);
     firebase.initializeApp(firebaseConfig);
 
     function pushImage(file) {
-
-        let storageRef = firebase.storage().ref('img/' + file.name);
-        console.log(111)
+        let random = Math.random().toString(36).substring(7);
+        let storageRef = firebase.storage().ref(random);
         let task = storageRef.put(file);
         task.on('state_changed', function progress(snapshot) {
             let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
