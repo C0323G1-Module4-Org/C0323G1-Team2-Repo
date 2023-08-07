@@ -10,4 +10,5 @@ public interface ICustomerRepository extends JpaRepository<Customer, Integer> {
     Page<Customer> findCustomerByCustomerNameContaining(Pageable pageable,String name);
     @Query(value = "select * from customer order by customer_name",nativeQuery = true)
     Page<Customer> sortByCustomerName(Pageable pageable);
+    Customer findByCustomerPhoneNumber(String phoneNumber);
 }

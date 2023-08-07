@@ -14,4 +14,11 @@ public interface ICustomerService {
     boolean deleteById(int id);
     List<Customer> findListCustomer();
     Page<Customer> sortByName(Pageable pageable);
+    Customer findByCustomerPhoneNumber(String phoneNumber);
+
+
+
+
+
+
 }

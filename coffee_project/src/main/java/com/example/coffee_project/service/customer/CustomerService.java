@@ -55,5 +55,8 @@ public class CustomerService implements ICustomerService{
     public Page<Customer> sortByName(Pageable pageable) {
         return customerRepository.sortByCustomerName(pageable);
     }
-
+    @Override
+    public Customer findByCustomerPhoneNumber(String phoneNumber) {
+        return customerRepository.findByCustomerPhoneNumber(phoneNumber);
+    }
 }
