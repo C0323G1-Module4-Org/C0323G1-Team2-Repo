@@ -33,7 +33,7 @@
                         <div class="table">
                             <table class="table table-hover">
                                 <tr>
-                                    <th>Tên khách hàng</th>
+                                    <th>Tên khách hàng <span style="color: red">*</span></th>
                                     <td>
                                         <input class="form-control" type="text" th:field="*{customerName}">
                                         <small th:if="${#fields.hasErrors('customerName')}" th:errors="*{customerName}"
@@ -41,7 +41,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Giới tính</th>
+                                    <th>Giới tính <span style="color: red">*</span></th>
                                     <td>
                                         <input type="radio" th:field="*{customerGender}" th:value="true">
                                         <span th:text="Nam"></span>
@@ -53,14 +53,14 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Ngày sinh</th>
+                                    <th>Ngày sinh <span style="color: red">*</span></th>
                                     <td><input class="form-control" type="date" th:field="*{customerBirthday}">
                                         <small th:if="${#fields.hasErrors('customerBirthday')}"
                                                th:errors="*{customerBirthday}" style="color: red"></small>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Số điện thoại</th>
+                                    <th>Số điện thoại <span style="color: red">*</span></th>
                                     <td><input class="form-control" type="text" th:field="*{customerPhoneNumber}">
                                         <small th:if="${#fields.hasErrors('customerPhoneNumber')}"
                                                th:errors="*{customerPhoneNumber}" style="color: red"></small>
