@@ -78,7 +78,6 @@ public class CustomerController {
     @PostMapping("/update")
     public String update(@Valid @ModelAttribute CustomerDto customerDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         Customer customer = new Customer();
-        System.out.println(customerDto.getCustomerPoint());
         new CustomerDto().validate(customerDto, bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("customerDto", customerDto);
