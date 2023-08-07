@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Set;
 
 
 @Controller
@@ -27,33 +28,54 @@ public class ProductController {
     private IProductTypeService productTypeService;
 
     @GetMapping("/list")
-    public String display(@PageableDefault(size = 8, sort = "productPrice") Pageable pageable, Model model) {
+    public String displayCard(@PageableDefault(size = 6, sort = "productPrice") Pageable pageable, Model model) {
         model.addAttribute("productTypes", productTypeService.display());
-        String[] prices = {"10-50", "50-100", "100-150", "150-200"};
+        String[] prices = {"10,000-50,000", "50,000-100,000", "100,000-150,000", "150,000-200,000"};
         model.addAttribute("prices", prices);
         Page<Product> products = productService.display(pageable);
         model.addAttribute("products", products);
-        return "product/list";
+        return "product/card";
     }
 
-    @PostMapping("/search")
-    public String search(@PageableDefault(size = 8, sort = "product_price") Pageable pageable, Model model, @RequestParam(value = "name", defaultValue = "") String name,
-                         @RequestParam(defaultValue = "") String productType, @RequestParam(defaultValue = "") String price) {
-        String[] prices = {"10000-50000", "50000-100000", "100000-150000", "150000-200000"};
+    @PostMapping("/searchCard")
+    public String searchCard(@PageableDefault(size = 8, sort = "product_price") Pageable pageable, Model model,
+                             @RequestParam(value = "name", defaultValue = "") String name,
+                             @RequestParam(defaultValue = "") String productType, @RequestParam(defaultValue = "")
+                             String price) {
+        String[] prices = {"10,000-50,000", "50,000-100,000", "100,000-150,000", "150,000-200,000"};
         model.addAttribute("prices", prices);
         model.addAttribute("productTypes", productTypeService.display());
         Page<Product> products = productService.search(pageable, name, productType, price);
+        model.addAttribute("products", products);
+        return "product/card";
+    }
+
+    @PostMapping("/search")
+    public String search(@PageableDefault(size = 8, sort = "product_price") Pageable pageable, Model model,
+                         RedirectAttributes redirectAttributes,
+                         @RequestParam(value = "name", defaultValue = "") String name,
+                         @RequestParam(defaultValue = "") String productType, @RequestParam(defaultValue = "")
+                         String price) {
+        String[] prices = {"10,000-50,000", "50,000-100,000", "100,000-150,000", "150,000-200,000"};
+        model.addAttribute("prices", prices);
+        model.addAttribute("productTypes", productTypeService.display());
+        Page<Product> products = productService.search(pageable, name, productType, price);
+        if (products.getSize()==0){
+            redirectAttributes.addFlashAttribute("msg","Danh sách trống");
+            return "forward:/product";
+        }
         model.addAttribute("products", products);
         return "product/list";
     }
 
     @GetMapping("")
-    public String display2(@PageableDefault(size = 4, sort = "productPrice") Pageable pageable, @RequestParam
-            (value = "msg", required = false) String msg, Model model) {
-        model.addAttribute("msg", msg);
+    public String display(@PageableDefault(size = 4, sort = "productPrice") Pageable pageable, Model model) {
+        model.addAttribute("productTypes", productTypeService.display());
+        String[] prices = {"10,000-50,000", "50,000-100,000", "100,000-150,000", "150,000-200,000"};
+        model.addAttribute("prices", prices);
         Page<Product> products = productService.display(pageable);
         model.addAttribute("products", products);
-        return "product/list2";
+        return "product/list";
     }
 
     @PostMapping("/delete")
@@ -78,7 +100,7 @@ public class ProductController {
         return "product/edit";
     }
 
-    @GetMapping("create")
+    @GetMapping("/create")
     public String showFormCreate(Model model) {
         model.addAttribute("productTypes", productTypeService.display());
         model.addAttribute("product", new ProductDto());
@@ -99,12 +121,12 @@ public class ProductController {
         Product product = new Product();
         BeanUtils.copyProperties(productDto, product);
         productService.edit(product);
-        redirectAttributes.addAttribute("msg", "Sửa thành công.");
+        redirectAttributes.addFlashAttribute("msg", "Sửa thành công.");
         return "redirect:/product";
     }
 
     @PostMapping("/create")
-    public String create(@Valid @ModelAttribute("product") ProductDto productDto, BindingResult bindingResult,
+    public String create(@Valid @ModelAttribute(name = "product") ProductDto productDto, BindingResult bindingResult,
                          RedirectAttributes redirectAttributes, Model model) {
         if (productDto == null) {
             redirectAttributes.addFlashAttribute("msg", "Đối tượng không tồn tại. ");
@@ -117,17 +139,21 @@ public class ProductController {
         Product product = new Product();
         BeanUtils.copyProperties(productDto, product);
         productService.add(product);
-        redirectAttributes.addAttribute("msg", "Thêm mới thành công.");
+        redirectAttributes.addFlashAttribute("msg", "Thêm mới thành công.");
         return "redirect:/product";
     }
+
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable int id, Model model) {
-        Product product=productService.findProductById(id);
+        Product product = productService.findProductById(id);
         if (product == null) {
             model.addAttribute("msg", "Id không tồn tại.  ");
-            return "product/list2";
+            return "product/list";
         } else {
             model.addAttribute("product", product);
+            Set<Product> productSet = productTypeService.displayListProduct(product.getProductType().getProductTypeId());
+            System.out.println(productSet);
+            model.addAttribute("products", productSet);
             return "product/detail";
         }
     }

@@ -11,56 +11,118 @@
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-            margin-bottom: 10px;
-            margin-top: 50px;
+            /*margin-bottom: 10px;*/
+            /*margin-top: 50px;*/
+        }
+
+        #next {
+            font-size: 1.5em;
+            color: #333;
+            transition: font-size 0.2s ease-in-out;
+        }
+
+        #next:hover {
+            font-size: 2em;
+            color: #007bff;
+        }
+
+        img:hover {
+            color: #007bff;
         }
     </style>
+    <style th:insert="/layout::style"></style>
+    <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
+          href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
 </head>
 <body>
-<div style="background-color: white">
-    <br>
+<div th:replace="layout::nav"></div>
+<div class="container-fluid">
     <div class="row">
-        <h4 class="col-9">Thông tin sản phẩm</h4>
-        <div class="col-3">
-            <a style="color: white" th:href="@{/product/edit/{id}(id=${product.productId})}">
-                <button class="btn btn-primary">
-                    Cập nhật
-                </button>
-            </a>
-        </div>
+        <div th:replace="layout::content1"></div>
+        <div class="col-sm-10" style="background-color: #FEFAE0;min-height: 700px">
+            <div>
+                <br>
+                <div class="row">
+                    <h4 style="text-align: center" class="col-9">Thông tin sản phẩm</h4>
+                    <div class="col-3">
+                        <a style="color: white" th:href="@{/product/edit/{id}(id=${product.productId})}">
+                            <button class="btn btn-primary">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                        </a>
+                    </div>
 
-    </div>
-
-    <hr>
-    <div class="row">
-        <div class="col-md-3">
-            <div class="image-container">
-                <img id="imagePreview" th:src="${product.productImagePath}" alt="">
-            </div>
-        </div>
-        <div class="col-md-9">
-            <div class="card-body">
-                <dl class="row">
-                    <dt class="col-sm-3"> Tên</dt>
-                    <dd class="col-sm-9" th:text="${product.productName}"></dd>
-                </dl>
-                <dl class="row">
-                    <dt class="col-sm-3 text-truncate"> Mô tả</dt>
-                    <dd class="col-sm-9" th:text="${product.productDescription}">  <!---->
-                    </dd>
-                </dl>
-                <dl class="row">
-                    <dt class="col-sm-3">Loại sản phẩm</dt>
-                    <dd class="col-sm-9" th:text="${product.productType.productTypeName}"></dd>
-                </dl>
-                <dl class="row">
-                    <dt class="col-sm-3"> Giá</dt>
-                    <dd class="col-sm-9" th:text="${product.productPrice}"></dd>
-                </dl>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="image-container">
+                            <img id="imagePreview" th:src="${product.productImagePath}" alt="">
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="card-body">
+                            <dl class="row">
+                                <!--                                <dt class="col-sm-3"> Tên</dt>-->
+                                <h1>
+                                    <dd class="col-sm-9" th:text="${product.productName}"></dd>
+                                </h1>
+                            </dl>
+                            <!--                            <dl class="row">-->
+                            <!--                                <dt class="col-sm-3">Loại sản phẩm</dt>-->
+                            <!--                                <dd class="col-sm-9" th:text="${product.productType.productTypeName}"></dd>-->
+                            <!--                            </dl>-->
+                            <dl class="row">
+                                <!--                                <dt class="col-sm-3"> Giá</dt>-->
+                                <b style="color: #e7b45a">
+                                    <h1>
+                                        <dd class="col-sm-9"
+                                            th:text="${#numbers.formatDecimal(product.productPrice, 0, 'COMMA', 0, 'POINT')} +' VNĐ'"></dd>
+                                    </h1>
+                                </b>
+                            </dl>
+                            <dl>
+                                <dt> Mô tả:</dt>
+                                <dd th:text="${product.productDescription}">  <!---->
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+                <h1 style="text-align: center">Sản phẩm cùng loại</h1>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                        </thead>
+                        <tbody>
+                        <tr th:each="product,status: ${products}">
+                            <td th:text="${status.count}"></td>
+                            <td><a th:href="@{/product/detail/{id}(id=${product.productId})}">
+                                <img th:src="${product.productImagePath}" alt="product image" width="100">
+                            </a></td>
+                            <td th:text="${product.productName}">Product Name</td>
+                            <td th:text="${product.productType.productTypeName}">Product Type</td>
+                            <td th:text="${#numbers.formatDecimal(product.productPrice, 0, 'COMMA', 0, 'POINT')} +' VNĐ'"
+                                class="card-text">Product Price
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!--                    <div style="text-align: center">-->
+                    <!--                        <a id="next" th:if="${products.hasPrevious()}" th:href="@{/product//detail/{id}(page=${products.number-1})}"><i-->
+                    <!--                                class="fas fa-backward"></i></a>-->
+                    <!--                        &lt;!&ndash;            <span th:text="${products.number+1}"></span>/ <span th:text="${products.totalPages}"></span>&ndash;&gt;-->
+                    <!--                        <a id="next1" th:if="${products.hasNext()}" th:href="@{/product//detail/{id}(page=${products.number+1})}"><i-->
+                    <!--                                class="fas fa-forward"></i></a>-->
+                    <!--                    </div>-->
+                </div>
+                <a id="next" href="/product">
+                    <i class="fas fa-backward"></i>
+                </a>
             </div>
         </div>
     </div>
 </div>
-
+<div th:replace="layout::footer"></div>
 </body>
 </html>
