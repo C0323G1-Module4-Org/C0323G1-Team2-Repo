@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 
 import java.util.List;
@@ -73,5 +74,26 @@ public class UserService implements IUserService {
     @Override
     public Page<User> findNewEmployeeList(Pageable pageable) {
         return userRepository.findNewEmployeeList(pageable);
+    }
+
+    @Override
+    public void checkUniqueAttributeUpdate(UserDto userDto, Errors errors) {
+        if (findByPhoneNumber(userDto.getUserPhoneNumber()) != null) {
+            if (!userDto.getAccount().getAccountName().equals(findByPhoneNumber(userDto.getUserPhoneNumber()).getAccount().getAccountName())) {
+                errors.rejectValue("userPhoneNumber", null, "Số điện thoại này đã được đăng ký!");
+            }
+        }
+
+        if (findByEmail(userDto.getUserEmail()) != null) {
+            if (!userDto.getAccount().getAccountName().equals(findByEmail(userDto.getUserEmail()).getAccount().getAccountName())) {
+                errors.rejectValue("userEmail", null, "Email này đã được đăng ký!");
+            }
+        }
+
+        if (findByIdCard(userDto.getUserIdCard()) != null) {
+            if (!userDto.getAccount().getAccountName().equals(findByIdCard(userDto.getUserIdCard()).getAccount().getAccountName())) {
+                errors.rejectValue("userIdCard", null, "Căn cước này đã được đăng ký!");
+            }
+        }
     }
 }

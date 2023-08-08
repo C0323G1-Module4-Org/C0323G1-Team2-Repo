@@ -29,4 +29,6 @@ public interface IUserService {
     void checkUniqueAttribute(UserDto userDto, Errors errors);
 
     Page<User> findNewEmployeeList(Pageable pageable);
+
+    void checkUniqueAttributeUpdate(UserDto userDto, Errors errors);
 }
