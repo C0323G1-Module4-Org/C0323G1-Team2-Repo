@@ -49,37 +49,57 @@
                     </a></td>
                 </tr>
             </table>
-            <div class="d-flex justify-content-center">
+            <!---------------------------Paging--------------------------------------------------------------->
+            <div th:if="${userPage.totalPages >1}">
+                <div class="d-flex justify-content-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li th:class="${!userPage.hasPrevious()} ? 'page-item disabled' : 'page-item'"><a
+                                    class="page-link"
+                                    th:href="@{/user/list/(page=${userPage.number -1},search=${search})}">Lùi</a>
+                            </li>
 
-                <a style="text-decoration: none" th:if="${userPage.hasPrevious()}"
-                   th:href="@{/user/list(page=${userPage.number-1},search=${search})}">
-                    <button class="btn btn-primary">Previous</button>
-                </a>
+                            <li class="page-link disabled"><span th:text="${userPage.number +1}"></span>/<span
+                                    th:text="${userPage.totalPages}"></span>
+                            </li>
 
-                <!----------------------//số trang--------------------------------------------------------------------------------->
-
-                <span th:text="${userPage.number +1}"></span>
-                &nbsp;
-                /
-                &nbsp;
-                <span th:text="${userPage.totalPages}"></span>
-
-                <!----------------------------------------------------------------------------------------------------------------->
-
-                <a style="text-decoration: none" th:if="${userPage.hasNext()}"
-                   th:href="@{/user/list(page=${userPage.number+1},search=${search})}">
-                    <button class="btn btn-primary">Next</button>
-                </a>
-
-
+                            <li th:class="${!userPage.hasNext()} ? 'page-item disabled' : 'page-item'"><a
+                                    class="page-link"
+                                    th:href="@{/user/list/(page=${userPage.number +1},search=${search})}">Tới</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
-            <!------------------------END CODE--------------------------------------------------------------------->
+            <!------------------------End Paging------------------------------------------------------------>
 
         </div>
     </div>
 </div>
+
+<!-------------------------Toast-------------------------------------------------------------->
+<div class="position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Tin nhắn</strong>
+            <small>Bây giờ</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body text-info" th:text="${msg}">
+        </div>
+    </div>
+</div>
+<!-------------------------End Toast-------------------------------------------------------------->
+
 <div th:replace="layout::footer"></div>
 <script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
         src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
+<script th:if="${msg}">
+    window.onload = function () {
+        let myAlert = document.getElementById('liveToast');//select id of toast
+        let bsAlert = new bootstrap.Toast(myAlert);//inizialize it
+        bsAlert.show();//show it
+    }
+</script>
 </body>
 </html>
