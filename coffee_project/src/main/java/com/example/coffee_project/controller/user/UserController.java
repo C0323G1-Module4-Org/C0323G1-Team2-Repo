@@ -90,9 +90,8 @@ public class UserController {
     public String deleteUser(@RequestParam Integer userId,
                              @RequestParam String userName,
                              RedirectAttributes redirectAttributes) {
-        System.out.println(userName);
         userService.removeUser(userId);
-        redirectAttributes.addFlashAttribute("deleteSuccess", userName);
+        redirectAttributes.addFlashAttribute("msg", "Xoá thành công!");
         return "redirect:/user/list";
     }
 

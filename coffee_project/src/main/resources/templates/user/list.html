@@ -41,28 +41,23 @@
                     </div>
 
                     <div class="col-4">
-                        <!--//Toast hiển thị thông báo đã xoá thành công-->
-                        <div th:if="${deleteSuccess}" class="toast p-0" id="myToast" role="alert"
-                             aria-live="assertive" aria-atomic="true">
-                            <div style="margin-left: 20px"
-                                 class="toast-header d-flex justify-content-between bg-success text-dark">
-                                <span> <strong id="delete">Đã xoá thành công!</strong></span>
-                                <button type="button" class="btn-close float-end" data-bs-dismiss="toast"
-                                        aria-label="Đóng"></button>
-                            </div>
-                        </div>
                     </div>
                     <div class="col-7">
                         <form th:action="@{/user/list}" th:method="get">
-                            <label style="float: right">
-                                <input style="width: 400px;display: inline-block" type="text"
-                                       id="disabledTextInput" class="form-control"
-                                       th:name="search" placeholder="Nhập tên nhân viên" th:value="${search}">
-                                <button style="margin-bottom: 5px" class="btn btn-primary" type="submit"><i
-                                        class="fas fa-search"></i></button>
-                            </label>
+                            <div class="input-group d-flex justify-content-end">
+
+                                <div class="form-outline">
+                                    <input id="search-input" name="search" type="search" placeholder="Tên nhân viên"
+                                           class="form-control" th:value="${search}"/>
+                                </div>
+                                <button id="search-button" type="submit" class="btn btn-primary">
+                                    <i class="fas fa-search"></i>
+                                </button>
+
+                            </div>
                         </form>
                     </div>
+
                 </div>
 
                 <div class="table-responsive" style="margin-top: 20px">
@@ -119,29 +114,48 @@
                     </table>
                 </div>
                 <!---------------------------Paging--------------------------------------------------------------->
-                <div class="d-flex justify-content-center">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <li th:class="${!userPage.hasPrevious()} ? 'page-item disabled' : 'page-item'"><a
-                                    class="page-link"
-                                    th:href="@{/user/list/(page=${userPage.number -1},search=${search})}">Lùi</a></li>
+                <div th:if="${userPage.totalPages >0}">
+                    <div class="d-flex justify-content-center">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li th:class="${!userPage.hasPrevious()} ? 'page-item disabled' : 'page-item'"><a
+                                        class="page-link"
+                                        th:href="@{/user/list/(page=${userPage.number -1},search=${search})}">Lùi</a>
+                                </li>
 
-                            <li class="page-link disabled" ><span th:text="${userPage.number +1}"></span>..<span
-                                    th:text="${userPage.totalPages}"></span>
-                            </li>
+                                <li class="page-link disabled"><span th:text="${userPage.number +1}"></span>/<span
+                                        th:text="${userPage.totalPages}"></span>
+                                </li>
 
-                            <li th:class="${!userPage.hasNext()} ? 'page-item disabled' : 'page-item'"><a
-                                    class="page-link"
-                                    th:href="@{/user/list/(page=${userPage.number +1},search=${search})}">Tới</a></li>
-                        </ul>
-                    </nav>
-<!------------------------End Paging------------------------------------------------------------>
+                                <li th:class="${!userPage.hasNext()} ? 'page-item disabled' : 'page-item'"><a
+                                        class="page-link"
+                                        th:href="@{/user/list/(page=${userPage.number +1},search=${search})}">Tới</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
-
+                <!------------------------End Paging------------------------------------------------------------>
             </div>
         </div>
     </div>
 </div>
+
+
+<!-------------------------Toast-------------------------------------------------------------->
+<div class="position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Tin nhắn</strong>
+            <small>Bây giờ</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body text-info" th:text="${msg}">
+        </div>
+    </div>
+</div>
+<!-------------------------End Toast-------------------------------------------------------------->
+
 
 <!-- Button trigger modal -->
 
@@ -265,14 +279,12 @@
 </script>
 
 <!--    //Toast Delete Successfully-->
-<script th:if="${deleteSuccess}">
-    window.onload = (event) => {
-        let myAlert = document.querySelectorAll('.toast')[0];
-        if (myAlert) {
-            let bsAlert = new bootstrap.Toast(myAlert);
-            bsAlert.show();
-        }
-    };
+<script th:if="${msg}">
+    window.onload = function () {
+        let myAlert = document.getElementById('liveToast');//select id of toast
+        let bsAlert = new bootstrap.Toast(myAlert);//inizialize it
+        bsAlert.show();//show it
+    }
 </script>
 
 <script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
