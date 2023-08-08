@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 public interface IUserRepository extends JpaRepository<User, Integer> {
     Page<User> findUserByUserNameContaining(Pageable pageable, String search);
@@ -23,6 +25,8 @@ public interface IUserRepository extends JpaRepository<User, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "call remove_user(:id) ;",nativeQuery = true)
+    @Query(value = " call remove_user(:id) ; ",nativeQuery = true)
     void removeUserByUserId(@Param("id") Integer id);
+    @Query(value = " select * from user u where u.user_salary = 0 ",nativeQuery = true)
+    Page<User> findNewEmployeeList(Pageable pageable);
 }

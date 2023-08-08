@@ -1,9 +1,6 @@
 package com.example.coffee_project.common.user;
 
-import com.example.coffee_project.service.user.IUserService;
-
 import org.springframework.validation.Errors;
-
 import java.time.LocalDate;
 import java.sql.Date;
 import java.time.Period;
@@ -12,7 +9,7 @@ public class UserValidate {
     private static final String REGEX_USER_NAME = "^[\\p{Lu}][\\p{Ll}]*([\\s][\\p{Lu}][\\p{Ll}]*)*$\"";
     private static final String REGEX_NUMBER_PHONE = "^0\\d{9}$";
     private static final String REGEX_EMAIL = "^(.+)@(\\S+)$";
-    private IUserService userService;
+
     public static boolean checkRegexUserName(String userName) {
         return userName.matches(REGEX_USER_NAME);
     }
@@ -105,9 +102,8 @@ public class UserValidate {
 
     public static void checkValidateUserUserSalary(Double userSalary, Errors errors) {
         if (userSalary == null) {
-            return;
-        }
-        if (userSalary.isNaN() || userSalary.isInfinite()) {
+            errors.rejectValue("userSalary", null, "Lương không được để trống!");
+        }else if (userSalary.isNaN() || userSalary.isInfinite()) {
             errors.rejectValue("userSalary", null, "Nhập lương không đúng định dạng!");
         } else if (userSalary < 0) {
             errors.rejectValue("userSalary", null, "Lương không được bé hơn 0");
