@@ -34,18 +34,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/customer/{id}/view").hasAnyAuthority("admin", "employee")
                 .antMatchers("/customer/list").hasAnyAuthority("admin", "employee")
                 // user
-
+                .antMatchers("/user/create-form").hasAnyAuthority("admin", "employee")
+                .antMatchers("/user/create").hasAnyAuthority("admin", "employee")
                 .antMatchers("/user/update").hasAnyAuthority("admin", "employee")
                 .antMatchers("/user/update-form/{id}").hasAnyAuthority("admin", "employee")
 
                 // product
 
                 .antMatchers("/product").hasAnyAuthority("admin", "employee")
-                .antMatchers("/product/search").hasAnyAuthority("admin", "employee")
+                .antMatchers("/product/searchCard").hasAnyAuthority("admin", "employee")
                 .antMatchers("/product/list").hasAnyAuthority("admin", "employee")
                 .antMatchers("/product/detail/{id}").hasAnyAuthority("admin", "employee")
-                .antMatchers("/user/create-form").hasAnyAuthority("admin", "employee")
-                .antMatchers("/user/create").hasAnyAuthority("admin", "employee")
+
+
 
                //order
                 .antMatchers("/order/").hasAnyAuthority("admin", "employee")
@@ -62,6 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/product/edit/{id}").hasAuthority("admin")
                 .antMatchers("/product/edit").hasAuthority("admin")
                 .antMatchers("/product/delete").hasAuthority("admin")
+                .antMatchers("/product/create").hasAuthority("admin")
 
 
                 .antMatchers("/account/admin").hasAuthority("admin")
@@ -82,7 +84,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/account/login?error=true")  // trang error
                 .usernameParameter("accountName")                      //tham số
                 .passwordParameter("accountPassword")
-                .and().logout().logoutUrl("/account/logout").logoutSuccessUrl("/account/login");
+                .and().logout().invalidateHttpSession(true).logoutUrl("/account/logout").logoutSuccessUrl("/account/login");
         //
         http.authorizeRequests().and().rememberMe()
                 .tokenRepository(this.persistentTokenRepository())

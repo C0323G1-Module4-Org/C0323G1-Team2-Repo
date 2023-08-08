@@ -48,7 +48,7 @@
                         </div>
                         <div th:if="${#request.getParameter('error')=='true'}"
                              style="color: red;margin: 10px 0">
-
+                            Đăng nhập thất bại
                         </div>
                         <form th:object="${accountDto}" th:action="@{/j_spring_security_check}" method="POST"
                               class="signin-form">
@@ -84,6 +84,26 @@
             </div>
         </div>
     </div>
+    <!-------------------------Toast-------------------------------------------------------------->
+    <div class="position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Tin nhắn</strong>
+                <small>Bây giờ</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body text-info" th:text="${message}">
+            </div>
+        </div>
+    </div>
+    <!-------------------------End Toast-------------------------------------------------------------->
 </section>
+<script th:if="${message!=null}">
+    window.onload = function () {
+        let myAlert = document.getElementById('liveToast');//select id of toast
+        let bsAlert = new bootstrap.Toast(myAlert);//inizialize it
+        bsAlert.show();//show it
+    }
+</script>
 </body>
 </html>

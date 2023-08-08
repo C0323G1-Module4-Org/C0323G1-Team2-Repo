@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface IAccountService extends UserDetailsService {
     Page<Account> getAllAccount(Pageable pageable, String searchName);
     void save(AccountDto accountDto);
+    void forgot(Account account);
     Account findByUsername(String username);
     void sendEmail(String to, String subject, String body);
+     String sendEmailAndReturnCode(String to);
 }

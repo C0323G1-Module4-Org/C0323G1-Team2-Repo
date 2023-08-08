@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Objects;
+
 
 @Controller
 @RequestMapping("/account")
@@ -42,16 +44,14 @@ public class AccountController {
     }
 
     @PostMapping("/signup")
-    public String signupAccount(@ModelAttribute AccountDto accountDto,
-                                RedirectAttributes redirectAttributes) {
+    public String signupAccount(@ModelAttribute AccountDto accountDto) {
         accountService.save(accountDto);
-        redirectAttributes.addFlashAttribute("message", "đăng ký thành công");
         return "redirect:/account/admin";
     }
     @GetMapping("/admin")
     public  ModelAndView showListAccount(@RequestParam(defaultValue = "0") int page,
                                          @RequestParam(defaultValue = "") String searchName) {
-        Pageable pageable = PageRequest.of(page, 10, Sort.by("role.roleId").ascending());
+        Pageable pageable = PageRequest.of(page, 5, Sort.by("role.roleId").ascending());
         Page<Account> accountPage = accountService.getAllAccount(pageable, searchName);
         ModelAndView modelAndView = new ModelAndView("/account/list-account");
         modelAndView.addObject("accountDto", new AccountDto());
@@ -82,20 +82,33 @@ public class AccountController {
             if (user.getUserEmail().equals(email)) {
                 System.out.println(email);
                 Account account = accountService.findByUsername(username);
+                String code=accountService.sendEmailAndReturnCode(user.getUserEmail());
                 System.out.println(account.getAccountName());
-                modelAndView.addObject("account", account);
+                modelAndView.addObject("username", username);
+                modelAndView.addObject("code",code);
                 return modelAndView;
             } else {
 
             }
         }
-        return new ModelAndView("/forgot", "message", "tài khoản không tồn tại trong hệ thống");
+        return new ModelAndView("/forgot");
     }
 
     @PostMapping("/reset-password")
-    public ModelAndView reset(@RequestParam String password,
-                              @RequestParam String password2) {
-        ModelAndView modelAndView = new ModelAndView("/accuracy");
-        return modelAndView;
+    public String reset(@RequestParam String username,
+                              @RequestParam String password,
+                              @RequestParam String password2,
+                              @RequestParam String emailCode,
+                              @RequestParam String code) {
+        Account account=accountService.findByUsername(username);
+        if (Objects.equals(password, password2) && Objects.equals(emailCode, code)){
+           account.setAccountPassword(password);
+            accountService.forgot(account);
+            return "redirect:/account/login";
+        }else {
+            return"redirect:/account/forgot";
+        }
+
+
     }
 }
