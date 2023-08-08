@@ -49,6 +49,14 @@ public class AccountService implements IAccountService {
         account.setRole(role);
         accountRepository.save(account);
     }
+    @Override
+    public void forgot(Account account) {
+        String encoderPassword = bCryptPasswordEncoder.encode(account.getAccountPassword());
+        account.setAccountPassword(encoderPassword);
+        Role role = roleService.findByName("employee");
+        account.setRole(role);
+        accountRepository.save(account);
+    }
 
     @Override
     public Account findByUsername(String username) {
@@ -95,7 +103,7 @@ public class AccountService implements IAccountService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = this.accountRepository.findAccountByAccountName(username);
         if (account == null) {
-            throw new UsernameNotFoundException(" tài khoản " + account + " không có ");
+            throw new UsernameNotFoundException(" tài khoản " + username + " không có ");
         }
         UserDetails userDetails = User.withUsername(account.getAccountName())
                 .password(account.getAccountPassword())
