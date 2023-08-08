@@ -44,7 +44,8 @@ public class AccountController {
     }
 
     @PostMapping("/signup")
-    public String signupAccount(@ModelAttribute AccountDto accountDto) {
+    public String signupAccount(@ModelAttribute AccountDto accountDto,RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("msg","Thêm mới thành công");
         accountService.save(accountDto);
         return "redirect:/account/admin";
     }
