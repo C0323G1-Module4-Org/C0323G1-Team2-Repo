@@ -48,7 +48,7 @@ public class AccountController {
     @PostMapping("/signup")
     public String signupAccount(@Valid @ModelAttribute AccountDto accountDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("msg","Cần xem xét lại");
+            redirectAttributes.addFlashAttribute("msg","Không để trống");
         }else {
             if (accountService.findByUsername(accountDto.getAccountName())!=null){
                 redirectAttributes.addFlashAttribute("msg","Tài khoản đã tồn tại");
