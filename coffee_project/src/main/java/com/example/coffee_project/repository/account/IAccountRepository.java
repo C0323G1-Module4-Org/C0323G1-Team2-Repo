@@ -5,8 +5,10 @@ import com.example.coffee_project.model.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
@@ -21,4 +23,9 @@ public interface IAccountRepository extends JpaRepository<Account,String> {
 // Page<Account> findAllByNameContaining(Pageable pageable,@Param("name") String name);
  Page<Account> findAllByAccountNameContaining(Pageable pageable,String name);
  Account findAccountByAccountName(String name);
+
+ @Transactional
+ @Modifying
+ @Query(value = " call remove_account(:name) ; ",nativeQuery = true)
+ void removeAccount(@Param("name") String name);
 }
