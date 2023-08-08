@@ -1,7 +1,10 @@
 package com.example.coffee_project.dto.account;
 
 
+import javax.validation.constraints.NotBlank;
+
 public class AccountDto {
+    @NotBlank(message = "Không được để trống tên tài khoản")
     private String accountName;
     private String accountPassword;
 
