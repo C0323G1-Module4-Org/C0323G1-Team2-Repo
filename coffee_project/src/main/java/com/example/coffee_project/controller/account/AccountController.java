@@ -14,10 +14,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.Objects;
 
 
@@ -44,12 +46,16 @@ public class AccountController {
     }
 
     @PostMapping("/signup")
-    public String signupAccount(@ModelAttribute AccountDto accountDto,RedirectAttributes redirectAttributes) {
-        if (accountService.findByUsername(accountDto.getAccountName())!=null){
-            redirectAttributes.addFlashAttribute("msg","Tài khoản đã tồn tại");
+    public String signupAccount(@Valid @ModelAttribute AccountDto accountDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()){
+            redirectAttributes.addFlashAttribute("msg","Cần xem xét lại");
         }else {
-            redirectAttributes.addFlashAttribute("msg","Thêm mới thành công");
-            accountService.save(accountDto);
+            if (accountService.findByUsername(accountDto.getAccountName())!=null){
+                redirectAttributes.addFlashAttribute("msg","Tài khoản đã tồn tại");
+            }else {
+                redirectAttributes.addFlashAttribute("msg","Thêm mới thành công");
+                accountService.save(accountDto);
+            }
         }
         return "redirect:/account/admin";
     }
