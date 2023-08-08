@@ -82,8 +82,8 @@ public class UserController {
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
         userService.saveUser(user);
-        redirectAttributes.addAttribute("success",
-                "Thêm thông tin cho tài khoản " + user.getAccount() + " thành công");
+        redirectAttributes.addAttribute("msg",
+                "Chỉnh sửa thành công");
         return "redirect:/user/list";
     }
 
@@ -116,6 +116,7 @@ public class UserController {
                              RedirectAttributes redirectAttributes,
                              Model model) {
         new UserDto().validate(userDto, bindingResult);
+        userService.checkUniqueAttributeUpdate(userDto,bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("userDto", userDto);
             return "/user/update";
@@ -123,8 +124,8 @@ public class UserController {
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
         userService.saveUser(user);
-        redirectAttributes.addAttribute("success",
-                "Sửa tài khoản " + user.getAccount() + " thành công");
+        redirectAttributes.addAttribute("msg",
+                "Sửa tài khoản thành công");
         return "redirect:/user/list";
     }
     @GetMapping("/change-form/{id}")

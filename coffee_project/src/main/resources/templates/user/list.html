@@ -69,9 +69,8 @@
                         <th scope="col">Tài khoản</th>
                         <th scope="col">Lương</th>
                         <th scope="col">Vị trí</th>
-                        <th scope="col" style="text-align: center">Chỉnh sửa</th>
-                        <th scope="col" style="text-align: center">Chi tiết</th>
-                        <th scope="col" style="text-align: center">Xoá</th>
+                        <th colspan="3" scope="col" style="text-align: center">Hành động</th>
+
                         </thead>
                         <tr th:each="user, status :${userPage}">
                             <th th:text="${status.count}">
