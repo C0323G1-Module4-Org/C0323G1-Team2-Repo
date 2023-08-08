@@ -44,28 +44,29 @@ public class OrderController {
     IOrderDetailService orderDetailService;
 
     @GetMapping(value = "/")
-    public ModelAndView home(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "") String name) {
+    public String home(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "") String name, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findByName(authentication.getName());
+        if (user == null)
+            return "redirect:/user/create-form";
         Order order = orderService.findCurrentOrder(true, user);
         Pageable pageable = PageRequest.of(page, 6, Sort.by("productName").ascending());
         Page<Product> listProduct = productService.searchByName(pageable, name);
-        ModelAndView modelAndView = new ModelAndView("oder/index");
         if (listProduct.getTotalPages() > 0) {
             List<Integer> pageNumbers = new ArrayList<>();
             for (int i = 1; i <= listProduct.getTotalPages(); i++) {
                 pageNumbers.add(i);
             }
-            modelAndView.addObject("pageNumbers", pageNumbers);
+            model.addAttribute("pageNumbers", pageNumbers);
         }
         if (order != null) {
             OrderDetailDto orderDetailDto = new OrderDetailDto();
             orderDetailDto.setOrderDetailList(new ArrayList<>(order.getOrderDetailSet()));
-            modelAndView.addObject("listOrderDetail", orderDetailDto);
+            model.addAttribute("listOrderDetail", orderDetailDto);
         }
-        modelAndView.addObject("name", name);
-        modelAndView.addObject("listProduct", listProduct);
-        return modelAndView;
+        model.addAttribute("name", name);
+        model.addAttribute("listProduct", listProduct);
+        return "oder/index";
     }
 
     @PostMapping("/add-order")
@@ -98,11 +99,9 @@ public class OrderController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findByName(authentication.getName());
         Order order = orderService.findCurrentOrder(true, user);
-        if (order != null) {
+        if (order != null)
             orderDetailService.remove(id);
-            redirectAttributes.addFlashAttribute("msg1", "Đã xóa thành công sản phẩm");
-        } else
-            redirectAttributes.addFlashAttribute("msg1", "xóa sản phẩm thất bại");
+        redirectAttributes.addFlashAttribute("msg1", "");
         return "redirect:/order/";
     }
 
