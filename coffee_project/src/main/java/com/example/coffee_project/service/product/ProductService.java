@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
+
 @Service
 public class ProductService implements IProductService {
     @Autowired
@@ -45,7 +46,9 @@ public class ProductService implements IProductService {
 
     @Override
     public void delete(int id) {
-        productRepository.deleteById(id);
+        productRepository.disableForeignKeyChecks();
+        productRepository.delete(id);
+        productRepository.enableForeignKeyChecks();
     }
 
     @Override
