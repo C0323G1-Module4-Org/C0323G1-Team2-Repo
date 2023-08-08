@@ -21,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.List;
 
 
 @Controller
@@ -40,8 +39,10 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView("/user/list");
         Pageable pageable = PageRequest.of(page, 3,
                 Sort.by("userName").ascending().and(Sort.by("userSalary").ascending()));
-
         Page<User> userPage = userService.findAll(pageable, search);
+        if(userPage.getTotalElements() == 0){
+            modelAndView.addObject("msg","Không có nhân viên nào!");
+        }
         modelAndView.addObject("userPage", userPage);
         modelAndView.addObject("search", search);
         return modelAndView;
@@ -163,7 +164,9 @@ public class UserController {
                                       Model model){
         Pageable pageable = PageRequest.of(page,3,Sort.by("user_name").ascending());
         Page<User> userPage = userService.findNewEmployeeList(pageable);
-
+        if(userPage.getTotalElements() == 0){
+            model.addAttribute("msg","Không có nhân viên nào!");
+        }
         model.addAttribute("userPage",userPage);
         return "/user/new-employee";
     }

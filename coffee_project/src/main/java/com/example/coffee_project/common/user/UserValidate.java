@@ -23,7 +23,7 @@ public class UserValidate {
         }
         if (userName.length() > 0 && (userName.length() <= 5 || userName.length() > 255)) {
             errors.rejectValue("userName", null,
-                    "Tên nhân viên không được ít hơn 5 kí tự và vượt quá 255 kí tự!");
+                    "Tên không được ít hơn 5 kí tự và vượt quá 255 kí tự!");
 
         }
     }
