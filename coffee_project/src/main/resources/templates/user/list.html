@@ -74,6 +74,7 @@
                         <th scope="col">Tài khoản</th>
                         <th scope="col">Lương</th>
                         <th scope="col">Vị trí</th>
+                        <th scope="col" style="text-align: center">Chỉnh sửa</th>
                         <th scope="col" style="text-align: center">Chi tiết</th>
                         <th scope="col" style="text-align: center">Xoá</th>
                         </thead>
@@ -84,10 +85,18 @@
                                 <div th:if="${user.userGender == null}">Khác</div>
                                 <div th:if="${user.userGender}">Nam</div>
                                 <div th:if="${!user.userGender}">Nữ</div>
-                         </td>
+                            </td>
                             <td th:text="${user.account.accountName}">
                             <td th:text="${#numbers.formatDecimal(user.userSalary, 0, 'COMMA', 0, 'POINT') + ' VND'}"></td>
                             <td th:text="${user.employeeType.employeeTypeName}">
+                            <td style="text-align: center">
+
+                                <a th:href="@{/user/change-form/{id}(id=${user.userId})}">
+                                    <button type="button" class="btn btn-primary">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                </a>
+                            </td>
                             <td style="text-align: center">
 
                                 <!-- Button trigger detail modal -->
@@ -109,32 +118,24 @@
                         </tr>
                     </table>
                 </div>
-                <div class="row">
-                    <div class="col-4"></div>
+                <!---------------------------Paging--------------------------------------------------------------->
+                <div class="d-flex justify-content-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li th:class="${!userPage.hasPrevious()} ? 'page-item disabled' : 'page-item'"><a
+                                    class="page-link"
+                                    th:href="@{/user/list/(page=${userPage.number -1},search=${search})}">Lùi</a></li>
 
+                            <li class="page-link disabled" ><span th:text="${userPage.number +1}"></span>..<span
+                                    th:text="${userPage.totalPages}"></span>
+                            </li>
 
-                    <div class="col-1">
-                        <a style="text-decoration: none" th:if="${userPage.hasPrevious()}"
-                           th:href="@{/user/list(page=${userPage.number-1},search=${search})}">
-                            <button class="btn btn-primary">Previous</button>
-                        </a>
-                    </div>
-                    <!----------------------//số trang--------------------------------------------------------------------------------->
-                    <div class="col-2 d-flex justify-content-center">
-                        <span th:text="${userPage.number +1}"></span>
-                        &nbsp;
-                        /
-                        &nbsp;
-                        <span th:text="${userPage.totalPages}"></span>
-                    </div>
-                    <!----------------------------------------------------------------------------------------------------------------->
-                    <div class="col-1">
-                        <a style="text-decoration: none" th:if="${userPage.hasNext()}"
-                           th:href="@{/user/list(page=${userPage.number+1},search=${search})}">
-                            <button class="btn btn-primary">Next</button>
-                        </a>
-                    </div>
-                    <div class="col-4"></div>
+                            <li th:class="${!userPage.hasNext()} ? 'page-item disabled' : 'page-item'"><a
+                                    class="page-link"
+                                    th:href="@{/user/list/(page=${userPage.number +1},search=${search})}">Tới</a></li>
+                        </ul>
+                    </nav>
+<!------------------------End Paging------------------------------------------------------------>
                 </div>
 
             </div>
@@ -175,17 +176,18 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel1">Thông tin chi tiết</h1>
+                <h1 class="d-flex justify-content-center modal-title fs-5" id="exampleModalLabel1">
+                    <strong>Thông tin chi tiết</strong></h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-4">
-                        <div id="dnd" class="preview" style="margin-top: 15px">
+                    <div class="col-5">
+                        <div id="dnd" class="preview d-flex justify-content-center" style="margin-top: 15px">
                             <img id="imgPath" style="height: 150px; width: 100px;">
                         </div>
                     </div>
-                    <div class="col-8">
+                    <div class="col-7">
 
                         <div>Tên: <span id="userNameDetail"></span></div>
 
@@ -197,7 +199,7 @@
 
                         <div>Email: <span id="userEmail"></span></div>
 
-                        <div>Căn cước : <span id="userIdCard"></span></div>
+                        <div>Căn cước: <span id="userIdCard"></span></div>
 
                         <div>Lương: <span id="userSalary"></span></div>
 
@@ -231,9 +233,9 @@
             url: "http://localhost:8080/api/user/detail/" + id,
             success: function (data) {
                 let gender = "";
-                if(data.userGender){
+                if (data.userGender) {
                     gender = "Nam";
-                }else {
+                } else {
                     gender = "Nữ";
                 }
                 let birthday = data.userBirthday.split("-").reverse().join("-");
@@ -244,10 +246,10 @@
                 $("#userPhoneNumber").text(data.userPhoneNumber);
                 $("#userEmail").text(data.userEmail);
                 $("#userIdCard").text(data.userIdCard);
-                $("#userSalary").text(data.userSalary.toLocaleString('en-US'));
+                $("#userSalary").text(data.userSalary.toLocaleString('en-US') + " VND");
                 $("#userAddress").text(data.userAddress);
                 $("#employeeTypeName").text(data.employeeType.employeeTypeName);
-                $("#imgPath").attr("src",data.userImagePath);
+                $("#imgPath").attr("src", data.userImagePath);
                 $("#exampleModal1").show();
             }
         })

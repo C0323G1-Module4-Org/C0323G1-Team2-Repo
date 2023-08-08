@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 
+import java.util.List;
+
 @Service
 public class UserService implements IUserService {
     @Autowired
@@ -66,5 +68,10 @@ public class UserService implements IUserService {
         if (findByIdCard(userDto.getUserIdCard()) != null) {
             errors.rejectValue("userIdCard", null, "Căn cước này đã được đăng kí!");
         }
+    }
+
+    @Override
+    public Page<User> findNewEmployeeList(Pageable pageable) {
+        return userRepository.findNewEmployeeList(pageable);
     }
 }

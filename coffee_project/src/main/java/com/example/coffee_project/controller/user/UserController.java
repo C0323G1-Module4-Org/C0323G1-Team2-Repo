@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @Controller
@@ -41,7 +42,6 @@ public class UserController {
                 Sort.by("userName").ascending().and(Sort.by("userSalary").ascending()));
 
         Page<User> userPage = userService.findAll(pageable, search);
-        System.out.println(userPage.getTotalElements());
         modelAndView.addObject("userPage", userPage);
         modelAndView.addObject("search", search);
         return modelAndView;
@@ -58,7 +58,6 @@ public class UserController {
         UserDto userDto = new UserDto();
         userDto.setUserImagePath("https://phongreviews.com/wp-content/uploads/2022/11/avatar-facebook-mac-dinh-8.jpg");
         model.addAttribute("userDto", userDto);
-        model.addAttribute("employeeTypeList", employeeTypeService.findAll());
         return "user/create";
     }
 
@@ -76,7 +75,6 @@ public class UserController {
         userService.checkUniqueAttribute(userDto,bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("userDto", userDto);
-            model.addAttribute("employeeTypeList", employeeTypeService.findAll());
             return "/user/create";
         }
 
@@ -129,5 +127,45 @@ public class UserController {
                 "Sửa tài khoản " + user.getAccount() + " thành công");
         return "redirect:/user/list";
     }
+    @GetMapping("/change-form/{id}")
+    public String changeForm(@PathVariable Integer id, Model model,RedirectAttributes redirectAttributes){
+        User user = userService.findByID(id);
 
+        if(user == null){
+            redirectAttributes.addFlashAttribute("msg","Không có nhân viên này!");
+            return "redirect:/user/list";
+        }
+
+        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(user,userDto);
+        model.addAttribute("employeeTypeList",employeeTypeService.findAll());
+        model.addAttribute("userDto",userDto);
+        return "/user/change";
+    }
+    @PostMapping("/change")
+    public String changeSalaryAndEmployeeType(@Valid @ModelAttribute UserDto userDto, BindingResult bindingResult,
+                                              Model model,
+                                              RedirectAttributes redirectAttributes){
+
+        new UserDto().validate(userDto,bindingResult);
+        if(bindingResult.hasErrors()){
+            model.addAttribute("employeeTypeList", employeeTypeService.findAll());
+            model.addAttribute("userDto",userDto);
+            return "/user/change";
+        }
+        User user = new User();
+        BeanUtils.copyProperties(userDto,user);
+        userService.saveUser(user);
+        redirectAttributes.addFlashAttribute("msg","Chỉnh sửa thành công!");
+        return "redirect:/user/list";
+    }
+    @GetMapping("/new-employee")
+    public String showNewEmployeeList(@RequestParam(defaultValue = "0")Integer page,
+                                      Model model){
+        Pageable pageable = PageRequest.of(page,3,Sort.by("user_name").ascending());
+        Page<User> userPage = userService.findNewEmployeeList(pageable);
+
+        model.addAttribute("userPage",userPage);
+        return "/user/new-employee";
+    }
 }
