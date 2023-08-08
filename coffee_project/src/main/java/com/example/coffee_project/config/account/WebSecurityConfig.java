@@ -67,6 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
                 .antMatchers("/account/admin").hasAuthority("admin")
+                .antMatchers("/account/delete").hasAuthority("admin")
 
 
                 .antMatchers("/user/delete").hasAuthority("admin")

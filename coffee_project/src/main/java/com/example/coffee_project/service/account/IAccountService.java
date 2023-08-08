@@ -13,4 +13,6 @@ public interface IAccountService extends UserDetailsService {
     Account findByUsername(String username);
     void sendEmail(String to, String subject, String body);
      String sendEmailAndReturnCode(String to);
+
+    void deleteAccount(Account account);
 }

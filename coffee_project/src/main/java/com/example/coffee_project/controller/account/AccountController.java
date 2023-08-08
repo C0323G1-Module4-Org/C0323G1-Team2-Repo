@@ -45,8 +45,12 @@ public class AccountController {
 
     @PostMapping("/signup")
     public String signupAccount(@ModelAttribute AccountDto accountDto,RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("msg","Thêm mới thành công");
-        accountService.save(accountDto);
+        if (accountService.findByUsername(accountDto.getAccountName())!=null){
+            redirectAttributes.addFlashAttribute("msg","Tài khoản đã tồn tại");
+        }else {
+            redirectAttributes.addFlashAttribute("msg","Thêm mới thành công");
+            accountService.save(accountDto);
+        }
         return "redirect:/account/admin";
     }
     @GetMapping("/admin")
@@ -109,7 +113,17 @@ public class AccountController {
         }else {
             return"redirect:/account/forgot";
         }
-
-
+    }
+    @PostMapping("/delete")
+    public  String delete(@RequestParam String accountName,
+                          RedirectAttributes redirectAttributes){
+    Account account=accountService.findByUsername(accountName);
+    if (account.getRole().getRoleName().equals("admin")){
+        redirectAttributes.addFlashAttribute("msg","Bạn không thể xóa tài khoản này");
+    }else {
+        accountService.deleteAccount(account);
+        redirectAttributes.addFlashAttribute("msg","đã xóa tài khoản : "+account.getAccountName());
+    }
+    return "redirect:/account/admin";
     }
 }

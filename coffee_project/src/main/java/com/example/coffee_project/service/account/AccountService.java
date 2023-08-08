@@ -87,6 +87,11 @@ public class AccountService implements IAccountService {
         return code;
     }
 
+    @Override
+    public void deleteAccount(Account account) {
+        accountRepository.removeAccount(account.getAccountName());
+    }
+
     private String generateRandomCode(int length) {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         StringBuilder code = new StringBuilder();
