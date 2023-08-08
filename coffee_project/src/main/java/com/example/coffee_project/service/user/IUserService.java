@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 
+import java.util.List;
+
 public interface IUserService {
     Page<User> findAll(Pageable pageable, String search);
 
@@ -25,4 +27,6 @@ public interface IUserService {
     User findByIdCard(String userIdCard);
 
     void checkUniqueAttribute(UserDto userDto, Errors errors);
+
+    Page<User> findNewEmployeeList(Pageable pageable);
 }
