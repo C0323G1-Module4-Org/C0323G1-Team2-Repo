@@ -41,7 +41,7 @@ public class CustomerService implements ICustomerService{
     @Override
     public boolean deleteById(int id) {
         try {
-            customerRepository.deleteById(id);
+            customerRepository.deleteByCustomerId(id);
         } catch (Exception e) {
             return false;
         }
