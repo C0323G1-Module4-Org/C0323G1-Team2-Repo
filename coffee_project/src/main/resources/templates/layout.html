@@ -1,97 +1,142 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Bootstrap 5 Website Example</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style th:fragment="style">
         * {
-            font-style: italic;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
         }
 
-        .content-left:hover {
-            background-color: #D4A373;
-            border-radius: 10px;
+        ul li:hover {
+            background-color: #c29867;
+            border-radius: 3px;
+        }
+
+        .content {
+            background-color: #eeeeee;
+
         }
 
     </style>
-    <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
-          href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <link rel="stylesheet" href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
+
 </head>
 <body>
-
-<nav class="navbar navbar-expand-md navbar-dark bg-dark" th:fragment="nav">
-    <div class="container-fluid">
-        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-            <div class="navbar-nav me-auto text-light">
-                Logo
-            </div>
-        </div>
-        <div class="mx-auto order-0">
-            <span class="navbar-brand mx-auto">Chào mừng đến với Queen Coffee</span>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".dual-collapse2">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-            <div class="navbar-nav ms-auto text-light">
-                <div class="dropdown">
-                    <button class="btn btn-success" type="button" id="dropdownMenuButton1"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                        <i class="fa-regular fa-user"></i>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="/user/update-form">Thông tin</a></li>
-                        <li><a class="dropdown-item" href="/account/login">Đăng nhập</a></li>
-                        <li><a class="dropdown-item" href="/account/logout">Đăng xuất</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</nav>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-2" style="background-color: #3A4F50" th:fragment="content1">
-            <h2 class="text-light">Queen Coffee</h2>
-            <ul class="nav nav-pills flex-column">
-                <li class="nav-item content-left">
-                    <a class="nav-link text-light " href="/order/">Đặt sản phẩm</a>
-                </li>
-                <li class="nav-item content-left">
-                    <a class="nav-link text-light" href="/customer/list">Quản lí khách hàng</a>
-                </li>
-                <li class="nav-item content-left">
-                    <a class="nav-link text-light" href="/user/list">Quản lí nhân viên</a>
-                </li>
-                <li class="nav-item content-left">
-                    <a class="nav-link text-light" href="/product">Quản lí sản phẩm</a>
-                </li>
-                <li class="nav-item content-left">
-                    <a class="nav-link text-light" href="/account/admin">Quản lí tài khoản</a>
-                </li>
-            </ul>
-            <hr class="d-sm-none">
+        <!--        xs-->
+        <!--        <576px	sm-->
+        <!--        ≥576px	md-->
+        <!--        ≥768px	lg-->
+        <!--        ≥992px	xl-->
+        <!--        ≥1200px	xxl-->
+        <div class="col-2 col-sm-3 col-md-3 col-lg-2 px-sm-2 px-0 bg-dark" th:fragment="side-bar">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-0 pt-2 text-white min-vh-100">
+                <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <img class="fs-5 d-none d-sm-inline w-100 h-100" src="healthy_drink-1_4x.png"/>
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start "
+                    id="menu">
+                    <li class="nav-item w-100">
+                        <a href="/order/" class="nav-link align-middle px-0 text-light">
+                            <i class="fa-solid fa-file-pen" style="color: #ffffff;"></i><span
+                                class="ms-1 d-none d-sm-inline">Dặt sản phẩm</span>
+                        </a>
+                    </li>
+                    <li class="nav-item w-100">
+                        <a href="/customer/list" class="nav-link px-0 align-middle text-light">
+                            <i class="fa-solid fa-users" style="color: #ffffff;"></i><span
+                                class="ms-1 d-none d-sm-inline">Quản lí khách hàng</span> </a>
+                    </li>
+
+                    <li class="nav-item w-100">
+                        <a href="/user/list" class="nav-link px-0 align-middle text-light">
+                            <i class="fa-solid fa-person" style="color: #ffffff;"></i> <span
+                                class="ms-1 d-none d-sm-inline">Quản lí nhân viên</span> </a>
+                    </li>
+                    <li class="nav-item w-100">
+                        <a href="/user/new-employee" class="nav-link px-0 align-middle text-light">
+                            <i class="fa-solid fa-person" style="color: #ffffff;"></i> <span
+                                class="ms-1 d-none d-sm-inline">nhân viên mới</span> </a>
+                    </li>
+                    <li class="nav-item w-100">
+                        <a href="/product" class="nav-link px-0 align-middle text-light">
+                            <i class="fa-solid fa-mug-hot" style="color: #ffffff;"></i> <span
+                                class="ms-1 d-none d-sm-inline">Quản lí sản phẩm</span>
+                        </a>
+                    </li>
+                    <li class="nav-item w-100">
+                        <a href="/account/admin" class="nav-link px-0 align-middle text-light">
+                            <i class="fa-solid fa-users-gear" style="color: #ffffff;"></i> <span
+                                class="ms-1 d-none d-sm-inline">Quản lí tài khoản</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="col-sm-10" style="background-color: #F4FEFD;min-height: 700px">
-            ewve
+        <div class="col-10  col-sm-9 col-md-9 col-lg-10">
+            <nav class="navbar navbar-expand-md navbar-dark row" style="background-color: #c29867"
+                 th:fragment="nav-bar">
+                <div class="container-fluid ">
+                    <div class="mx-auto col-6">
+                        <span class="navbar-brand mx-auto float-end h1" style="color:#FF0066">e</span>
+                        <span class="navbar-brand mx-auto float-end h1" style="color:#FF0066">e</span>
+                        <span class="navbar-brand mx-auto float-end h1" style="color:#FF9966">f</span>
+                        <span class="navbar-brand mx-auto float-end h1" style="color:#FFCCCC">f</span>
+                        <span class="navbar-brand mx-auto float-end h1" style="color:#66CC66">o</span>
+                        <span class="navbar-brand mx-auto float-end h1" style="color:#222831">C</span>
+                        <span class="navbar-brand mx-auto float-end h1" style="color:#ffe272">n</span>
+                        <span class="navbar-brand mx-auto float-end h1" style="color:#de6fff">e</span>
+                        <span class="navbar-brand mx-auto float-end h1" style="color:#53afff">e</span>
+                        <span class="navbar-brand mx-auto float-end h1" style="color:#36d8b7">u</span>
+                        <span class="navbar-brand mx-auto float-end h1" style="color:#9de16f">Q </span>
+
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                data-bs-target=".dual-collapse2">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                    <div class="navbar-collapse collapse dual-collapse2 col-6">
+                        <div class="navbar-nav ms-auto text-light">
+                            <div class="dropdown">
+                                <a id="dropdownMenuButton1"
+                                   data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                    <i class="fa-regular fa-user" style="color: #ffffff;"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                                    <li><a class="dropdown-item" href="/user/update-form">Thông tin</a></li>
+                                    <li><a class="dropdown-item" href="/account/login">Đăng nhập</a></li>
+                                    <li><a class="dropdown-item" href="/account/logout">Đăng xuất</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="row min-vh-100 content">
+                <div class="col-12">
+
+                </div>
+            </div>
+            <div class="row" style="background-color: #c29867" th:fragment="footer">
+                <footer class="text-light text-center text-lg-start bottom-0">
+                    <!-- Copyright -->
+                    <div class="text-center p-3">
+                        © 2023 Copyright: Team 2
+                        <a class="text-light" href="http://localhost:8080/">Queen Coffee</a>
+                    </div>
+                    <!-- Copyright -->
+                </footer>
+            </div>
         </div>
     </div>
 </div>
-
-
-<footer class=" text-light text-center text-lg-start" style="background-color: black" th:fragment="footer">
-    <!-- Copyright -->
-    <div class="text-center p-3">
-        © 2023 Copyright: Team 2
-        <a class="text-light" href="http://localhost:8080/">Queen Coffee</a>
-
-    </div>
-    <!-- Copyright -->
-</footer>
-<script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
-        src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
+<script src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </body>
 </html>
