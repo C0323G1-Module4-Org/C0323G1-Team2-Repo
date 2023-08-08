@@ -28,7 +28,8 @@
             <div class="form">
                 <form class="form-group" th:action="@{/customer/update}" th:object="${customerDto}" method="post">
                     <fieldset>
-                        <legend style="text-align: center; margin-top: 2rem"><h1><b>Chỉnh Sửa Thông Tin Khách Hàng</b></h1></legend>
+                        <legend style="text-align: center; margin-top: 2rem"><h1><b>Chỉnh Sửa Thông Tin Khách Hàng</b>
+                        </h1></legend>
                         <div class="table">
                             <table class="table table-hover">
                                 <tr>
@@ -39,7 +40,9 @@
                                 </tr>
                                 <tr>
                                     <th>Tên khách hàng <span style="color: red">*</span></th>
-                                    <td><input class="form-control" type="text" th:field="*{customerName}"></td>
+                                    <td><input class="form-control" type="text" th:field="*{customerName}">
+                                        <small th:if="${#fields.hasErrors('customerName')}" th:errors="*{customerName}"
+                                               style="color: red"></small></td>
                                 </tr>
                                 <tr>
                                     <th>Giới tính <span style="color: red">*</span></th>
@@ -48,15 +51,23 @@
                                         <span th:text="Nam"></span>
                                         <input type="radio" th:field="*{customerGender}" th:value="false">
                                         <span th:text="Nữ"></span>
+                                        <small th:if="${#fields.hasErrors('customerGender')}"
+                                               th:errors="*{customerGender}" style="color: red"></small>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Ngày sinh <span style="color: red">*</span></th>
-                                    <td><input class="form-control" type="date" th:field="*{customerBirthday}"></td>
+                                    <td>
+                                        <input class="form-control" type="date" th:field="*{customerBirthday}">
+                                        <small th:if="${#fields.hasErrors('customerBirthday')}"
+                                               th:errors="*{customerBirthday}" style="color: red"></small>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>Số điện thoại <span style="color: red">*</span></th>
                                     <td><input class="form-control" type="number" th:field="*{customerPhoneNumber}">
+                                        <small th:if="${#fields.hasErrors('customerPhoneNumber')}"
+                                               th:errors="*{customerPhoneNumber}" style="color: red"></small>
                                     </td>
                                 </tr>
                                 <tr>
@@ -66,8 +77,8 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <a th:href="@{/customer/list}">
-                                            <button type="button" class="btn btn-primary">Quay lại
+                                        <a th:href="@{/customer/list}" style="text-decoration: none">
+                                            <button type="button" class="btn btn-secondary">Thoát
                                             </button>
                                         </a>
                                         <button type="submit" class="btn btn-primary">Chỉnh sửa</button>
