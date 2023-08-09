@@ -4,6 +4,8 @@ import com.example.coffee_project.model.product.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 
 public interface IProductService {
     Page<Product> display(Pageable pageable);
@@ -13,4 +15,5 @@ public interface IProductService {
     Product findProductById(int id);
     void edit(Product product);
     Page<Product> searchByName(Pageable pageable, String name);
+    List<Product> getBestSeller();
 }
