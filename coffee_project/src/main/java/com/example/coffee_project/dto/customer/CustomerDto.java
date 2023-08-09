@@ -6,6 +6,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import java.sql.Date;
+import java.util.Objects;
 
 public class CustomerDto implements Validator {
     private Integer customerId;
@@ -94,6 +95,19 @@ public class CustomerDto implements Validator {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CustomerDto that = (CustomerDto) o;
+        return Objects.equals(customerId, that.customerId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(customerId);
+    }
+
+    @Override
     public String toString() {
         return "CustomerDto{" +
                 "customerId=" + customerId +
@@ -136,7 +150,7 @@ public class CustomerDto implements Validator {
             errors.rejectValue("customerPhoneNumber", null, "Không được để trống số điện thoại");
         } else if (!customerDto.getCustomerPhoneNumber().matches("^(84|0[3|5|7|8|9])+([0-9]{8})\\b$")) {
             errors.rejectValue("customerPhoneNumber", null, "Bạn nhập sai định dạng số điện thoại!");
-        } else if (customerDto.getCustomer() != null) {
+        } else if (customerDto.getCustomer() != null && !customerDto.getCustomer().getCustomerId().equals(customerDto.getCustomerId())) {
             errors.rejectValue("customerPhoneNumber", null, "Số điện thoại bạn nhập đã tồn tại!");
         }
     }

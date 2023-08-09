@@ -4,6 +4,7 @@ import com.example.coffee_project.model.oder.Order;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -100,6 +101,19 @@ public class Customer {
 
     public void setCustomerPoint(Integer customerPoint) {
         this.customerPoint = customerPoint;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return Objects.equals(customerId, customer.customerId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(customerId);
     }
 
     @Override

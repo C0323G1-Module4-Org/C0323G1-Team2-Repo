@@ -30,8 +30,7 @@
                         <form class="form-group" th:action="@{/customer/update}" th:object="${customerDto}"
                               method="post">
                             <fieldset>
-                                <legend style="text-align: center; margin-top: 2rem"><h1><b>Chỉnh Sửa Thông Tin Khách
-                                    Hàng</b></h1></legend>
+                                <legend style="text-align: center; margin-top: 2rem"><h1>Chỉnh Sửa Thông Tin Khách Hàng</h1></legend>
                                 <div class="table">
                                     <table class="table table-hover">
                                         <tr>
@@ -43,9 +42,13 @@
                                         <tr>
                                             <th>Tên khách hàng <span style="color: red">*</span></th>
                                             <td><input class="form-control" type="text" th:field="*{customerName}">
-                                                <small th:if="${#fields.hasErrors('customerName')}"
+                                                <div style="height: 20px">
+                                                    <small th:if="${#fields.hasErrors('customerName')}"
                                                        th:errors="*{customerName}"
-                                                       style="color: red"></small></td>
+                                                       style="color: red">
+                                                    </small>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>Giới tính <span style="color: red">*</span></th>
@@ -54,30 +57,36 @@
                                                 <span th:text="Nam"></span>
                                                 <input type="radio" th:field="*{customerGender}" th:value="false">
                                                 <span th:text="Nữ"></span>
-                                                <small th:if="${#fields.hasErrors('customerGender')}"
+                                                <div style="height: 20px">
+                                                    <small th:if="${#fields.hasErrors('customerGender')}"
                                                        th:errors="*{customerGender}" style="color: red"></small>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Ngày sinh <span style="color: red">*</span></th>
                                             <td>
                                                 <input class="form-control" type="date" th:field="*{customerBirthday}">
-                                                <small th:if="${#fields.hasErrors('customerBirthday')}"
+                                                <div style="height: 20px">
+                                                    <small th:if="${#fields.hasErrors('customerBirthday')}"
                                                        th:errors="*{customerBirthday}" style="color: red"></small>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Số điện thoại <span style="color: red">*</span></th>
                                             <td><input class="form-control" type="number"
                                                        th:field="*{customerPhoneNumber}">
-                                                <small th:if="${#fields.hasErrors('customerPhoneNumber')}"
+                                                <div style="height: 20px">
+                                                    <small th:if="${#fields.hasErrors('customerPhoneNumber')}"
                                                        th:errors="*{customerPhoneNumber}" style="color: red"></small>
+                                                </div>
                                             </td>
                                         </tr>
-                                        <!-- <tr>-->
-                                        <!-- <th>Điểm <span style="color: red">*</span></th>-->
-                                        <!-- <td><input class="form-control" th:field="*{customerPoint}" readonly></td>-->
-                                        <!-- </tr>-->
+                                        <tr>
+                                            <th>Điểm <span style="color: red">*</span></th>
+                                            <td><input class="form-control" th:field="*{customerPoint}" readonly></td>
+                                        </tr>
                                         <tr>
                                             <td></td>
                                             <td>
