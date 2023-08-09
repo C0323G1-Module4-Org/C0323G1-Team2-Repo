@@ -30,6 +30,13 @@ public class CustomerController {
     private ICustomerService customerService;
 
     //    Hiển thị danh sách khách hàng
+
+    /**
+     *
+     * @param page
+     * @param searchName
+     * @return
+     */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView showList(@RequestParam(defaultValue = "0") int page,
                                  @RequestParam(defaultValue = "") String searchName) {
