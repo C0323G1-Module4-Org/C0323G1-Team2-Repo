@@ -1,16 +1,31 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--    <style th:insert="/layout::style"></style>-->
+<!--    <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"-->
+<!--          href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">-->
+
+<!--</head>-->
+<!--<body>-->
+<!--<div th:replace="layout::nav"></div>-->
+<!--<div class="container-fluid">-->
+<!--    <div class="row">-->
+<!--        <div th:replace="layout::content1"></div>-->
+<!--        <div class="col-sm-10" style="background-color: #FEFAE0;min-height: 700px">-->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <style th:insert="/layout::style"></style>
+    <style th:replace="/layout::style"></style>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
           href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
     <style>
-        /*body {*/
-        /*    font-family: "Source Code Pro";*/
-        /*}*/
         .form {
             width: 70%;
             position: relative;
@@ -20,69 +35,79 @@
     </style>
 </head>
 <body>
-<div th:replace="layout::nav"></div>
 <div class="container-fluid">
     <div class="row">
-        <div th:replace="layout::content1"></div>
-        <div class="col-sm-10" style="background-color: #FEFAE0;min-height: 700px">
-            <div class="form">
-                <form class="form-group" th:action="@{/customer/save}" th:object="${customerDto}" method="post">
-                    <fieldset>
-                        <legend style="text-align: center; margin-top: 2rem"><h1><b>Đăng Ký Khách Hàng</b></h1></legend>
-                        <div class="table">
-                            <table class="table table-hover">
-                                <tr>
-                                    <th>Tên khách hàng <span style="color: red">*</span></th>
-                                    <td>
-                                        <input class="form-control" type="text" th:field="*{customerName}">
-                                        <small th:if="${#fields.hasErrors('customerName')}" th:errors="*{customerName}"
-                                               style="color: red"></small>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Giới tính <span style="color: red">*</span></th>
-                                    <td>
-                                        <input type="radio" th:field="*{customerGender}" th:value="true">
-                                        <span th:text="Nam"></span>
-                                        <input type="radio" th:field="*{customerGender}" th:value="false">
-                                        <span th:text="Nữ"></span>
-                                        </br>
-                                        <small th:if="${#fields.hasErrors('customerGender')}"
-                                               th:errors="*{customerGender}" style="color: red"></small>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Ngày sinh <span style="color: red">*</span></th>
-                                    <td><input class="form-control" type="date" th:field="*{customerBirthday}">
-                                        <small th:if="${#fields.hasErrors('customerBirthday')}"
-                                               th:errors="*{customerBirthday}" style="color: red"></small>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Số điện thoại <span style="color: red">*</span></th>
-                                    <td><input class="form-control" type="text" th:field="*{customerPhoneNumber}">
-                                        <small th:if="${#fields.hasErrors('customerPhoneNumber')}"
-                                               th:errors="*{customerPhoneNumber}" style="color: red"></small>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>
-                                        <button type="submit" class="btn btn-primary"> Thêm mới </button>
-                                        <a th:href="@{/customer/list}" style="text-decoration: none">
-                                            <button type="button" class="btn btn-secondary"> Thoát </button>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </fieldset>
-                </form>
+        <div th:replace="layout::side-bar"></div>
+        <div class="col-10  col-sm-9 col-md-9 col-lg-10">
+            <div th:replace="layout::nav-bar"></div>
+            <div class="row min-vh-100 content">
+                <div class="col-12">
+                    <!-------------------------------------------Main----------------------------------------------->
+                    <div class="form">
+                        <form class="form-group" th:action="@{/customer/save}" th:object="${customerDto}" method="post">
+                            <fieldset>
+                                <legend style="text-align: center; margin-top: 2rem"><h1><b>Đăng Ký Khách Hàng</b></h1>
+                                </legend>
+                                <div class="table">
+                                    <table class="table table-hover">
+                                        <tr>
+                                            <th>Tên khách hàng <span style="color: red">*</span></th>
+                                            <td>
+                                                <input class="form-control" type="text" th:field="*{customerName}">
+                                                <small th:if="${#fields.hasErrors('customerName')}"
+                                                       th:errors="*{customerName}"
+                                                       style="color: red"></small>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Giới tính <span style="color: red">*</span></th>
+                                            <td>
+                                                <input type="radio" th:field="*{customerGender}" th:value="true">
+                                                <span th:text="Nam"></span>
+                                                <input type="radio" th:field="*{customerGender}" th:value="false">
+                                                <span th:text="Nữ"></span>
+                                                </br>
+                                                <small th:if="${#fields.hasErrors('customerGender')}"
+                                                       th:errors="*{customerGender}" style="color: red"></small>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Ngày sinh <span style="color: red">*</span></th>
+                                            <td><input class="form-control" type="date" th:field="*{customerBirthday}">
+                                                <small th:if="${#fields.hasErrors('customerBirthday')}"
+                                                       th:errors="*{customerBirthday}" style="color: red"></small>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Số điện thoại <span style="color: red">*</span></th>
+                                            <td><input class="form-control" type="text"
+                                                       th:field="*{customerPhoneNumber}">
+                                                <small th:if="${#fields.hasErrors('customerPhoneNumber')}"
+                                                       th:errors="*{customerPhoneNumber}" style="color: red"></small>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <button type="submit" class="btn btn-primary"> Thêm mới</button>
+                                                <a th:href="@{/customer/list}" style="text-decoration: none">
+                                                    <button type="button" class="btn btn-secondary"> Thoát</button>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <!-------------------------------------------- End-main-------------------------------------------->
+                </div>
             </div>
+            <div th:replace="layout::footer"></div>
         </div>
     </div>
 </div>
-<div th:replace="layout::footer"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
         src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
 </body>
