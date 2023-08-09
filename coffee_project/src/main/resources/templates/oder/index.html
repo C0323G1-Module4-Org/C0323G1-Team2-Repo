@@ -3,101 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <style th:insert="/layout::style"></style>
+    <style th:replace="/layout::style"></style>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
-          href="../../static/bootstrap-5.0.2-dist/css/bootstrap.css">
+          href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
 </head>
 <body>
-<div th:replace="layout::nav"></div>
 <div class="container-fluid">
     <div class="row">
-        <div th:replace="layout::content1"></div>
-        <div class="col-sm-10" style="background-color: #FEFAE0;min-height: 700px">
-            <div class="display-5 text-center">Best Seller</div>
-            <div class="row">
-                <div class="col-3">
-                    <div class="card">
-                        <img src="https://bonjourcoffee.vn/blog/wp-content/uploads/2020/01/cafe-latte.jpg"
-                             class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <div class="card-text display-2">Cà Phê</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="card">
-                        <img src="https://bonjourcoffee.vn/blog/wp-content/uploads/2020/01/cafe-latte.jpg"
-                             class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <div class="card-text display-2">Cà Phê</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="card">
-                        <img src="https://bonjourcoffee.vn/blog/wp-content/uploads/2020/01/cafe-latte.jpg"
-                             class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <div class="card-text display-2">Cà Phê</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="card">
-                        <img src="https://bonjourcoffee.vn/blog/wp-content/uploads/2020/01/cafe-latte.jpg"
-                             class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <div class="card-text display-2">Cà Phê</div>
-                        </div>
-                    </div>
-                </div>
+        <div th:replace="layout::side-bar">
+        </div>
+        <div class="col-10  col-sm-9 col-md-9 col-lg-10">
+            <div th:replace="/layout::nav-bar">
             </div>
-            <div class="row m-5">
-                <div class="container pt-4">
-                    <div class="row">
-                        <div class="col-12 px-4 my-5">
-                            <h1 class="float-start">Đặt sản phẩm</h1>
-                            <form action="/order/" class="float-end" method="get">
-                                <div class="input-group">
-                                    <div class="form-outline">
-                                        <input id="search-input" name="name" type="search" placeholder="Tên sản phẩm"
-                                               class="form-control" th:value="${name}"/>
-                                    </div>
-                                    <button id="search-button" type="submit" class="btn btn-primary">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-12" style="min-height: 50%">
-                            <div class="row">
-                                <div class="col-lg-4 col-md-12 mb-4" th:each="product:${listProduct}">
-                                    <div class="card" style="width: 18rem;">
-                                        <img th:src="${product.productImagePath}"
-                                             class="card-img-top" alt="...">
-                                        <div class="card-body">
-                                            <h5 class="card-title" th:text="${product.productName}"></h5>
-                                            <p class="card-title float-start"
-                                               th:text="${product.productType.productTypeName}"></p>
-                                            <p class="card-title float-end"
-                                               th:text="${#numbers.formatDecimal(product.productPrice, 0, 'COMMA', 0, 'POINT')} + ' VND'"></p>
-                                            <form action="/order/add-order" method="post">
-                                                <div class="form-outline my-2" style="width:50%;">
-                                                    <input value="1" type="number" name="quantity" min="1"
-                                                           class="form-control"/>
-                                                </div>
-
-                                                <input type="hidden" name="idProduct" id="idProduct"
-                                                       th:value="${product.productId}">
-                                                <button type="submit" class="btn btn-primary">Đặt</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+            <div class="row min-vh-100 content">
+                <div class="col-12">
+                    <div class="container-fluid d-flex mt-3">
+                        <p class="h1">Bán chạy nhất</p>
+                    </div>
+                    <div class="container-fluid d-flex justify-content-evenly gap-3 mt-3">
+                        <div class="card">
+                            <img src="https://bonjourcoffee.vn/blog/wp-content/uploads/2020/01/cafe-latte.jpg"
+                                 class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <div class="card-text display-6">Cà Phê</div>
                             </div>
                         </div>
+                        <div class="card">
+                            <img src="https://bonjourcoffee.vn/blog/wp-content/uploads/2020/01/cafe-latte.jpg"
+                                 class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <div class="card-text display-6">Cà Phê</div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img src="https://bonjourcoffee.vn/blog/wp-content/uploads/2020/01/cafe-latte.jpg"
+                                 class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <div class="card-text display-6">Cà Phê</div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img src="https://bonjourcoffee.vn/blog/wp-content/uploads/2020/01/cafe-latte.jpg"
+                                 class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <div class="card-text display-6">Cà Phê</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid d-flex justify-content-between my-4">
+                        <p class="h1 float-start">Đặt sản phẩm</p>
+                        <form action="/order/" class="float-end" method="get">
+                            <div class="input-group">
+                                <div class="form-outline">
+                                    <input id="search-input" name="name" type="search" placeholder="Tên sản phẩm"
+                                           class="form-control" th:value="${name}"/>
+                                </div>
+                                <button id="search-button" type="submit" class="btn btn-primary">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="container-fluid d-flex flex-wrap justify-content-between">
+
+
+                        <div class="card" style="width: 18rem;margin-bottom: 30px" th:each="product:${listProduct}">
+                            <img th:src="${product.productImagePath}"
+                                 class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${product.productName}"></h5>
+                                <p class="card-title float-start"
+                                   th:text="${product.productType.productTypeName}"></p>
+                                <p class="card-title float-end"
+                                   th:text="${#numbers.formatDecimal(product.productPrice, 0, 'COMMA', 0, 'POINT')} + ' VND'"></p>
+                                <form action="/order/add-order" method="post">
+                                    <div class="form-outline my-2" style="width:50%;">
+                                        <input value="1" type="number" name="quantity" min="1"
+                                               class="form-control"/>
+                                    </div>
+
+                                    <input type="hidden" name="idProduct" id="idProduct"
+                                           th:value="${product.productId}">
+                                    <button type="submit" class="btn btn-primary">Đặt</button>
+                                </form>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="d-flex container-fluid">
 
                         <nav aria-label="Page navigation example">
                             <ul class="pagination">
@@ -118,37 +115,38 @@
                                         th:href="@{/order/(page=${listProduct.number +1},name=${name})}">Tới</a></li>
                             </ul>
                         </nav>
-
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="position-fixed bottom-0 end-0 p-3">
-            <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header">
-                    <strong class="me-auto">Tin nhắn</strong>
-                    <small>Bây giờ</small>
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-                <div class="toast-body text-info" th:text="${msg}">
-                </div>
-            </div>
+        <div th:replace="layout::footer">
         </div>
-
     </div>
-    <div class="col-12 position-fixed top-50 bottom-50" style="z-index: 2;">
-        <button class="btn btn-outline-dark float-end position-relative" style="margin-top: 20%;margin-right: 5%"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal">
-            <i class="fa-solid fa-cart-shopping" style="color: #3a4d50;">
-            </i>
-            <span
-                    th:if="${listOrderDetail}" th:text="${listOrderDetail.orderDetailList.size()}"
-                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+</div>
 
+<div class="col-12 position-fixed top-50 bottom-50" style="z-index: 2;">
+    <button class="btn btn-outline-dark float-end position-relative" style="margin-top: 20%;margin-right: 5%"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal">
+        <i class="fa-solid fa-cart-shopping" style="color: #3a4d50;">
+        </i>
+        <span
+                th:if="${listOrderDetail}" th:text="${listOrderDetail.orderDetailList.size()}"
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             </span>
-        </button>
+    </button>
+</div>
+
+<!--Toast-->
+<div class="position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Tin nhắn</strong>
+            <small>Bây giờ</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body text-info" th:text="${msg}">
+        </div>
     </div>
 </div>
 
@@ -166,7 +164,7 @@
                         <table class="table table-hover">
                             <thead>
                             <tr class="text-center">
-                                <th scope="col">Stt</th>
+                                <th scope="col">STT</th>
                                 <th scope="col">Tên sản phẩm</th>
                                 <th scope="col">Loại</th>
                                 <th scope="col">Giá</th>
@@ -249,9 +247,6 @@
     </div>
 </div>
 
-
-<div th:replace="layout::footer"></div>
-
 <script>
     document.cookie = 'JESESSIONID=; Max-Age=0;'
 
@@ -286,8 +281,16 @@
         bsAlert.show();//show it
     }
 </script>
+<script th:if="${msg1}">
+    window.onload = function () {
+        var myModal = document.getElementById("exampleModal");
+        var modal = new bootstrap.Modal(myModal);
+        modal.show();
+    }
+</script>
+
 
 <script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
-        src="../../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
+        src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
 </body>
 </html>
