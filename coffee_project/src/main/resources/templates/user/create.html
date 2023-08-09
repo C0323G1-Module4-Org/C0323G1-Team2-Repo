@@ -120,9 +120,11 @@
                                                 <input class="form-check-input" type="radio" name="gender"
                                                        th:field="*{userGender}"
                                                        th:value="false">&nbsp;<span>Nữ</span>
-                                                <div style=" height: 20px"><small style="color: red"
-                                                                                  th:if="${#fields.hasErrors('userGender')}"
-                                                                                  th:errors="*{userGender}"></small></div>
+                                                <div style=" height: 20px">
+                                                    <small style="color: red"
+                                                           th:if="${#fields.hasErrors('userGender')}"
+                                                           th:errors="*{userGender}"></small>
+                                                </div>
                                             </td>
 
                                         </tr>

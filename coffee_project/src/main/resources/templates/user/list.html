@@ -73,7 +73,7 @@
                                 <th scope="col">Tài khoản</th>
                                 <th scope="col">Lương</th>
                                 <th scope="col">Vị trí</th>
-                                <th colspan="3" scope="col" style="text-align: center">Hành động</th>
+                                <th colspan="3" scope="col" style="text-align: center">Chức năng</th>
 
                                 </thead>
                                 <tr th:each="user, status :${userPage}">
@@ -124,7 +124,7 @@
                                         <li th:class="${!userPage.hasPrevious()} ? 'page-item disabled' : 'page-item'">
                                             <a
                                                     class="page-link"
-                                                    th:href="@{/user/list/(page=${userPage.number -1},search=${search})}">Lùi</a>
+                                                    th:href="@{/user/list/(page=${userPage.number -1},search=${search})}">Trước</a>
                                         </li>
 
                                         <li class="page-link disabled"><span
@@ -134,7 +134,7 @@
 
                                         <li th:class="${!userPage.hasNext()} ? 'page-item disabled' : 'page-item'"><a
                                                 class="page-link"
-                                                th:href="@{/user/list/(page=${userPage.number +1},search=${search})}">Tới</a>
+                                                th:href="@{/user/list/(page=${userPage.number +1},search=${search})}">Sau</a>
                                         </li>
                                     </ul>
                                 </nav>
