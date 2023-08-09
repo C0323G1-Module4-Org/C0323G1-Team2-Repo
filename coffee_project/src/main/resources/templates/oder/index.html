@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Đặt sản phẩm</title>
+    <link rel="shortcut icon" href="/static/healthy_drink-1_4x.png" th:href="@{/healthy_drink-1_4x.png}">
     <style th:replace="/layout::style"></style>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -62,7 +63,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="container-fluid d-flex flex-wrap gap-5 justify-content-start">
+                    <div class="container-fluid d-flex flex-wrap gap-3 justify-content-between">
 
                         <div class="card" style="width: 18rem;margin-bottom: 30px"
                              th:each="product:${listProduct}">
@@ -124,7 +125,7 @@
     </div>
 
     <div class="col-12 position-fixed top-50 bottom-50" style="z-index: 2;">
-        <button class="btn btn-outline-dark float-end position-relative" style="margin-top: 10%;margin-right: 4%"
+        <button class="btn btn-outline-dark float-end position-relative" style="margin-top: 12%;margin-right: 4%"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal">
             <i class="fa-solid fa-cart-shopping" style="color: #3a4d50;">

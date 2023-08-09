@@ -7,6 +7,9 @@ import com.example.coffee_project.repository.oder.IOrderDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class OrderDetailService implements IOrderDetailService {
     @Autowired
@@ -32,5 +35,12 @@ public class OrderDetailService implements IOrderDetailService {
     public OrderDetail findByOrderDetailId(int orderDetailId) {
         return orderDetailRepository.findByOrderDetailId(orderDetailId);
     }
-
+    @Override
+    public List<String> revenue() {
+        List<String> revenueList = new ArrayList<>();
+        revenueList.add(orderDetailRepository.revenue3());
+        revenueList.add(orderDetailRepository.revenue2());
+        revenueList.add(orderDetailRepository.revenue1());
+        return revenueList;
+    }
 }

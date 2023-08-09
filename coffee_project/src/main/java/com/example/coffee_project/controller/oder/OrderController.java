@@ -162,4 +162,12 @@ public class OrderController {
         redirectAttributes.addFlashAttribute("msg", "Đã thanh toán");
         return "redirect:/order/";
     }
+
+    @GetMapping("/revenue")
+    public String chart(Model model) {
+        for (int i = 0; i < orderDetailService.revenue().size(); i++) {
+            model.addAttribute("msg" + i, orderDetailService.revenue().get(i));
+        }
+        return "oder/chart";
+    }
 }
