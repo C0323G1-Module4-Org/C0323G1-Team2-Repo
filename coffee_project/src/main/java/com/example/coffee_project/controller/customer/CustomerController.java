@@ -30,13 +30,6 @@ public class CustomerController {
     private ICustomerService customerService;
 
     //    Hiển thị danh sách khách hàng
-
-    /**
-     *
-     * @param page
-     * @param searchName
-     * @return
-     */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView showList(@RequestParam(defaultValue = "0") int page,
                                  @RequestParam(defaultValue = "") String searchName) {
@@ -93,6 +86,8 @@ public class CustomerController {
     @PostMapping("/update")
     public String update(@Valid @ModelAttribute CustomerDto customerDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
         Customer customer = new Customer();
+        Customer customer1 = customerService.findByCustomerPhoneNumber(customerDto.getCustomerPhoneNumber());
+        customerDto.setCustomer(customer1);
         new CustomerDto().validate(customerDto, bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("customerDto", customerDto);
