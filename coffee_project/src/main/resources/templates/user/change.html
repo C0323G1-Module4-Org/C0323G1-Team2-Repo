@@ -36,117 +36,128 @@
     </style>
 </head>
 <body>
-<div th:replace="layout::nav"></div>
+
 <div class="container-fluid">
     <div class="row">
-        <div th:replace="layout::content1"></div>
-        <div class="col-sm-10" style="background-color: #FEFAE0;min-height: 700px">
-
-            <!-------------------------------CODE--------------------------------------------------->
-            <div class="row" style="margin-top: 15px;margin-bottom: 20px">
-
-                <a class="col-1 mt-2" style="text-decoration: none" href="/user/list">
-                    <button title="Quay lại"
-                            class="btn btn-primary">
-                        <i class="fa-solid fa-circle-arrow-left"></i></button>
-                </a>
-                <h1 class="col-11" style="text-align: center">
-                    Thay Đổi Thông Tin Nhân Viên</h1>
+        <div th:replace="layout::side-bar">
+        </div>
+        <div class="col-10  col-sm-9 col-md-9 col-lg-10">
+            <div th:replace="layout::nav-bar">
             </div>
+            <div class="row min-vh-100 content">
+                <div class="col-12">
 
-            <div class="row">
-                <div class="col-4">
-                    <div id="dnd" class="preview" style="margin-top: 15px">
-                        <img th:src="${userDto.userImagePath}" style="height: 300px; width: 200px;">
+                    <!-------------------------------CODE--------------------------------------------------->
+                    <div class="row" style="margin-top: 15px;margin-bottom: 20px">
+
+                        <a class="col-1 mt-2" style="text-decoration: none" href="/user/list">
+                            <button title="Quay lại"
+                                    class="btn btn-primary">
+                                <i class="fa-solid fa-circle-arrow-left"></i></button>
+                        </a>
+                        <h1 class="col-11" style="text-align: center">
+                            Thay Đổi Thông Tin Nhân Viên</h1>
                     </div>
-                </div>
-                <div class="col-8" id="form-create">
-                    <table class="table table-responsive table-hover" style="width: 70%">
 
-                        <tr>
-                            <th>Tên:</th>
-                            <td>
-                                <div th:text="${userDto.userName}"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Ngày Sinh:</th>
-                            <td><div th:text="${#dates.format(userDto.userBirthday, 'dd-MM-yyyy')}"></div></td>
-                        </tr>
-                        <tr>
-                            <th>Số điện thoại:</th>
-                            <td><div th:text="${userDto.userPhoneNumber}"></div></td>
+                    <div class="row">
+                        <div class="col-4">
+                            <div id="dnd" class="preview" style="margin-top: 15px">
+                                <img th:src="${userDto.userImagePath}" style="height: 300px; width: 200px;">
+                            </div>
+                        </div>
+                        <div class="col-8" id="form-create">
+                            <table class="table table-responsive table-hover" style="width: 70%">
 
-                        </tr>
-                        <tr>
-                            <th>Email:</th>
-                            <td><div th:text="${userDto.userEmail}"></div></td>
+                                <tr>
+                                    <th>Tên:</th>
+                                    <td>
+                                        <div th:text="${userDto.userName}"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Ngày Sinh:</th>
+                                    <td><div th:text="${#dates.format(userDto.userBirthday, 'dd-MM-yyyy')}"></div></td>
+                                </tr>
+                                <tr>
+                                    <th>Số điện thoại:</th>
+                                    <td><div th:text="${userDto.userPhoneNumber}"></div></td>
 
-                        </tr>
-                        <tr>
-                            <th>Căn cước công dân:</th>
-                            <td><div th:text="${userDto.userIdCard}"></div></td>
+                                </tr>
+                                <tr>
+                                    <th>Email:</th>
+                                    <td><div th:text="${userDto.userEmail}"></div></td>
 
-                        </tr>
-                        <tr>
-                            <th>Địa chỉ:</th>
-                            <td><div th:text="${userDto.userAddress}"></div></td>
-                        </tr>
-                        <tr>
-                            <th>Tên đăng nhập:</th>
-                            <td><div th:text="${userDto.account.accountName}"></div></td>
-                        </tr>
-                        <form th:object="${userDto}" method="post" th:action="@{/user/change}">
-                            <input hidden="hidden" th:field="*{userId}">
-                            <input hidden="hidden" th:field="*{userImagePath}">
-                            <input hidden="hidden" th:field="*{userBirthday}">
-                            <input hidden="hidden" th:field="*{userAddress}">
-                            <input hidden="hidden" th:field="*{userIdCard}">
-                            <input hidden="hidden" th:field="*{userEmail}">
-                            <input hidden="hidden" th:field="*{userPhoneNumber}">
-                            <input hidden="hidden" th:field="*{userName}">
-                            <input hidden="hidden" th:field="*{userGender}">
-                            <input hidden="hidden" th:field="*{account}">
-                            <tr>
-                                <th>Lương <span style="color: red">*</span>
-                                    <div style=" height: 20px"></div>
-                                </th>
-                                <td><input id="salary" class="form-control" th:field="*{userSalary}" type="number">
-                                    <div style=" height: 20px"><small style="color: red"
-                                                                      th:if="${#fields.hasErrors('userSalary')}"
-                                                                      th:errors="*{userSalary}"></small></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Ca làm việc <span style="color: red">*</span>
-                                    <div style=" height: 20px"></div>
-                                </th>
-                                <td><select id="disabledSelect" class="form-select" th:field="*{employeeType}">
-                                    <option th:each="employeeType :${employeeTypeList}"
-                                            th:value="${employeeType.employeeTypeId}"
-                                            th:text="${employeeType.employeeTypeName}"></option>
-                                </select>
-                                    <div style=" height: 20px"></div>
-                                </td>
-                            </tr>
-                            <tr>
+                                </tr>
+                                <tr>
+                                    <th>Căn cước công dân:</th>
+                                    <td><div th:text="${userDto.userIdCard}"></div></td>
 
-                                <td colspan="2">
-                                    <button style="margin-top:20px; width: 100%" type="submit" class="btn btn-primary">
-                                        Xác Nhận
-                                    </button>
-                                </td>
-                            </tr>
-                        </form>
-                    </table>
+                                </tr>
+                                <tr>
+                                    <th>Địa chỉ:</th>
+                                    <td><div th:text="${userDto.userAddress}"></div></td>
+                                </tr>
+                                <tr>
+                                    <th>Tên đăng nhập:</th>
+                                    <td><div th:text="${userDto.account.accountName}"></div></td>
+                                </tr>
+                                <form th:object="${userDto}" method="post" th:action="@{/user/change}">
+                                    <input hidden="hidden" th:field="*{userId}">
+                                    <input hidden="hidden" th:field="*{userImagePath}">
+                                    <input hidden="hidden" th:field="*{userBirthday}">
+                                    <input hidden="hidden" th:field="*{userAddress}">
+                                    <input hidden="hidden" th:field="*{userIdCard}">
+                                    <input hidden="hidden" th:field="*{userEmail}">
+                                    <input hidden="hidden" th:field="*{userPhoneNumber}">
+                                    <input hidden="hidden" th:field="*{userName}">
+                                    <input hidden="hidden" th:field="*{userGender}">
+                                    <input hidden="hidden" th:field="*{account}">
+                                    <tr>
+                                        <th>Lương <span style="color: red">*</span>
+                                            <div style=" height: 20px"></div>
+                                        </th>
+                                        <td><input id="salary" class="form-control" th:field="*{userSalary}" type="number">
+                                            <div style=" height: 20px"><small style="color: red"
+                                                                              th:if="${#fields.hasErrors('userSalary')}"
+                                                                              th:errors="*{userSalary}"></small></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Ca làm việc <span style="color: red">*</span>
+                                            <div style=" height: 20px"></div>
+                                        </th>
+                                        <td><select id="disabledSelect" class="form-select" th:field="*{employeeType}">
+                                            <option th:each="employeeType :${employeeTypeList}"
+                                                    th:value="${employeeType.employeeTypeId}"
+                                                    th:text="${employeeType.employeeTypeName}"></option>
+                                        </select>
+                                            <div style=" height: 20px"></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td colspan="2">
+                                            <button style="margin-top:20px; width: 100%" type="submit" class="btn btn-primary">
+                                                Xác Nhận
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </form>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-------------------------------END CODE--------------------------------------------------->
+
                 </div>
             </div>
-
-            <!-------------------------------END CODE--------------------------------------------------->
+            <div th:replace="layout::footer">
+            </div>
         </div>
     </div>
 </div>
-<div th:replace="layout::footer"></div>
+
+
 <script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
         src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
 </body>
@@ -157,6 +168,5 @@
         let salary = +document.getElementById("salary").value;
         document.getElementById("salary").value = Math.round(salary);
     }
-
 </script>
 </html>
