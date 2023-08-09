@@ -158,7 +158,7 @@ public class UserController {
         BeanUtils.copyProperties(userDto,user);
         userService.saveUser(user);
         redirectAttributes.addFlashAttribute("msg","Chỉnh sửa thành công!");
-        return "redirect:/user/list";
+        return "redirect:/user/new-employee";
     }
     @GetMapping("/new-employee")
     public String showNewEmployeeList(@RequestParam(defaultValue = "0")Integer page,
