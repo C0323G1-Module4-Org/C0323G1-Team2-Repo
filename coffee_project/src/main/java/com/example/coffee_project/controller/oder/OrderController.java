@@ -47,6 +47,7 @@ public class OrderController {
     public String home(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "") String name, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findByName(authentication.getName());
+        List<Product> bestSeller = productService.getBestSeller();
         if (user == null)
             return "redirect:/user/create-form";
         Order order = orderService.findCurrentOrder(true, user);
@@ -64,6 +65,7 @@ public class OrderController {
             orderDetailDto.setOrderDetailList(new ArrayList<>(order.getOrderDetailSet()));
             model.addAttribute("listOrderDetail", orderDetailDto);
         }
+        model.addAttribute("bestSeller", bestSeller);
         model.addAttribute("name", name);
         model.addAttribute("listProduct", listProduct);
         return "oder/index";
@@ -106,12 +108,14 @@ public class OrderController {
     }
 
     @PostMapping("/payment")
-    public String Payment(@ModelAttribute OrderDetailDto orderDetailDto, Model model) {
+    public String Payment(@ModelAttribute OrderDetailDto orderDetailDto, Model model, RedirectAttributes redirectAttributes) {
+        System.out.println(orderDetailDto.getOrderDetailList().size());
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findByName(authentication.getName());
         Order order = orderService.findCurrentOrder(true, user);
+        order.setOrderDate(new Timestamp(new Date().getTime()));
         List<Customer> listCustomer = customerService.findListCustomer();
-        if (orderDetailDto != null) {
+        if (orderDetailDto != null && orderDetailDto.getOrderDetailList().size() != 0) {
             for (OrderDetail o : orderDetailDto.getOrderDetailList()) {
                 if (o.getQuantityProduct() == null || o.getQuantityProduct() < 1)
                     return "redirect:/order/";
@@ -121,6 +125,7 @@ public class OrderController {
             model.addAttribute("order", order);
             return "oder/payment";
         }
+        redirectAttributes.addFlashAttribute("msg", "Giỏ hàng rỗng");
         return "redirect:/order/";
     }
 
@@ -129,7 +134,6 @@ public class OrderController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findByName(authentication.getName());
         Order order = orderService.findCurrentOrder(true, user);
-        order.setOrderDate(new Timestamp(new Date().getTime()));
         Customer customer = customerService.findByCustomerPhoneNumber(phoneNumber);
         if (customer != null) {
             double totalPrice = 0;
