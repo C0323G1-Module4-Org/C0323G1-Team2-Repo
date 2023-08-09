@@ -7,12 +7,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 
 
 @Service
 public class ProductService implements IProductService {
     @Autowired
     private IProductRepository productRepository;
+
     @Override
     public Page<Product> searchByName(Pageable pageable, String name) {
         return productRepository.findAllByProductNameContaining(pageable, name);
@@ -59,5 +61,10 @@ public class ProductService implements IProductService {
     @Override
     public void edit(Product product) {
         productRepository.save(product);
+    }
+
+    @Override
+    public List<Product> getBestSeller() {
+        return productRepository.getBestSeller();
     }
 }

@@ -110,6 +110,17 @@
             font-size: 2em;
             color: #007bff;
         }
+        .image-cell {
+            width: 100px;
+            height: 100px;
+            text-align: center;
+        }
+
+        .image-cell img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
     <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
@@ -169,7 +180,7 @@
                             <tbody>
                             <tr th:each="product,status: ${products}">
                                 <td th:text="${status.count}"></td>
-                                <td><img th:src="${product.productImagePath}" alt="product image" width="100"></td>
+                                <td class="image-cell"><img th:src="${product.productImagePath}" alt="product image" width="100"></td>
                                 <td th:text="${product.productName}">Product Name</td>
                                 <td th:text="${product.productType.productTypeName}">Product Type</td>
                                 <td th:text="${#numbers.formatDecimal(product.productPrice, 0, 'COMMA', 0, 'POINT')} +' VNĐ'"
@@ -204,7 +215,7 @@
                                 <ul class="pagination">
                                     <li th:class="${!products.hasPrevious()} ? 'page-item disabled' : 'page-item'"><a
                                             class="page-link"
-                                            th:href="@{/product(page=${products.number-1},name=${name},productType=${productType},price=${price})}">Lùi</a>
+                                            th:href="@{/product(page=${products.number-1},name=${name},productType=${productType},price=${price})}">Trước</a>
                                     </li>
 
                                     <li class="page-link disabled"><span th:text="${products.number +1}"></span>/<span
@@ -213,7 +224,7 @@
 
                                     <li th:class="${!products.hasNext()} ? 'page-item disabled' : 'page-item'"><a
                                             class="page-link"
-                                            th:href="@{/product(page=${products.number+1},name=${name},productType=${productType},price=${price})}">Tới</a>
+                                            th:href="@{/product(page=${products.number+1},name=${name},productType=${productType},price=${price})}">Sau</a>
                                     </li>
                                 </ul>
                             </nav>
