@@ -21,7 +21,7 @@ public class CustomerService implements ICustomerService{
 
     @Override
     public boolean save(Customer customer) {
-        customer.setCustomerName(CustomerValidate.validateString(customer.getCustomerName()));
+//        customer.setCustomerName(CustomerValidate.validateString(customer.getCustomerName()));
         Customer customer1 = customerRepository.save(customer);
         return customer1 != null;
     }
