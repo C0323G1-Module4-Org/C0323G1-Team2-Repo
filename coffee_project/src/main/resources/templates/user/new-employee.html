@@ -23,15 +23,16 @@
 
 
                     <!------------------CODE------------------------------->
+                    <h1 class="col-11" style="text-align: center">
+                        Danh Sách Nhân Viên Mới</h1>
                     <div class="row" style="margin-top: 15px;margin-bottom: 20px">
 
-                        <a class="col-1 mt-2" style="text-decoration: none" href="/user/list">
+                        <a class="col-12 mt-2" style="text-decoration: none" href="/user/list">
                             <button title="Quay lại"
                                     class="btn btn-primary">
                                 <i class="fa-solid fa-circle-arrow-left"></i></button>
                         </a>
-                        <h1 class="col-11" style="text-align: center">
-                            Danh Sách Nhân Viên Mới</h1>
+
                     </div>
 
                     <table class="table table-hover table-responsive">
@@ -103,7 +104,6 @@
 </div>
 <!-------------------------End Toast-------------------------------------------------------------->
 
-<div th:replace="layout::footer"></div>
 <script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
         src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
 <script th:if="${msg}">
