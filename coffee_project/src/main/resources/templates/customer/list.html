@@ -3,257 +3,241 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <style th:insert="/layout::style"></style>
+    <style th:replace="/layout::style"></style>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
           href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
-    <script src="/js/jquery-3.7.0.min.js"></script>
     <style>
-        /*body {*/
-        /*    font-family: "Source Code Pro";*/
-        /*}*/
-
-        #next {
-            font-size: 1em;
-            color: #333;
-            transition: font-size 0.2s ease-in-out;
-            margin-right: 5px;
-        }
-
-        #next:hover {
-            font-size: 1.5em;
-            color: #007bff;
-        }
-
-        #next1 {
-            font-size: 1em;
-            color: #333;
-            transition: font-size 0.2s ease-in-out;
-        }
-
-        #next1:hover {
-            font-size: 1.5em;
-            color: #007bff;
-        }
-
         .page-link {
             color: black;
         }
     </style>
 </head>
 <body>
-<div th:replace="layout::nav"></div>
 <div class="container-fluid">
     <div class="row">
-        <div th:replace="layout::content1"></div>
-        <div class="col-sm-10" style="background-color: #FEFAE0;min-height: 700px">
-            <h1 style="text-align: center; margin-top: 2rem"><b>Quản Lý Khách Hàng</b></h1>
-            <!------------------------------------ Thanh công cụ ------------------------------------>
+        <div th:replace="layout::side-bar">
+        </div>
+        <div class="col-10  col-sm-9 col-md-9 col-lg-10">
+            <div th:replace="layout::nav-bar">
+            </div>
+            <div class="row min-vh-100 content">
+                <div class="col-12">
 
-            <nav class="navbar navbar-inverse">
-                <div class="container-fluid">
-                    <div class="navbar-form navbar-left">
-                        <a th:href="@{/customer/showCreateForm}">
-                            <button title="Thêm mới khách hàng"
-                                    class="btn btn-primary">
-                                <i class="fa-solid fa-plus"></i></button>
-                        </a>
-                    </div>
-                    <!------------------------------- Thanh tìm kiếm ------------------------------------>
+                    <h1 style="text-align: center; margin-top: 2rem"><b>Quản Lý Khách Hàng</b></h1>
+                    <!------------------------------------ Thanh công cụ ------------------------------------>
 
-                    <form class="navbar-form navbar-right" action="/customer/list" method="get">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Nhập tên khách hàng..."
-                                   th:name="searchName" th:value="${searchName}">
-                            <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                    <nav class="navbar navbar-inverse">
+                        <div class="container-fluid">
+                            <div class="navbar-form navbar-left">
+                                <a th:href="@{/customer/showCreateForm}">
+                                    <button title="Thêm mới khách hàng"
+                                            class="btn btn-primary">
+                                        <i class="fa-solid fa-plus"></i></button>
+                                </a>
+                            </div>
+                            <!------------------------------- Thanh tìm kiếm ------------------------------------>
+
+                            <form class="navbar-form navbar-right" action="/customer/list" method="get">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Nhập tên khách hàng..."
+                                           th:name="searchName" th:value="${searchName}">
+                                    <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </nav>
+                    <!-------------------------------------------Toast--------------------------------------------->
+
+                    <div class="position-fixed bottom-0 end-0 p-3">
+                        <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="toast-header">
+                                <strong class="me-auto">Tin nhắn</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="toast"
+                                        aria-label="Thoát"></button>
+                            </div>
+                            <div class="toast-body text-info" th:text="${message}">
+                            </div>
+                        </div>
+                    </div>
+                    <!----------------------------------------- End Toast ----------------------------------------->
+
+                    <!--            <div th:if="${message!=null}" class="toast p-0" id="myToast" role="alert"-->
+                    <!--                 aria-live="assertive" aria-atomic="true">-->
+                    <!--                <div class="toast-header d-flex justify-content-between bg-success text-dark">-->
+                    <!--                    <span><strong th:text="${message}"></strong></span>-->
+                    <!--                </div>-->
+                    <!--            </div>-->
+                    <!---------------------------------------  Hiển thị danh sách  -------------------------------->
+
+                    <div th:if="${!customerPage.isEmpty()}" class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">STT</th>
+                                <th scope="col">Họ và tên</th>
+                                <th scope="col">Giới tính</th>
+                                <th scope="col">Ngày sinh</th>
+                                <th scope="col">Số điện thoại</th>
+                                <th scope="col">Điểm</th>
+                                <th scope="col" colspan="3" style="text-align: center">Chức năng</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="customer, status: ${customerPage}">
+                                <td scope="row" th:text="${status.count}"></td>
+                                <td th:text="${customer.customerName}"></td>
+                                <td th:switch="${customer.customerGender}">
+                                    <span th:case="true" th:text="Nam"></span>
+                                    <span th:case="false" th:text="Nữ"></span>
+                                    <span th:case="*" th:utext="${'<h3>N/A</h3>'}"></span>
+                                </td>
+                                <td th:text="${#dates.format(customer.customerBirthday,'dd-MM-yyyy')}"></td>
+                                <td th:text="${customer.customerPhoneNumber}"></td>
+                                <td th:text="${customer.customerPoint}"></td>
+                                <td style="text-align: center">
+                                    <button type="button" class="btn btn-primary"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#modalView"
+                                            th:attr="onclick=|showDetail(${customer.customerId})|">
+                                        <i class="fa-solid fa-circle-info"></i>
+                                    </button>
+                                </td>
+                                <!--                        <td>-->
+                                <!--                            <a th:href="@{/customer/{id}/view(id=${customer.getCustomerId()})}" class="btn btn-primary">-->
+                                <!--                                <i class="fa-solid fa-circle-info"></i>-->
+                                <!--                            </a>-->
+                                <!--                        </td>-->
+                                <td>
+                                    <a th:href="@{/customer/{id}/edit(id=${customer.getCustomerId()})}">
+                                        <button class="btn btn-primary">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+                                    </a>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal" th:data-id="${customer.customerId}"
+                                            th:data-name="${customer.customerName}"
+                                            th:onclick="sendInfoToDelete(this.getAttribute('data-id'), this.getAttribute('data-name'))">
+                                        <i class="fa-regular fa-trash-can"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-----------------------------------------Phân trang----------------------------------------->
+
+                    <div class="d-flex justify-content-center">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li th:class="${!customerPage.hasPrevious()} ? 'page-item disabled' : 'page-item'">
+                                    <a class="page-link"
+                                       th:href="@{/customer/list(page=${customerPage.number-1}, searchName=${searchName})}">Lùi
+                                    </a>
+                                </li>
+                                <li class="page-link disabled"><span th:text="${customerPage.number +1}"></span>/<span
+                                        th:text="${customerPage.totalPages}"></span>
+                                </li>
+                                <li th:class="${!customerPage.hasNext()} ? 'page-item disabled' : 'page-item'">
+                                    <a class="page-link"
+                                       th:href="@{/customer/list(page=${customerPage.number+1},searchName=${searchName})}">Tới
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <!--------------------------------------------------------------------------------------->
+                    <!--                <div style="text-align: center ; gap: 1rem">-->
+                    <!--                    <a id="next" th:if="${customerPage.hasPrevious()}"-->
+                    <!--                       th:href="@{/customer/list(page=${customerPage.number-1}, searchName=${searchName})}"><i-->
+                    <!--                            class="fas fa-backward"></i></a>-->
+                    <!--                    <span th:text="${customerPage.number+1}"></span>/<span th:text="${customerPage.totalPages}"></span>-->
+                    <!--                    <a id="next1" th:if="${customerPage.hasNext()}"-->
+                    <!--                       th:href="@{/customer/list(page=${customerPage.number+1},searchName=${searchName})}"><i-->
+                    <!--                            class="fas fa-forward"></i></a>-->
+                    <!--                </div>-->
+                    <!------------------------------------ Modal Detail------------------------------------->
+
+                    <div class="modal fade" id="modalView" tabindex="-1" aria-labelledby="viewModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="viewModalLabel1" style="text-align: center">
+                                        <strong>Thông
+                                            tin chi tiết</strong></h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table" style="border-color: white">
+                                        <tr>
+                                            <td><strong>Tên: </strong></td>
+                                            <td><span id="customerName"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Giới tính: </strong></td>
+                                            <td><span id="customerGender"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Ngày Sinh: </strong></td>
+                                            <td><span id="customerBirthday"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Điện thoại: </strong></td>
+                                            <td><span id="customerPhoneNumber"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Điểm tích lũy: </strong></td>
+                                            <td><span id="customerPoint"></span></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-------------------------------------- Delete Modal --------------------------------------->
+
+                    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModalLabel">Hộp thoại</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Không"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Bạn có chắc chắn muốn xóa <strong id="nameDelete"></strong> ?</span>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không
+                                    </button>
+                                    <a id="idDelete">
+                                        <button type="button" class="btn btn-primary" id="myToastBtn">Có</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </nav>
-            <!-------------------------------------------Toast--------------------------------------------->
-
-            <div class="position-fixed bottom-0 end-0 p-3">
-                <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="toast-header">
-                        <strong class="me-auto">Tin nhắn</strong>
-                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Thoát"></button>
-                    </div>
-                    <div class="toast-body text-info" th:text="${message}">
-                    </div>
-                </div>
+                <!------------------------------------------End-main------------------------------------------------>
             </div>
-            <!----------------------------------------- End Toast ----------------------------------------->
-
-<!--            <div th:if="${message!=null}" class="toast p-0" id="myToast" role="alert"-->
-<!--                 aria-live="assertive" aria-atomic="true">-->
-<!--                <div class="toast-header d-flex justify-content-between bg-success text-dark">-->
-<!--                    <span><strong th:text="${message}"></strong></span>-->
-<!--                </div>-->
-<!--            </div>-->
-            <!---------------------------------------  Hiển thị danh sách  -------------------------------->
-
-            <div th:if="${!customerPage.isEmpty()}" class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th scope="col">STT</th>
-                        <th scope="col">Họ và tên</th>
-                        <th scope="col">Giới tính</th>
-                        <th scope="col">Ngày sinh</th>
-                        <th scope="col">Số điện thoại</th>
-                        <th scope="col">Điểm</th>
-                        <th scope="col" colspan="3">Chức năng</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="customer, status: ${customerPage}">
-                        <td scope="row" th:text="${status.count}"></td>
-                        <td th:text="${customer.customerName}"></td>
-                        <td th:switch="${customer.customerGender}">
-                            <span th:case="true" th:text="Nam"></span>
-                            <span th:case="false" th:text="Nữ"></span>
-                            <span th:case="*" th:utext="${'<h3>N/A</h3>'}"></span>
-                        </td>
-                        <td th:text="${#dates.format(customer.customerBirthday,'dd-MM-yyyy')}"></td>
-                        <td th:text="${customer.customerPhoneNumber}"></td>
-                        <td th:text="${customer.customerPoint}"></td>
-                        <td style="text-align: center">
-                            <button type="button" class="btn btn-primary"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#modalView"
-                                    th:attr="onclick=|showDetail(${customer.customerId})|">
-                                <i class="fa-solid fa-circle-info"></i>
-                            </button>
-                        </td>
-                        <!--                        <td>-->
-                        <!--                            <a th:href="@{/customer/{id}/view(id=${customer.getCustomerId()})}" class="btn btn-primary">-->
-                        <!--                                <i class="fa-solid fa-circle-info"></i>-->
-                        <!--                            </a>-->
-                        <!--                        </td>-->
-                        <td>
-                            <a th:href="@{/customer/{id}/edit(id=${customer.getCustomerId()})}">
-                                <button class="btn btn-primary">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </button>
-                            </a>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                    data-bs-target="#deleteModal" th:data-id="${customer.customerId}"
-                                    th:data-name="${customer.customerName}"
-                                    th:onclick="sendInfoToDelete(this.getAttribute('data-id'), this.getAttribute('data-name'))">
-                                <i class="fa-regular fa-trash-can"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-----------------------------------------Phân trang----------------------------------------->
-
-            <div class="d-flex justify-content-center">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li th:class="${!customerPage.hasPrevious()} ? 'page-item disabled' : 'page-item'">
-                            <a class="page-link"
-                               th:href="@{/customer/list(page=${customerPage.number-1}, searchName=${searchName})}">Lùi
-                            </a>
-                        </li>
-                        <li class="page-link disabled"><span th:text="${customerPage.number +1}"></span>/<span
-                                th:text="${customerPage.totalPages}"></span>
-                        </li>
-                        <li th:class="${!customerPage.hasNext()} ? 'page-item disabled' : 'page-item'">
-                            <a class="page-link"
-                               th:href="@{/customer/list(page=${customerPage.number+1},searchName=${searchName})}">Tới
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-            <!--------------------------------------------------------------------------------------->
-            <!--                <div style="text-align: center ; gap: 1rem">-->
-            <!--                    <a id="next" th:if="${customerPage.hasPrevious()}"-->
-            <!--                       th:href="@{/customer/list(page=${customerPage.number-1}, searchName=${searchName})}"><i-->
-            <!--                            class="fas fa-backward"></i></a>-->
-            <!--                    <span th:text="${customerPage.number+1}"></span>/<span th:text="${customerPage.totalPages}"></span>-->
-            <!--                    <a id="next1" th:if="${customerPage.hasNext()}"-->
-            <!--                       th:href="@{/customer/list(page=${customerPage.number+1},searchName=${searchName})}"><i-->
-            <!--                            class="fas fa-forward"></i></a>-->
-            <!--                </div>-->
-            <!------------------------------------ Modal Detail------------------------------------->
-
-            <div class="modal fade" id="modalView" tabindex="-1" aria-labelledby="viewModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="viewModalLabel1" style="text-align: center"><strong>Thông
-                                tin chi tiết</strong></h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <table class="table" style="border-color: white">
-                                <tr>
-                                    <td><strong>Tên: </strong></td>
-                                    <td><span id="customerName"></span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Giới tính: </strong></td>
-                                    <td><span id="customerGender"></span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Ngày Sinh: </strong></td>
-                                    <td><span id="customerBirthday"></span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Điện thoại: </strong></td>
-                                    <td><span id="customerPhoneNumber"></span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Điểm tích lũy: </strong></td>
-                                    <td><span id="customerPoint"></span></td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-------------------------------------- Delete Modal --------------------------------------->
-
-            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabel">Hộp thoại</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Không"></button>
-                        </div>
-                        <div class="modal-body">
-                            Bạn có chắc chắn muốn xóa <strong id="nameDelete"></strong> ?</span>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
-                            <a id="idDelete">
-                                <button type="button" class="btn btn-primary" id="myToastBtn">Có</button>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        </div>
+        <div th:replace="layout::footer">
         </div>
     </div>
 </div>
-<div th:replace="layout::footer"></div>
-</body>
-<script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
-        src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
+</div>
 <script>
     function sendInfoToDelete(id, name) {
         document.getElementById('nameDelete').innerText = name
@@ -298,4 +282,8 @@
         bsAlert.show();//show it
     }
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
+        src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
+</body>
 </html>
