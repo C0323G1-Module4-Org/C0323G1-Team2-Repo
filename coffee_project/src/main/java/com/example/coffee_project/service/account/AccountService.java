@@ -33,8 +33,8 @@ public class AccountService implements IAccountService {
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     @Override
-    public Page<Account> getAllAccount(Pageable pageable, String searchName) {
-        return accountRepository.findAllByAccountNameContaining(pageable, searchName);
+    public Page<Account> getAllAccount(Pageable pageable, String searchName,String roleName) {
+        return accountRepository.findAllByAccountNameContainingAndRole_RoleName(pageable, searchName,roleName);
     }
 
     @Override
@@ -82,14 +82,31 @@ public class AccountService implements IAccountService {
         // Tạo nội dung email
         String body = "Mã xác nhận của bạn là: " + code +" .Bạn vui lòng lấy mã để tại lại mật khẩu";
         // Cấu hình subject
-        String subject="Queen Coffee gửi mã xác thực ta khoản của bạn";
-        sendEmail(to,subject,body);
+        String subject = "Queen Coffee gửi mã xác thực ta khoản của bạn";
+        sendEmail(to, subject, body);
         return code;
     }
 
     @Override
     public void deleteAccount(Account account) {
         accountRepository.removeAccount(account.getAccountName());
+    }
+
+    @Override
+    public boolean testPass(String username, String pass) {
+        Account account = accountRepository.findAccountByAccountName(username);
+        System.out.println(username);
+        String oldPassEncoder=account.getAccountPassword();
+        boolean isMath= bCryptPasswordEncoder.matches(pass,oldPassEncoder);
+        System.out.println(isMath);
+      return isMath;
+    }
+
+    @Override
+    public void changePass(String username, String newPassword) {
+        Account account = accountRepository.findAccountByAccountName(username);
+        account.setAccountPassword(bCryptPasswordEncoder.encode(newPassword));
+        accountRepository.save(account);
     }
 
     private String generateRandomCode(int length) {
@@ -102,7 +119,6 @@ public class AccountService implements IAccountService {
         }
         return code.toString();
     }
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

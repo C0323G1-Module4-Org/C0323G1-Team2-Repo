@@ -48,7 +48,7 @@ public class AccountController {
     @PostMapping("/signup")
     public String signupAccount(@Valid @ModelAttribute AccountDto accountDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("msg","Không để trống");
+            redirectAttributes.addFlashAttribute("msg", "Không để trống ");
         }else {
             if (accountService.findByUsername(accountDto.getAccountName())!=null){
                 redirectAttributes.addFlashAttribute("msg","Tài khoản đã tồn tại");
@@ -63,7 +63,7 @@ public class AccountController {
     public  ModelAndView showListAccount(@RequestParam(defaultValue = "0") int page,
                                          @RequestParam(defaultValue = "") String searchName) {
         Pageable pageable = PageRequest.of(page, 5, Sort.by("role.roleId").ascending());
-        Page<Account> accountPage = accountService.getAllAccount(pageable, searchName);
+        Page<Account> accountPage = accountService.getAllAccount(pageable, searchName,"employee");
         ModelAndView modelAndView = new ModelAndView("/account/list-account");
         modelAndView.addObject("accountDto", new AccountDto());
         modelAndView.addObject("accountPage", accountPage);
@@ -112,24 +112,55 @@ public class AccountController {
                               @RequestParam String emailCode,
                               @RequestParam String code) {
         Account account=accountService.findByUsername(username);
-        if (Objects.equals(password, password2) && Objects.equals(emailCode, code)){
-           account.setAccountPassword(password);
+        if (Objects.equals(password, password2) && Objects.equals(emailCode, code)) {
+            account.setAccountPassword(password);
             accountService.forgot(account);
             return "redirect:/account/login";
-        }else {
-            return"redirect:/account/forgot";
+        } else {
+            return "redirect:/account/forgot";
         }
     }
+
     @PostMapping("/delete")
-    public  String delete(@RequestParam String accountName,
-                          RedirectAttributes redirectAttributes){
-    Account account=accountService.findByUsername(accountName);
-    if (account.getRole().getRoleName().equals("admin")){
-        redirectAttributes.addFlashAttribute("msg","Bạn không thể xóa tài khoản này");
-    }else {
-        accountService.deleteAccount(account);
-        redirectAttributes.addFlashAttribute("msg","đã xóa tài khoản : "+account.getAccountName());
+    public String delete(@RequestParam String accountName,
+                         RedirectAttributes redirectAttributes) {
+        Account account = accountService.findByUsername(accountName);
+        if (account.getRole().getRoleName().equals("admin")) {
+            redirectAttributes.addFlashAttribute("msg", "Bạn không thể xóa tài khoản này");
+        } else {
+            accountService.deleteAccount(account);
+            redirectAttributes.addFlashAttribute("msg", "đã xóa tài khoản : " + account.getAccountName());
+        }
+        return "redirect:/account/admin";
     }
-    return "redirect:/account/admin";
+
+    @GetMapping("/change-password")
+    public String showFormChange() {
+        return "/account/change-pass";
     }
+
+    @PostMapping("/change-password")
+    public String changePass(@RequestParam("currentPassword") String currentPassword,
+                             @RequestParam("newPassword") String newPassword,
+                             @RequestParam("newPassword1") String newPassword1,
+                             Authentication authentication,
+                             RedirectAttributes redirectAttributes) {
+        String username = authentication.getName();
+        if (Objects.equals(currentPassword, "") || Objects.equals(newPassword, "") || Objects.equals(newPassword1, "")) {
+            redirectAttributes.addFlashAttribute("msg", "Vui lòng điền đầy đủ các thông tin");
+        } else if (!Objects.equals(newPassword, newPassword1)) {
+            redirectAttributes.addFlashAttribute("msg", "Kiểm tra lại nhập liệu");
+        } else if (accountService.testPass(username, currentPassword)) {
+            accountService.changePass(username, newPassword);
+            redirectAttributes.addFlashAttribute("msg", "Đổi mật khẩu thành công");
+            return "redirect:/order/";
+        }else {
+            redirectAttributes.addFlashAttribute("msg", "Kiểm tra lại nhập liệu");
+        }
+        redirectAttributes.addFlashAttribute("currentPassword", currentPassword);
+        redirectAttributes.addFlashAttribute("newPassword", newPassword);
+        redirectAttributes.addFlashAttribute("newPassword1", newPassword1);
+        return "redirect:/account/change-password";
+    }
+
 }
