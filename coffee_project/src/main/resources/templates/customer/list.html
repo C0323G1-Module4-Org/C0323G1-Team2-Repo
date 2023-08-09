@@ -8,11 +8,6 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
           href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
-    <style>
-        .page-link {
-            color: black;
-        }
-    </style>
 </head>
 <body>
 <div class="container-fluid">
@@ -24,8 +19,7 @@
             </div>
             <div class="row min-vh-100 content">
                 <div class="col-12">
-
-                    <h1 style="text-align: center; margin-top: 2rem"><b>Quản Lý Khách Hàng</b></h1>
+                    <h1 style="text-align: center; margin-top: 2rem">Quản Lý Khách Hàng</h1>
                     <!------------------------------------ Thanh công cụ ------------------------------------>
 
                     <nav class="navbar navbar-inverse">
@@ -109,14 +103,14 @@
                                 <!--                                <i class="fa-solid fa-circle-info"></i>-->
                                 <!--                            </a>-->
                                 <!--                        </td>-->
-                                <td>
+                                <td style="text-align: center">
                                     <a th:href="@{/customer/{id}/edit(id=${customer.getCustomerId()})}">
                                         <button class="btn btn-primary">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </button>
                                     </a>
                                 </td>
-                                <td>
+                                <td style="text-align: center">
                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                             data-bs-target="#deleteModal" th:data-id="${customer.customerId}"
                                             th:data-name="${customer.customerName}"
@@ -136,7 +130,7 @@
                             <ul class="pagination">
                                 <li th:class="${!customerPage.hasPrevious()} ? 'page-item disabled' : 'page-item'">
                                     <a class="page-link"
-                                       th:href="@{/customer/list(page=${customerPage.number - 1}, searchName=${searchName})}">Lùi
+                                       th:href="@{/customer/list(page=${customerPage.number - 1}, searchName=${searchName})}">Trước
                                     </a>
                                 </li>
                                 <li class="page-link disabled"><span th:text="${customerPage.number +1}"></span>/<span
@@ -144,7 +138,7 @@
                                 </li>
                                 <li th:class="${!customerPage.hasNext()} ? 'page-item disabled' : 'page-item'">
                                     <a class="page-link"
-                                       th:href="@{/customer/list(page=${customerPage.number+1},searchName=${searchName})}">Tới
+                                       th:href="@{/customer/list(page=${customerPage.number+1},searchName=${searchName})}">Sau
                                     </a>
                                 </li>
                             </ul>
