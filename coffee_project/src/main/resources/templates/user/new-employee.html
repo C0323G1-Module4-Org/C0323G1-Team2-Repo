@@ -64,7 +64,7 @@
                                 <ul class="pagination">
                                     <li th:class="${!userPage.hasPrevious()} ? 'page-item disabled' : 'page-item'"><a
                                             class="page-link"
-                                            th:href="@{/user/list/(page=${userPage.number -1},search=${search})}">Lùi</a>
+                                            th:href="@{/user/list/(page=${userPage.number -1},search=${search})}">Trước</a>
                                     </li>
 
                                     <li class="page-link disabled"><span th:text="${userPage.number +1}"></span>/<span
@@ -73,7 +73,7 @@
 
                                     <li th:class="${!userPage.hasNext()} ? 'page-item disabled' : 'page-item'"><a
                                             class="page-link"
-                                            th:href="@{/user/list/(page=${userPage.number +1},search=${search})}">Tới</a>
+                                            th:href="@{/user/list/(page=${userPage.number +1},search=${search})}">Sau</a>
                                     </li>
                                 </ul>
                             </nav>
