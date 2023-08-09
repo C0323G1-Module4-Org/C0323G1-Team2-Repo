@@ -54,7 +54,8 @@
                                                    placeholder="Tên nhân viên"
                                                    class="form-control" th:value="${search}"/>
                                         </div>
-                                        <button id="search-button" type="submit" class="btn btn-primary">
+                                        <button title="Tìm kiếm" id="search-button" type="submit"
+                                                class="btn btn-primary">
                                             <i class="fas fa-search"></i>
                                         </button>
 
@@ -90,7 +91,8 @@
                                     <td style="text-align: center">
 
                                         <a th:href="@{/user/change-form/{id}(id=${user.userId})}">
-                                            <button type="button" class="btn btn-primary">
+                                            <button title="Sửa lương và ca làm việc" type="button"
+                                                    class="btn btn-primary">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </button>
                                         </a>
@@ -98,7 +100,7 @@
                                     <td style="text-align: center">
 
                                         <!-- Button trigger detail modal -->
-                                        <button type="button" class="btn btn-primary"
+                                        <button title="Chi tiết" type="button" class="btn btn-primary"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal1"
                                                 th:attr="onclick=|showDetail(${user.userId})|">
@@ -106,7 +108,8 @@
                                         </button>
                                     </td>
                                     <td style="text-align: center">
-                                        <button style="text-align: center" type="button" class="btn btn-danger"
+                                        <button title="Xoá" style="text-align: center" type="button"
+                                                class="btn btn-danger"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal"
                                                 th:attr="onclick=|showInfo(${user.userId},'${user.userName}')|">
@@ -185,6 +188,7 @@
                     <input id="userId" hidden="hidden" name="userId">
                     <input name="userName" id="userName" hidden="hidden">
                     <div>Bạn có xác nhận xoá người dùng có tên là: <span id="userNameDisplay"></span></div>
+                    <div style="color: red"><strong>Lưu ý:</strong> không thể hoàn tác hành động này!</div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
@@ -246,7 +250,6 @@
 
 
 <!-------End Modal Detail---------------------------------->
-<!--//code-->
 
 
 <script>

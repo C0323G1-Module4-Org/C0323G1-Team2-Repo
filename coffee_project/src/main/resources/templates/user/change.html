@@ -156,6 +156,19 @@
     </div>
 </div>
 
+<!-------------------------Toast-------------------------------------------------------------->
+<div class="position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Tin nhắn</strong>
+            <small>Bây giờ</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body text-info" th:text="${msg}">
+        </div>
+    </div>
+</div>
+<!-------------------------End Toast-------------------------------------------------------------->
 
 <script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
         src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
@@ -166,6 +179,13 @@
     function formatSalary() {
         let salary = +document.getElementById("salary").value;
         document.getElementById("salary").value = Math.round(salary);
+    }
+</script>
+<script th:if="${msg}">
+    window.onload = function () {
+        let myAlert = document.getElementById('liveToast');//select id of toast
+        let bsAlert = new bootstrap.Toast(myAlert);//inizialize it
+        bsAlert.show();//show it
     }
 </script>
 </html>
