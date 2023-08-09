@@ -135,8 +135,8 @@ public class CustomerDto implements Validator {
             errors.rejectValue("customerName", null, "Không được để trống tên!");
         } else if (customerDto.getCustomerName().length() > 255) {
             errors.rejectValue("customerName", null, "Tên quá dài! Không nhập quá 255 ký tự!");
-        } else if (!customerDto.getCustomerName().matches("^[\\p{Lu}][\\p{Ll}]*([\\s][\\p{Lu}][\\p{Ll}]*)*$")) {
-            errors.rejectValue("customerName", null, "Tên phải viết hoa chữ cái đầu và không được chứa ký tự đặc biệt!");
+        } else if (!customerDto.getCustomerName().matches("^[a-zA-zÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]*$")) {
+            errors.rejectValue("customerName", null, "Tên không được chứa ký tự đặc biệt!");
         }
         // Check gender
         if (customerDto.getCustomerGender() == null) {

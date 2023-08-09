@@ -18,4 +18,19 @@ public class CustomerValidate {
         Period period = Period.between(localBirthday, currentDay);
         return period.isNegative();
     }
+
+    public static String validateString(String s) {
+        String[] arrayS = s.trim().split("");
+        String newString = arrayS[0].toUpperCase();
+        for (int i = 1; i < arrayS.length; i++) {
+            if (arrayS[i-1].equals(" ") && arrayS[i].equals(" "))
+                continue;
+            if (arrayS[i - 1].equals(" ")) {
+                newString += " " + arrayS[i].toUpperCase();
+            } else {
+                newString += arrayS[i].toLowerCase();
+            }
+        }
+        return newString;
+    }
 }
