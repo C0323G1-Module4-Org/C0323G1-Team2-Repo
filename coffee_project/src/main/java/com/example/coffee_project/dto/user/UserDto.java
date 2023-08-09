@@ -1,18 +1,13 @@
 package com.example.coffee_project.dto.user;
 
 import com.example.coffee_project.common.user.UserValidate;
-import com.example.coffee_project.common.user.custom.ValidDouble;
 import com.example.coffee_project.common.user.custom.ValidSQLDate;
 import com.example.coffee_project.model.account.Account;
 import com.example.coffee_project.model.user.EmployeeType;
-import com.example.coffee_project.service.user.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
