@@ -36,6 +36,7 @@ public class CustomerService implements ICustomerService{
         Customer customer1 = findById(id);
         if (customer1 != null) {
             customer.setCustomerPoint(customer1.getCustomerPoint());
+            customer.setCustomerName(CustomerValidate.validateString(customer.getCustomerName()));
             Customer customerUpdate = customerRepository.save(customer);
             return true;
         }
