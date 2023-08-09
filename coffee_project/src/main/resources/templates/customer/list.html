@@ -120,7 +120,7 @@
                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                             data-bs-target="#deleteModal" th:data-id="${customer.customerId}"
                                             th:data-name="${customer.customerName}"
-                                            th:onclick="sendInfoToDelete(this.getAttribute('data-id'), this.getAttribute('data-name'))">
+                                            onclick="sendInfoToDelete(this.getAttribute('data-id'),this.getAttribute('data-name'))">
                                         <i class="fa-regular fa-trash-can"></i>
                                     </button>
                                 </td>
@@ -136,7 +136,7 @@
                             <ul class="pagination">
                                 <li th:class="${!customerPage.hasPrevious()} ? 'page-item disabled' : 'page-item'">
                                     <a class="page-link"
-                                       th:href="@{/customer/list(page=${customerPage.number-1}, searchName=${searchName})}">Lùi
+                                       th:href="@{/customer/list(page=${customerPage.number - 1}, searchName=${searchName})}">Lùi
                                     </a>
                                 </li>
                                 <li class="page-link disabled"><span th:text="${customerPage.number +1}"></span>/<span
@@ -229,14 +229,13 @@
                             </div>
                         </div>
                     </div>
+                    <!------------------------------------------End-main------------------------------------------------>
                 </div>
-                <!------------------------------------------End-main------------------------------------------------>
+            </div>
+            <div th:replace="layout::footer">
             </div>
         </div>
-        <div th:replace="layout::footer">
-        </div>
     </div>
-</div>
 </div>
 <script>
     function sendInfoToDelete(id, name) {
