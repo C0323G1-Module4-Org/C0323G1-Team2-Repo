@@ -6,9 +6,9 @@
     <style th:replace="/layout::style"></style>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
-          href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
+          href="../../static/bootstrap-5.0.2-dist/css/bootstrap.css">
 </head>
 <body>
 <div class="container-fluid">
@@ -32,7 +32,7 @@
                                                                           th:text="${order.user.employeeType.employeeTypeName}"></span>
                                         </li>
                                         <li class="text-black mt-1"
-                                            th:text="${#calendars.format(#calendars.createNow(), 'dd MMM yyyy HH:mm')}">
+                                            th:text="${order.orderDate}">
                                             April 17
                                             2021
                                         </li>
@@ -86,7 +86,7 @@
                                 <div class="row text-black">
 
                                     <div class="col-xl-12">
-                                        <p class="float-end fw-bold mx-1 " id="totalPrice"
+                                        <p class="float-end fw-bold mx-3 " id="totalPrice"
                                            th:text="${#numbers.formatDecimal(order.getTotalPrice(), 0, 'COMMA', 0, 'POINT')} + ' VND'">
                                             Total: $100000
                                         </p>
@@ -108,7 +108,7 @@
                                     <div class="col-xl-6">
                                         <div class="row">
                                             <p class="float-end align-content-end col-xl-12">Giảm giá: <span
-                                                    id="sale">-0 VND</span>
+                                                    id="sale">0 VND</span>
                                             </p>
                                             <p class="float-end col-xl-12">Tiền thực trả: <span id="net"></span></p>
                                             <span class="float-end col-xl-12 text-danger" id="error"></span>
@@ -199,7 +199,7 @@
         else if (parseInt($(this).val()) == 30)
             sale = (totalPrice * 10) / 100;
         let netPrice = totalPrice - sale;
-        $('#sale').html("- " + sale.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
+        $('#sale').html(sale.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
         $('#net').html(netPrice.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
     };
 
@@ -217,7 +217,7 @@
             $('#result').html("Không có");
             $('#error').html('');
             $('#totalPrice').html(totalPrice.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
-            $('#sale').html("-0 VND");
+            $('#sale').html("0 VND");
             $('#net').html(totalPrice.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
         }
         updatePoint.call($('#select'));
