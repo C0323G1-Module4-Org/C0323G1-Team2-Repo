@@ -109,7 +109,7 @@
                                             <div style=" height: 20px"></div>
                                         </th>
                                         <td>
-                                            <input class="form-control" th:field="*{userName}"
+                                            <input id="userName" class="form-control" th:field="*{userName}"
                                                    th:value="${userDto.userName}">
                                             <div style=" height: 20px"><small style="color: red"
                                                                               th:if="${#fields.hasErrors('userName')}"
@@ -236,7 +236,25 @@
 <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-analytics.js"></script>
 <script>
 
-
+    // Change User Name
+    let userName = document.getElementById("userName");
+    userName.addEventListener("blur", function changeUserName() {
+            let name = document.getElementById("userName").value.trim();
+            let arr = name.split(" ");
+            let newArr = [];
+            console.log(arr)
+            for (let i = 0; i < arr.length; i++) {
+                if(arr[i] === ""){
+                    continue;
+                }
+                let arrStr = arr[i].split("")
+                arrStr[0] = arrStr[0].toUpperCase();
+                arrStr.join("");
+                newArr.push(arrStr.join(""));
+            }
+            document.getElementById("userName").value = newArr.join(" ");
+        }
+    )
 
     const dndElement = document.querySelector('#dnd')
     const resultElement = document.querySelector('.preview')

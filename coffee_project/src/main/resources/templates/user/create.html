@@ -102,7 +102,8 @@
                                                 <div style=" height: 20px"></div>
                                             </th>
                                             <td>
-                                                <div><input id="userName" class="form-control" th:field="*{userName}"
+                                                <div><input  id="userName"
+                                                            class="form-control" th:field="*{userName}"
                                                             th:value="${userDto.userName}"></div>
                                                 <div style=" height: 20px"><small style="color: red"
                                                                                   th:if="${#fields.hasErrors('userName')}"
@@ -137,7 +138,8 @@
                                                        th:field="*{userBirthday}">
                                                 <div style=" height: 20px"><small style="color: red"
                                                                                   th:if="${#fields.hasErrors('userBirthday')}"
-                                                                                  th:errors="*{userBirthday}"></small></div>
+                                                                                  th:errors="*{userBirthday}"></small>
+                                                </div>
                                             </td>
                                         </tr>
 
@@ -148,7 +150,8 @@
                                             <td><input class="form-control" th:field="*{userPhoneNumber}">
                                                 <div style=" height: 20px"><small style="color: red"
                                                                                   th:if="${#fields.hasErrors('userPhoneNumber')}"
-                                                                                  th:errors="*{userPhoneNumber}"></small></div>
+                                                                                  th:errors="*{userPhoneNumber}"></small>
+                                                </div>
                                             </td>
                                         </tr>
 
@@ -159,7 +162,8 @@
                                             <td><input class="form-control" th:field="*{userEmail}">
                                                 <div style=" height: 20px"><small style="color: red"
                                                                                   th:if="${#fields.hasErrors('userEmail')}"
-                                                                                  th:errors="*{userEmail}"></small></div>
+                                                                                  th:errors="*{userEmail}"></small>
+                                                </div>
                                             </td>
                                         </tr>
 
@@ -170,7 +174,8 @@
                                             <td><input class="form-control" th:field="*{userIdCard}">
                                                 <div style=" height: 20px"><small style="color: red"
                                                                                   th:if="${#fields.hasErrors('userIdCard')}"
-                                                                                  th:errors="*{userIdCard}"></small></div>
+                                                                                  th:errors="*{userIdCard}"></small>
+                                                </div>
                                             </td>
                                         </tr>
 
@@ -181,14 +186,15 @@
                                             <td><input class="form-control" id="a" th:field="*{userAddress}">
                                                 <div style=" height: 20px"><small style="color: red"
                                                                                   th:if="${#fields.hasErrors('userAddress')}"
-                                                                                  th:errors="*{userAddress}"></small></div>
+                                                                                  th:errors="*{userAddress}"></small>
+                                                </div>
                                             </td>
                                         </tr>
 
                                         <tr>
 
                                             <td colspan="2">
-                                                <button style="margin-top:20px; width: 100%" id="submit"
+                                                <button style="margin-top:20px; width: 100%" id="submit" type="submit"
                                                         class="btn btn-primary">
                                                     Sửa
                                                 </button>
@@ -212,7 +218,6 @@
 </div>
 
 
-
 <script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
         src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
 
@@ -221,6 +226,28 @@
 <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-analytics.js"></script>
 <script type="module">
+
+
+    // Change User Name
+    let userName = document.getElementById("userName");
+    userName.addEventListener("blur", function changeUserName() {
+            let name = document.getElementById("userName").value.trim();
+            let arr = name.split(" ");
+            let newArr = [];
+            console.log(arr)
+            for (let i = 0; i < arr.length; i++) {
+                if(arr[i] === ""){
+                    continue;
+                }
+                let arrStr = arr[i].split("")
+                arrStr[0] = arrStr[0].toUpperCase();
+                arrStr.join("");
+                newArr.push(arrStr.join(""));
+            }
+            document.getElementById("userName").value = newArr.join(" ");
+        }
+    )
+
 
     function renderBaseImg() {
         let path = document.getElementById("thumbnailURL").value;
