@@ -4,19 +4,17 @@ import com.example.coffee_project.model.product.ProductType;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 
 public class ProductDto implements Validator {
     private Integer productId;
     private String productDescription;
     private String productImagePath;
-    @NotBlank(message = "không được để trống")
-    @Pattern(regexp = "^[\\p{Lu}][\\p{Ll}]{1,8}(\\s([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,10})){0,5}$",message = "Tên sản phẩm phải đúng định dạng ")
+    //    @NotBlank(message = "Tên không được để trống")
+//    @Pattern(regexp = "^[\\p{Lu}][\\p{Ll}]{1,8}(\\s([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,10})){0,5}$",
+//            message = "Tên sản phẩm phải đúng định dạng, chữ cái đầu viết hoa ")
     private String productName;
-//    @NotEmpty(message = "Không được để trống")
-    @Min(value = 1,message = "giá phải là số dương ")
+    //    @NotNull(message = "Không được để trống")
+//    @Min(value = 1, message = "giá phải là số dương ")
     private Double productPrice;
     private ProductType productType;
 
@@ -87,6 +85,16 @@ public class ProductDto implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-
+        ProductDto productDto = (ProductDto) target;
+        if (productDto.getProductName().equals("")) {
+            errors.rejectValue("productName", null, "Tên sản phẩm không được để trống");
+        } else if (!productDto.getProductName().matches("^[\\p{Lu}][\\p{Ll}]{1,8}(\\s([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,10})){0,5}$")) {
+            errors.rejectValue("productName", null, "Tên sản phẩm phải đúng định dạng, chữ cái đầu viết hoa ");
+        }
+        if (productDto.getProductPrice() == null) {
+            errors.rejectValue("productPrice", null, "Giá sản phẩm không được để trống");
+        } else if (productDto.getProductPrice() <= 0) {
+            errors.rejectValue("productPrice", null, "Giá sản phẩm không được nhỏ hơn hoặc bằng 0");
+        }
     }
 }

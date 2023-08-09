@@ -30,7 +30,7 @@ public class ProductController {
     @GetMapping("/list")
     public String displayCard(@PageableDefault(size = 6, sort = "productPrice") Pageable pageable, Model model) {
         model.addAttribute("productTypes", productTypeService.display());
-        String[] prices = {"10,000-50,000", "50,000-100,000", "100,000-150,000", "150,000-200,000"};
+        String[] prices = {"10,000 - 50,000", "50,000 - 100,000", "100,000 - 150,000", "150,000 - 200,000"};
         model.addAttribute("prices", prices);
         Page<Product> products = productService.display(pageable);
         model.addAttribute("products", products);
@@ -42,7 +42,7 @@ public class ProductController {
                              @RequestParam(value = "name", defaultValue = "") String name,
                              @RequestParam(defaultValue = "") String productType, @RequestParam(defaultValue = "")
                              String price) {
-        String[] prices = {"10,000-50,000", "50,000-100,000", "100,000-150,000", "150,000-200,000"};
+        String[] prices = {"10,000 - 50,000", "50,000 - 100,000", "100,000 - 150,000", "150,000 - 200,000"};
         model.addAttribute("prices", prices);
         model.addAttribute("productTypes", productTypeService.display());
         Page<Product> products = productService.search(pageable, name, productType, price);
@@ -56,11 +56,11 @@ public class ProductController {
                          @RequestParam(value = "name", defaultValue = "") String name,
                          @RequestParam(defaultValue = "") String productType, @RequestParam(defaultValue = "")
                          String price) {
-        String[] prices = {"10,000-50,000", "50,000-100,000", "100,000-150,000", "150,000-200,000"};
+        String[] prices = {"10,000 - 50,000", "50,000 - 100,000", "100,000 - 150,000", "150,000 - 200,000"};
         model.addAttribute("prices", prices);
         model.addAttribute("name", name);
-        model.addAttribute("productType", productType);
-        model.addAttribute("price", price);
+        model.addAttribute("productTypee", productType);
+        model.addAttribute("pricee", price);
         model.addAttribute("productTypes", productTypeService.display());
         Page<Product> products = productService.search(pageable, name, productType, price);
         if (products.isEmpty()){
@@ -113,6 +113,7 @@ public class ProductController {
     @PostMapping("/edit")
     public String edit(@Valid @ModelAttribute("product") ProductDto productDto, BindingResult bindingResult,
                        RedirectAttributes redirectAttributes, Model model) {
+        new ProductDto().validate(productDto,bindingResult);
         if (productDto == null) {
             redirectAttributes.addFlashAttribute("msg", "Đối tượng không tồn tại. ");
             return "product/edit";
@@ -131,6 +132,7 @@ public class ProductController {
     @PostMapping("/create")
     public String create(@Valid @ModelAttribute(name = "product") ProductDto productDto, BindingResult bindingResult,
                          RedirectAttributes redirectAttributes, Model model) {
+        new ProductDto().validate(productDto,bindingResult);
         if (productDto == null) {
             redirectAttributes.addFlashAttribute("msg", "Đối tượng không tồn tại. ");
             return "product/create";

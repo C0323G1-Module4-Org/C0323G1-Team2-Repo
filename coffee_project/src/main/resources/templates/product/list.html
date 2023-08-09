@@ -135,13 +135,15 @@
                 <form class="col-7" action="/product" method="get">
                     <select name="productType">
                         <option style="text-align: center" value="" selected>Chọn loại</option>
-                        <option th:each="productType : ${productTypes}"
-                                th:value="${productType.productTypeId}"
+                        <option th:each="productType : ${productTypes}" th:value="${productType.productTypeId}"
+                                th:selected="${productType.productTypeId} == ${productTypee}"
                                 th:text="${productType.productTypeName}"></option>
                     </select>
                     <select name="price">
-                        <option style="text-align: center" value="" selected>Chọn giá</option>
-                        <option th:each="price : ${prices}" th:value="${price}" th:text="${price}+' VNĐ'"></option>
+                        <option style="text-align: center" value="" selected> Chọn giá</option>
+                        <option th:each="price : ${prices}" th:value="${price}"
+                                th:selected="${price} == ${pricee}"
+                                th:text="${price}+' VNĐ'"></option>
                     </select>
                     <input th:value="${name}" type="text" name="name" placeholder="nhập tên sản phẩm ">
                     <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i>
