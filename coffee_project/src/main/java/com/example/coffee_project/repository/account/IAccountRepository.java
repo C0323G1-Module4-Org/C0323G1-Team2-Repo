@@ -21,7 +21,7 @@ public interface IAccountRepository extends JpaRepository<Account,String> {
 //         " join employee on user .account_name=user.account_name " +
 //         "where account.account_name like :name",nativeQuery = true)
 // Page<Account> findAllByNameContaining(Pageable pageable,@Param("name") String name);
- Page<Account> findAllByAccountNameContaining(Pageable pageable,String name);
+ Page<Account> findAllByAccountNameContainingAndRole_RoleName(Pageable pageable,String name,String roleName);
  Account findAccountByAccountName(String name);
 
  @Transactional

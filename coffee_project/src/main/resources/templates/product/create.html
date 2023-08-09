@@ -25,6 +25,9 @@
             margin-bottom: 10px;
             margin-top: 60px;
         }
+        input.form-control {
+            box-sizing: border-box;
+        }
     </style>
     <style th:insert="/layout::style"></style>
     <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
@@ -71,7 +74,7 @@
                                                             <input type="text" th:field="*{productName}"
                                                                    id="productName"
                                                                    class="form-control">
-                                                            <div style="height: 28px">
+                                                            <div style="height: 10px">
                                                                 <small style="color: red"
                                                                        th:if="${#fields.hasErrors('productName')}"
                                                                        th:errors="*{productName}"></small>
@@ -85,7 +88,7 @@
                                                         <td>
                                                             <input type="number" th:field="*{productPrice}" id="salary"
                                                                    class="form-control">
-                                                            <div style="height: 25px">
+                                                            <div style="height: 10px">
                                                                 <small style="color: red"
                                                                        th:if="${#fields.hasErrors('productPrice')}"
                                                                        th:errors="*{productPrice}"></small>

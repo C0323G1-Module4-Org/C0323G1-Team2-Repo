@@ -125,7 +125,7 @@
             </div>
             <div class="row min-vh-100 content">
                 <div class="col-12">
-                    <h1 style="text-align: center">Quản Lý Sản Phẩm</h1>
+                    <h1 style="text-align: center; margin-top: 2rem">Quản Lý Sản Phẩm</h1>
                     <!--                        <span th:if="${msg}!=null" th:text="${msg}" id="success"-->
                     <!--                              class="tin"-->
                     <!--                              style="float: left; background-color: rgba(97,139,234,0.87);font-size: 20px"></span>-->
@@ -163,8 +163,7 @@
                                 <th>Tên</th>
                                 <th>Loại</th>
                                 <th>Giá</th>
-                                <th>Sửa</th>
-                                <th>Xóa</th>
+                                <th style="text-align: center" colspan="2">Chức năng</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -175,9 +174,9 @@
                                 <td th:text="${product.productType.productTypeName}">Product Type</td>
                                 <td th:text="${#numbers.formatDecimal(product.productPrice, 0, 'COMMA', 0, 'POINT')} +' VNĐ'"
                                     class="card-text">Product Price
-                                </td>
+                                </td >
                                 <div class="d-flex justify-content-between">
-                                    <td>
+                                    <td style="text-align: center">
                                         <a style="color: white"
                                            th:href="@{/product/edit/{id}(id=${product.productId})}">
                                             <button class="btn btn-primary">
@@ -185,7 +184,7 @@
                                             </button>
                                         </a>
                                     </td>
-                                    <td>
+                                    <td style="text-align: center">
                                         <!-- Button trigger modal -->
                                         <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal"
@@ -268,7 +267,7 @@
         </div>
     </div>
 </div>
-<div th:replace="layout::footer"></div>
+<!--<div th:replace="layout::footer"></div>-->
 <script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
         src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
 <script th:if="${msg}">

@@ -86,7 +86,11 @@ public class ProductDto implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         ProductDto productDto = (ProductDto) target;
-        if (productDto.getProductName().equals("")) {
+        if (productDto.getProductName()==null) {
+            errors.rejectValue("productName", null, "Tên sản phẩm không được để trống");
+        }else if (productDto.getProductName().equals("")) {
+            errors.rejectValue("productName", null, "Tên sản phẩm không được để trống");
+        }else if (productDto.getProductName().equals(" ")) {
             errors.rejectValue("productName", null, "Tên sản phẩm không được để trống");
         } else if (!productDto.getProductName().matches("^[\\p{Lu}][\\p{Ll}]{1,8}(\\s([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,10})){0,5}$")) {
             errors.rejectValue("productName", null, "Tên sản phẩm phải đúng định dạng, chữ cái đầu viết hoa ");

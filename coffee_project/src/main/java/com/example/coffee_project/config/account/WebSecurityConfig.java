@@ -22,6 +22,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().antMatchers("/account/login").anonymous();
         http.authorizeRequests().antMatchers("/account/forgot-password","/account/reset-password").permitAll();
+        // đổi mk
+        http.authorizeRequests().antMatchers("/account/change-password").hasAnyAuthority("admin", "employee");
 
         http.authorizeRequests()
                 // any role admin and employee
