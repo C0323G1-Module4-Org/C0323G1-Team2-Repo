@@ -2,6 +2,8 @@ package com.example.coffee_project.dto.customer;
 
 import com.example.coffee_project.common.customer.custom.CustomerValidate;
 import com.example.coffee_project.model.customer.Customer;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -14,6 +16,7 @@ public class CustomerDto implements Validator {
     private Boolean customerGender;
     private Date customerBirthday;
     private String customerPhoneNumber;
+    @JsonBackReference
     private Integer customerPoint;
 
     private Customer customer;
