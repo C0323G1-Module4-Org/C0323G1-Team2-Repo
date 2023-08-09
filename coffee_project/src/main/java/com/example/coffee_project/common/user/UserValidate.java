@@ -24,7 +24,7 @@ public class UserValidate {
         if (userName.length() > 0 && (userName.length() <= 5 || userName.length() > 255)) {
             errors.rejectValue("userName", null,
                     "Tên không được ít hơn 5 kí tự và vượt quá 255 kí tự!");
-        }else if(userName.matches("^\\D+$")){
+        }else if(!userName.matches("^\\D+$")){
             errors.rejectValue("userName","Tên không được chứa kí tự số!");
         }
     }

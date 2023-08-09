@@ -102,7 +102,7 @@
                                                 <div style=" height: 20px"></div>
                                             </th>
                                             <td>
-                                                <div><input class="form-control" th:field="*{userName}"
+                                                <div><input id="userName" class="form-control" th:field="*{userName}"
                                                             th:value="${userDto.userName}"></div>
                                                 <div style=" height: 20px"><small style="color: red"
                                                                                   th:if="${#fields.hasErrors('userName')}"
