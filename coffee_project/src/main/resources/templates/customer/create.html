@@ -53,7 +53,8 @@
                                         <tr>
                                             <th>Tên khách hàng <span style="color: red">*</span></th>
                                             <td>
-                                                <input class="form-control" type="text" th:field="*{customerName}">
+                                                <input class="form-control" type="text"
+                                                       th:field="*{customerName}">
                                                 <div style="height: 20px">
                                                     <small th:if="${#fields.hasErrors('customerName')}"
                                                            th:errors="*{customerName}"
@@ -100,7 +101,9 @@
                                         <tr>
                                             <td></td>
                                             <td>
-                                                <button type="submit" class="btn btn-primary"> Thêm mới</button>
+                                                <button type="submit" class="btn btn-primary">
+                                                    Thêm mới
+                                                </button>
                                                 <a th:href="@{/customer/list}" style="text-decoration: none">
                                                     <button type="button" class="btn btn-secondary"> Thoát</button>
                                                 </a>
@@ -121,5 +124,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
         src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
+
+</script>
 </body>
 </html>

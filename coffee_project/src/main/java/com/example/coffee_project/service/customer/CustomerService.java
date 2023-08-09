@@ -1,5 +1,6 @@
 package com.example.coffee_project.service.customer;
 
+import com.example.coffee_project.common.customer.custom.CustomerValidate;
 import com.example.coffee_project.model.customer.Customer;
 import com.example.coffee_project.repository.customer.ICustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ public class CustomerService implements ICustomerService{
 
     @Override
     public boolean save(Customer customer) {
+        customer.setCustomerName(CustomerValidate.validateString(customer.getCustomerName()));
         Customer customer1 = customerRepository.save(customer);
         return customer1 != null;
     }
@@ -34,6 +36,7 @@ public class CustomerService implements ICustomerService{
         Customer customer1 = findById(id);
         if (customer1 != null) {
             customer.setCustomerPoint(customer1.getCustomerPoint());
+            customer.setCustomerName(CustomerValidate.validateString(customer.getCustomerName()));
             Customer customerUpdate = customerRepository.save(customer);
             return true;
         }
