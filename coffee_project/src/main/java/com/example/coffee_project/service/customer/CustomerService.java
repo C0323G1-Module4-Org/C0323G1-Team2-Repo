@@ -31,7 +31,9 @@ public class CustomerService implements ICustomerService{
 
     @Override
     public boolean update(int id, Customer customer) {
-        if (findById(id) != null) {
+        Customer customer1 = findById(id);
+        if (customer1 != null) {
+            customer.setCustomerPoint(customer1.getCustomerPoint());
             Customer customerUpdate = customerRepository.save(customer);
             return true;
         }

@@ -30,7 +30,8 @@
                         <form class="form-group" th:action="@{/customer/update}" th:object="${customerDto}"
                               method="post">
                             <fieldset>
-                                <legend style="text-align: center; margin-top: 2rem"><h1>Chỉnh Sửa Thông Tin Khách Hàng</h1></legend>
+                                <legend style="text-align: center; margin-top: 2rem"><h1>Chỉnh Sửa Thông Tin Khách
+                                    Hàng</h1></legend>
                                 <div class="table">
                                     <table class="table table-hover">
                                         <tr>
@@ -44,8 +45,8 @@
                                             <td><input class="form-control" type="text" th:field="*{customerName}">
                                                 <div style="height: 20px">
                                                     <small th:if="${#fields.hasErrors('customerName')}"
-                                                       th:errors="*{customerName}"
-                                                       style="color: red">
+                                                           th:errors="*{customerName}"
+                                                           style="color: red">
                                                     </small>
                                                 </div>
                                             </td>
@@ -59,7 +60,7 @@
                                                 <span th:text="Nữ"></span>
                                                 <div style="height: 20px">
                                                     <small th:if="${#fields.hasErrors('customerGender')}"
-                                                       th:errors="*{customerGender}" style="color: red"></small>
+                                                           th:errors="*{customerGender}" style="color: red"></small>
                                                 </div>
                                             </td>
                                         </tr>
@@ -69,7 +70,7 @@
                                                 <input class="form-control" type="date" th:field="*{customerBirthday}">
                                                 <div style="height: 20px">
                                                     <small th:if="${#fields.hasErrors('customerBirthday')}"
-                                                       th:errors="*{customerBirthday}" style="color: red"></small>
+                                                           th:errors="*{customerBirthday}" style="color: red"></small>
                                                 </div>
                                             </td>
                                         </tr>
@@ -79,14 +80,20 @@
                                                        th:field="*{customerPhoneNumber}">
                                                 <div style="height: 20px">
                                                     <small th:if="${#fields.hasErrors('customerPhoneNumber')}"
-                                                       th:errors="*{customerPhoneNumber}" style="color: red"></small>
+                                                           th:errors="*{customerPhoneNumber}"
+                                                           style="color: red"></small>
                                                 </div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th>Điểm <span style="color: red">*</span></th>
-                                            <td><input class="form-control" th:field="*{customerPoint}" readonly></td>
+                                            <th>Điểm</th>
+                                            <td>
+                                                <div th:text="${customerDto.getCustomerPoint()}"></div>
+                                            </td>
                                         </tr>
+                                        <!--                                        <input class="form-control" hidden="hidden" th:field="*{customerPoint}"-->
+                                        <!--                                               readonly>-->
+                                        <tr>
                                         <tr>
                                             <td></td>
                                             <td>
@@ -104,13 +111,9 @@
                     <!------------------------------End-main------------------------------------->
                 </div>
             </div>
+            <div th:replace="layout::footer"></div>
         </div>
     </div>
-</div>
-<div th:replace="layout::footer">
-</div>
-</div>
-</div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
