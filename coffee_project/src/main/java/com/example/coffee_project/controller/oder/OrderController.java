@@ -53,13 +53,6 @@ public class OrderController {
         Order order = orderService.findCurrentOrder(true, user);
         Pageable pageable = PageRequest.of(page, 6, Sort.by("productName").ascending());
         Page<Product> listProduct = productService.searchByName(pageable, name);
-        if (listProduct.getTotalPages() > 0) {
-            List<Integer> pageNumbers = new ArrayList<>();
-            for (int i = 1; i <= listProduct.getTotalPages(); i++) {
-                pageNumbers.add(i);
-            }
-            model.addAttribute("pageNumbers", pageNumbers);
-        }
         if (order != null) {
             OrderDetailDto orderDetailDto = new OrderDetailDto();
             orderDetailDto.setOrderDetailList(new ArrayList<>(order.getOrderDetailSet()));

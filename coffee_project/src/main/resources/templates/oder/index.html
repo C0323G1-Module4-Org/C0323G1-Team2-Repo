@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Đặt sản phẩm</title>
-    <link rel="shortcut icon" href="/static/healthy_drink-1_4x.png" th:href="@{/healthy_drink-1_4x.png}">
+    <link rel="shortcut icon" href="/static/android-chrome-512x512.png" th:href="@{/android-chrome-512x512.png}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <style th:replace="/layout::style"></style>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -24,7 +25,7 @@
                     <div class="container-fluid d-flex mt-3">
                         <p class="h1">Bán chạy nhất</p>
                     </div>
-                    <div class="container-fluid d-flex flex-sm-wrap flex-md-nowrap justify-content-evenly gap-3 mt-3">
+                    <div class="container-fluid d-flex flex-sm-wrap flex-md-nowrap justify-content-between gap-1 mt-3">
                         <div class="card" th:each="product:${bestSeller}">
                             <img th:src="${product.productImagePath}"
                                  class="card-img-top" alt="...">
