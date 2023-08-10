@@ -82,9 +82,9 @@ public class UserController {
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
         userService.saveUser(user);
-        redirectAttributes.addAttribute("msg",
+        redirectAttributes.addFlashAttribute("msg",
                 "Chỉnh sửa thành công");
-        return "redirect:/user/list";
+        return "redirect:/order/";
     }
 
     @PostMapping("/delete")
@@ -124,9 +124,9 @@ public class UserController {
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
         userService.saveUser(user);
-        redirectAttributes.addAttribute("msg",
-                "Sửa tài khoản thành công");
-        return "redirect:/user/list";
+        redirectAttributes.addFlashAttribute("msg",
+                "Sửa thông tin thành công");
+        return "redirect:/order/";
     }
     @GetMapping("/change-form/{id}")
     public String changeForm(@PathVariable Integer id, Model model,RedirectAttributes redirectAttributes){

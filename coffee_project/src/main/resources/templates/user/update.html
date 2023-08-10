@@ -71,16 +71,14 @@
 
                     <!-------------------------CODE--------------------------------------------------------------------------------->
 
-                    <div class="row" style="margin-top: 2rem;margin-bottom: 20px">
 
-                        <a class="col-1 mt-2" style="text-decoration: none" href="/order/">
-                            <button title="Quay lại"
-                                    class="btn btn-primary">
-                                <i class="fa-solid fa-circle-arrow-left"></i></button>
-                        </a>
-                        <h1 class="col-11" style="text-align: center">
-                            Thay Đổi Thông Tin Nhân Viên</h1>
-                    </div>
+                    <h1 style="text-align: center;margin-top: 2rem;margin-bottom: 20px">
+                        Thay Đổi Thông Tin Nhân Viên</h1>
+                    <a class="col-1 mt-2" style="text-decoration: none" href="/order/">
+                        <button title="Quay lại"
+                                class="btn btn-primary">
+                            <i class="fa-solid fa-circle-arrow-left"></i></button>
+                    </a>
                     <form th:object="${userDto}" method="post" th:action="@{/user/update}">
 
                         <!--------------//Drag and Drop---------------------------------------------------------->
@@ -125,9 +123,11 @@
                                             <div style=" height: 20px"></div>
                                         </th>
                                         <td>
-                                            <input class="form-check-input" type="radio" name="gender" th:field="*{userGender}"
+                                            <input class="form-check-input" type="radio" name="gender"
+                                                   th:field="*{userGender}"
                                                    th:value="true">&nbsp;<span>Nam</span>
-                                            <input class="form-check-input" type="radio" name="gender" th:field="*{userGender}"
+                                            <input class="form-check-input" type="radio" name="gender"
+                                                   th:field="*{userGender}"
                                                    th:value="false">&nbsp;<span>Nữ</span>
 
                                             <div style=" height: 20px">
@@ -161,7 +161,8 @@
                                         </th>
                                         <td><input class="form-control " th:field="*{userPhoneNumber}">
                                             <div style=" height: 20px">
-                                                <small style="color: red" th:if="${#fields.hasErrors('userPhoneNumber')}"
+                                                <small style="color: red"
+                                                       th:if="${#fields.hasErrors('userPhoneNumber')}"
                                                        th:errors="*{userPhoneNumber}"></small>
                                             </div>
                                         </td>
@@ -205,7 +206,8 @@
                                     <tr>
 
                                         <td colspan="2" align="left">
-                                            <button style="margin-top:20px; width: 88%" id="submit" class="btn btn-primary">
+                                            <button style="margin-top:20px; width: 88%" id="submit"
+                                                    class="btn btn-primary">
                                                 Sửa
                                             </button>
                                         </td>
@@ -218,7 +220,6 @@
 
 
                     <!---------------END BODY---------------------------------------------------------------------------------------->
-
 
 
                 </div>
@@ -246,7 +247,7 @@
             let newArr = [];
             console.log(arr)
             for (let i = 0; i < arr.length; i++) {
-                if(arr[i] === ""){
+                if (arr[i] === "") {
                     continue;
                 }
                 let arrStr = arr[i].split("")
