@@ -81,7 +81,7 @@
                                 <th scope="col">Ngày sinh</th>
                                 <th scope="col">Số điện thoại</th>
                                 <th scope="col">Điểm</th>
-                                <th scope="col" colspan="3" style="text-align: center">Chức năng</th>
+                                <th scope="col" colspan="2" style="text-align: center">Chức năng</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -96,14 +96,14 @@
                                 <td th:text="${#dates.format(customer.customerBirthday,'dd-MM-yyyy')}"></td>
                                 <td th:text="${customer.customerPhoneNumber}"></td>
                                 <td th:text="${customer.customerPoint}"></td>
-                                <td style="text-align: center">
-                                    <button type="button" class="btn btn-primary"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modalView"
-                                            th:attr="onclick=|showDetail(${customer.customerId})|">
-                                        <i class="fa-solid fa-circle-info"></i>
-                                    </button>
-                                </td>
+                                <!--                                <td style="text-align: center">-->
+                                <!--                                    <button type="button" class="btn btn-primary"-->
+                                <!--                                            data-bs-toggle="modal"-->
+                                <!--                                            data-bs-target="#modalView"-->
+                                <!--                                            th:attr="onclick=|showDetail(${customer.customerId})|">-->
+                                <!--                                        <i class="fa-solid fa-circle-info"></i>-->
+                                <!--                                    </button>-->
+                                <!--                                </td>-->
                                 <!--                        <td>-->
                                 <!--                            <a th:href="@{/customer/{id}/view(id=${customer.getCustomerId()})}" class="btn btn-primary">-->
                                 <!--                                <i class="fa-solid fa-circle-info"></i>-->
@@ -162,48 +162,48 @@
                     <!--                </div>-->
                     <!------------------------------------ Modal Detail------------------------------------->
 
-                    <div class="modal fade" id="modalView" tabindex="-1" aria-labelledby="viewModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="viewModalLabel1" style="text-align: center">
-                                        <strong>Thông
-                                            tin chi tiết</strong></h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <table class="table" style="border-color: white">
-                                        <tr>
-                                            <td><strong>Tên: </strong></td>
-                                            <td><span id="customerName"></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Giới tính: </strong></td>
-                                            <td><span id="customerGender"></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Ngày Sinh: </strong></td>
-                                            <td><span id="customerBirthday"></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Điện thoại: </strong></td>
-                                            <td><span id="customerPhoneNumber"></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Điểm tích lũy: </strong></td>
-                                            <td><span id="customerPoint"></span></td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!--                    <div class="modal fade" id="modalView" tabindex="-1" aria-labelledby="viewModalLabel"-->
+                    <!--                         aria-hidden="true">-->
+                    <!--                        <div class="modal-dialog">-->
+                    <!--                            <div class="modal-content">-->
+                    <!--                                <div class="modal-header">-->
+                    <!--                                    <h1 class="modal-title fs-5" id="viewModalLabel1" style="text-align: center">-->
+                    <!--                                        <strong>Thông-->
+                    <!--                                            tin chi tiết</strong></h1>-->
+                    <!--                                    <button type="button" class="btn-close" data-bs-dismiss="modal"-->
+                    <!--                                            aria-label="Close"></button>-->
+                    <!--                                </div>-->
+                    <!--                                <div class="modal-body">-->
+                    <!--                                    <table class="table" style="border-color: white">-->
+                    <!--                                        <tr>-->
+                    <!--                                            <td><strong>Tên: </strong></td>-->
+                    <!--                                            <td><span id="customerName"></span></td>-->
+                    <!--                                        </tr>-->
+                    <!--                                        <tr>-->
+                    <!--                                            <td><strong>Giới tính: </strong></td>-->
+                    <!--                                            <td><span id="customerGender"></span></td>-->
+                    <!--                                        </tr>-->
+                    <!--                                        <tr>-->
+                    <!--                                            <td><strong>Ngày Sinh: </strong></td>-->
+                    <!--                                            <td><span id="customerBirthday"></span></td>-->
+                    <!--                                        </tr>-->
+                    <!--                                        <tr>-->
+                    <!--                                            <td><strong>Điện thoại: </strong></td>-->
+                    <!--                                            <td><span id="customerPhoneNumber"></span></td>-->
+                    <!--                                        </tr>-->
+                    <!--                                        <tr>-->
+                    <!--                                            <td><strong>Điểm tích lũy: </strong></td>-->
+                    <!--                                            <td><span id="customerPoint"></span></td>-->
+                    <!--                                        </tr>-->
+                    <!--                                    </table>-->
+                    <!--                                </div>-->
+                    <!--                                <div class="modal-footer">-->
+                    <!--                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát-->
+                    <!--                                    </button>-->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
 
                     <!-------------------------------------- Delete Modal --------------------------------------->
 
