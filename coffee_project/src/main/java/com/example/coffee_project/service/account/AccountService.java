@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +20,8 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 
@@ -44,7 +47,7 @@ public class AccountService implements IAccountService {
         Account account = new Account();
         BeanUtils.copyProperties(accountDto, account);
         account.setAccountPassword(encoderPassword);
-        Role role = roleService.findByName("employee");
+        Role role = roleService.findByName("ROLE_EMPLOYEE");
         System.out.println(role);
         account.setRole(role);
         accountRepository.save(account);
@@ -53,7 +56,7 @@ public class AccountService implements IAccountService {
     public void forgot(Account account) {
         String encoderPassword = bCryptPasswordEncoder.encode(account.getAccountPassword());
         account.setAccountPassword(encoderPassword);
-        Role role = roleService.findByName("employee");
+        Role role = roleService.findByName("ROLE_EMPLOYEE");
         account.setRole(role);
         accountRepository.save(account);
     }
@@ -99,7 +102,7 @@ public class AccountService implements IAccountService {
         String oldPassEncoder=account.getAccountPassword();
         boolean isMath= bCryptPasswordEncoder.matches(pass,oldPassEncoder);
         System.out.println(isMath);
-      return isMath;
+        return isMath;
     }
 
     @Override
@@ -126,10 +129,11 @@ public class AccountService implements IAccountService {
         if (account == null) {
             throw new UsernameNotFoundException(" tài khoản " + username + " không có ");
         }
-        UserDetails userDetails = User.withUsername(account.getAccountName())
-                .password(account.getAccountPassword())
-                .authorities(new SimpleGrantedAuthority(account.getRole().getRoleName()))
-                .build();
+        List<GrantedAuthority> grantList = new ArrayList<>();
+
+        grantList.add(new SimpleGrantedAuthority(account.getRole().getRoleName()));
+        UserDetails userDetails =  new User(account.getAccountName(),
+                account.getAccountPassword(), grantList);
         return userDetails;
     }
 

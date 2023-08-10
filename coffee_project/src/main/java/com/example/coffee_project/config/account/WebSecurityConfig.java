@@ -4,6 +4,7 @@ import com.example.coffee_project.service.account.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,57 +24,62 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/account/login").anonymous();
         http.authorizeRequests().antMatchers("/account/forgot-password","/account/reset-password").permitAll();
         // đổi mk
-        http.authorizeRequests().antMatchers("/account/change-password").hasAnyAuthority("admin", "employee");
+        http.authorizeRequests().antMatchers("/account/change-password").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE");
 
         http.authorizeRequests()
                 // any role admin and employee
                 //customer
-                .antMatchers("/customer/showCreateForm").hasAnyAuthority("admin", "employee")
-                .antMatchers("/customer/save").hasAnyAuthority("admin", "employee")
-                .antMatchers("/customer/{id}/edit").hasAnyAuthority("admin", "employee")
-                .antMatchers("/customer/{id}/delete").hasAuthority("admin")
-                .antMatchers("/customer/update").hasAnyAuthority("admin", "employee")
-                .antMatchers("/customer/{id}/view").hasAnyAuthority("admin", "employee")
-                .antMatchers("/customer/list").hasAnyAuthority("admin", "employee")
+                .antMatchers("/customer/showCreateForm").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
+                .antMatchers("/customer/save").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
+                .antMatchers("/customer/{id}/edit").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
+                .antMatchers("/customer/{id}/delete").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers("/customer/update").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
+                .antMatchers("/customer/{id}/view").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
+                .antMatchers("/customer/list").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
                 // user
-                .antMatchers("/user/create-form").hasAnyAuthority("admin", "employee")
-                .antMatchers("/user/create").hasAnyAuthority("admin", "employee")
-                .antMatchers("/user/update").hasAnyAuthority("admin", "employee")
-                .antMatchers("/user/update-form/{id}").hasAnyAuthority("admin", "employee")
+                .antMatchers("/user/create-form").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
+                .antMatchers("/user/create").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
+                .antMatchers("/user/update").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
+                .antMatchers("/user/update-form/{id}").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
 
                 // product
 
-                .antMatchers("/product").hasAnyAuthority("admin", "employee")
-                .antMatchers("/product/searchCard").hasAnyAuthority("admin", "employee")
-                .antMatchers("/product/list").hasAnyAuthority("admin", "employee")
-                .antMatchers("/product/detail/{id}").hasAnyAuthority("admin", "employee")
+                .antMatchers("/product").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/product/searchCard").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/product/list").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/product/detail/{id}").hasAuthority("ROLE_ADMIN")
 
 
 
-               //order
-                .antMatchers("/order/").hasAnyAuthority("admin", "employee")
-                .antMatchers("/order/add-order").hasAnyAuthority("admin", "employee")
-                .antMatchers("/order/delete/{id}").hasAnyAuthority("admin", "employee")
-                .antMatchers("/order/payment").hasAnyAuthority("admin", "employee")
-                .antMatchers("/order/confirm-payment").hasAnyAuthority("admin", "employee")
+                //order
+                .antMatchers("/order/").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
+                .antMatchers("/order/add-order").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
+                .antMatchers("/order/delete/{id}").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
+                .antMatchers("/order/payment").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
+                .antMatchers("/order/revenue").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
+                .antMatchers("/order/confirm-payment").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE")
 
                 //admin
 
-                .antMatchers("/account/admin").hasAuthority("admin")
+                .antMatchers("/account/admin").hasAuthority("ROLE_ADMIN")
 
 
-                .antMatchers("/product/edit/{id}").hasAuthority("admin")
-                .antMatchers("/product/edit").hasAuthority("admin")
-                .antMatchers("/product/delete").hasAuthority("admin")
-                .antMatchers("/product/create").hasAuthority("admin")
+                .antMatchers("/product/edit/{id}").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/product/edit").hasAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.POST,"/product/delete").hasAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.GET,"/product/delete").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/product/create").hasAuthority("ROLE_ADMIN")
 
 
-                .antMatchers("/account/admin").hasAuthority("admin")
-                .antMatchers("/account/delete").hasAuthority("admin")
+                .antMatchers("/account/admin").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/account/delete").hasAuthority("ROLE_ADMIN")
 
 
-                .antMatchers("/user/delete").hasAuthority("admin")
-                .antMatchers("/user/list").hasAuthority("admin")
+                .antMatchers("/user/delete").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/user/change-form/{id}").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/user/change").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/user/list").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/user/new-employee").hasAuthority("ROLE_ADMIN")
 
         ;
         //
