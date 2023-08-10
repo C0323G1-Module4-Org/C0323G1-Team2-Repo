@@ -37,7 +37,7 @@ public class UserController {
     public ModelAndView showListUser(@RequestParam(defaultValue = "0") Integer page,
                                      @RequestParam(defaultValue = "") String search) {
         ModelAndView modelAndView = new ModelAndView("/user/list");
-        Pageable pageable = PageRequest.of(page, 3,
+        Pageable pageable = PageRequest.of(page, 5,
                 Sort.by("userName").ascending().and(Sort.by("userSalary").ascending()));
         Page<User> userPage = userService.findAll(pageable, search);
         if(userPage.getTotalElements() == 0){
@@ -163,7 +163,7 @@ public class UserController {
     @GetMapping("/new-employee")
     public String showNewEmployeeList(@RequestParam(defaultValue = "0")Integer page,
                                       Model model){
-        Pageable pageable = PageRequest.of(page,3,Sort.by("user_name").ascending());
+        Pageable pageable = PageRequest.of(page,5,Sort.by("user_name").ascending());
         Page<User> userPage = userService.findNewEmployeeList(pageable);
         if(userPage.getTotalElements() == 0){
             model.addAttribute("msg","Không có nhân viên nào!");
