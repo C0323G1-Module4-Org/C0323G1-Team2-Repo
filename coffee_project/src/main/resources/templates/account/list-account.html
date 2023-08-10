@@ -88,7 +88,7 @@
                                         <button th:if="${a.role.roleName!='ROLE_ADMIN'}" type="button" class="btn btn-danger"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal"
-                                                th:attr="onclick=|confirmDelete(${a.accountName})|">
+                                                th:attr="onclick=|confirmDelete('${a.accountName}')|">
                                             <i class="fa-regular fa-trash-can"></i>
                                         </button>
                                     </td>
