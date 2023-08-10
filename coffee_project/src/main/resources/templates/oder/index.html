@@ -52,11 +52,9 @@
                     <div class="container-fluid d-flex justify-content-between my-4">
                         <p class="h1 float-start">Đặt sản phẩm</p>
                         <form action="/order/" class="float-end" method="get">
-                            <div class="input-group">
-                                <div class="form-outline">
-                                    <input id="search-input" name="name" type="search" placeholder="Tên sản phẩm"
-                                           class="form-control" th:value="${name}"/>
-                                </div>
+                            <div class="input-group rounded">
+                                <input id="search-input" name="name" type="search" placeholder="Tên sản phẩm"
+                                       class="form-control rounded mx-2" th:value="${name}"/>
                                 <button id="search-button" type="submit" class="btn btn-primary">
                                     <i class="fas fa-search"></i>
                                 </button>
@@ -92,26 +90,23 @@
 
 
                     </div>
-                    <div class="d-flex container-fluid">
+                    <div class="d-flex justify-content-center container-fluid">
 
                         <nav aria-label="Page navigation example">
                             <ul class="pagination">
                                 <li th:class="${!listProduct.hasPrevious()} ? 'page-item disabled' : 'page-item'"><a
                                         class="page-link"
-                                        th:href="@{/order/(page=${listProduct.number -1},name=${name})}">Lùi</a>
+                                        th:href="@{/order/(page=${listProduct.number -1},name=${name})}">Trước</a>
                                 </li>
-                                <li th:if="${listProduct.totalPages > 0}"
-                                    th:each="pageNumber:${pageNumbers}"
-                                    th:class="${pageNumber==listProduct.number+1} ? 'page-item active':'page-item'">
-                                    <a
-                                            th:href="@{/order/(page=${pageNumber - 1},name=${name})}"
-                                            th:text="${pageNumber}"
-                                            class="page-link"></a>
+                                <li class="page-link disabled">
+                                    <span th:text="${listProduct.number + 1}"></span>/<span
+                                        th:text="${listProduct.totalPages}">
+                                </span>
                                 </li>
 
                                 <li th:class="${!listProduct.hasNext()} ? 'page-item disabled' : 'page-item'"><a
                                         class="page-link"
-                                        th:href="@{/order/(page=${listProduct.number +1},name=${name})}">Tới</a>
+                                        th:href="@{/order/(page=${listProduct.number +1},name=${name})}">Sau</a>
                                 </li>
                             </ul>
                         </nav>
@@ -138,7 +133,7 @@
     </div>
 
     <!--Toast-->
-    <div class="position-fixed bottom-0 end-0 p-3">
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 2">
         <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
                 <strong class="me-auto">Tin nhắn</strong>
