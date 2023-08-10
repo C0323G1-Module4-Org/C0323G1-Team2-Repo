@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Danh sách khách hàng</title>
+    <link rel="shortcut icon" href="/static/healthy_drink-1_4x.png" th:href="@{/healthy_drink-1_4x.png}">
     <style th:replace="/layout::style"></style>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -25,6 +26,11 @@
                     <nav class="navbar navbar-inverse">
                         <div class="container-fluid">
                             <div class="navbar-form navbar-left">
+                                <a class="col-12 mt-2" style="text-decoration: none" href="/order/">
+                                    <button title="Quay lại"
+                                            class="btn btn-primary">
+                                        <i class="fa-solid fa-circle-arrow-left"></i></button>
+                                </a>
                                 <a th:href="@{/customer/showCreateForm}">
                                     <button title="Thêm mới khách hàng"
                                             class="btn btn-primary">
