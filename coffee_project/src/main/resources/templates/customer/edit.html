@@ -42,7 +42,8 @@
                                         </tr>
                                         <tr>
                                             <th>Tên khách hàng <span style="color: red">*</span></th>
-                                            <td><input class="form-control" type="text" th:field="*{customerName}">
+                                            <td><input class="form-control" type="text" id="enterName" th:field="*{customerName}"
+                                                       th:value="${customerDto.customerName}">
                                                 <div style="height: 20px">
                                                     <small th:if="${#fields.hasErrors('customerName')}"
                                                            th:errors="*{customerName}"
@@ -119,5 +120,23 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
         src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
+<script>
+    let element = document.getElementById('enterName');
+    element.addEventListener("blur", function standardizeInput() {
+        let name = element.value.trim();
+        let arrayName = name.split("");
+        let newName = arrayName[0].toUpperCase();
+        for (let i = 1; i < arrayName.length; i++) {
+            if (arrayName[i-1] === " " && arrayName[i] === "") {
+                continue;
+            }
+            if (arrayName[i-1] === " " && arrayName[i] != " ") {
+                newName += " " + arrayName[i].toUpperCase();
+            } else if (arrayName[i] != " "){
+                newName += arrayName[i].toLowerCase();
+            }
+        } document.getElementById('enterName').value = newName;
+    })
+</script>
 </body>
 </html>
