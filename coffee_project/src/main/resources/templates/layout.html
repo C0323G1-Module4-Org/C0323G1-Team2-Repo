@@ -43,13 +43,13 @@
                 </a>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start "
                     id="menu">
-                    <li class="nav-item w-100" th:if="${#request.isUserInRole('ROLE_EMPLOYEE')}">
+                    <li class="nav-item w-100" >
                         <a href="/order/" class="nav-link align-middle px-0 text-light">
                             <i class="fa-solid fa-file-pen" style="color: #ffffff;"></i><span
                                 class="ms-1 d-none d-sm-inline">Đặt sản phẩm</span>
                         </a>
                     </li>
-                    <li class="nav-item w-100" th:if="${#request.isUserInRole('ROLE_EMPLOYEE')}">
+                    <li class="nav-item w-100">
                         <a href="/customer/list" class="nav-link px-0 align-middle text-light">
                             <i class="fa-solid fa-users" style="color: #ffffff;"></i><span
                                 class="ms-1 d-none d-sm-inline">Quản lí khách hàng</span> </a>
@@ -77,7 +77,7 @@
                                 class="ms-1 d-none d-sm-inline">Quản lí tài khoản</span>
                         </a>
                     </li>
-                    <li class="nav-item w-100" th:if="${#request.isUserInRole('ROLE_EMPLOYEE')}">
+                    <li class="nav-item w-100">
                         <a href="/order/revenue" class="nav-link px-0 align-middle text-light">
                             <i class="fa-solid fa-chart-simple" style="color: #ffffff;"></i> <span
                                 class="ms-1 d-none d-sm-inline">Doanh thu 3 tháng gần nhất</span>
