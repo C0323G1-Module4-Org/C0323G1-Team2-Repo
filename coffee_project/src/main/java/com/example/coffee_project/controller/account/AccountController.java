@@ -30,10 +30,13 @@ public class AccountController {
     private IAccountService accountService;
     @Autowired
     private IUserService userService;
+    @ModelAttribute("accountDto")
+    public AccountDto setUpLoginForm() {
+        return new AccountDto();
+    }
     @GetMapping("/login")
-    public ModelAndView login(Model model) {
+    public ModelAndView login(@ModelAttribute AccountDto accountDto) {
         ModelAndView modelAndView = new ModelAndView("/login");
-        AccountDto accountDto=new AccountDto();
         modelAndView.addObject("accountDto",accountDto);
         return modelAndView;
     }
@@ -91,11 +94,9 @@ public class AccountController {
                 modelAndView.addObject("username", username);
                 modelAndView.addObject("code",code);
                 return modelAndView;
-            } else {
-
             }
         }
-        return new ModelAndView("/forgot");
+        return new ModelAndView("/forgot","msg","Kiểm tra lại");
     }
 
     @PostMapping("/reset-password")
@@ -122,7 +123,7 @@ public class AccountController {
             redirectAttributes.addFlashAttribute("msg", "Bạn không thể xóa tài khoản này");
         } else {
             accountService.deleteAccount(account);
-            redirectAttributes.addFlashAttribute("msg", "đã xóa tài khoản : " + account.getAccountName());
+            redirectAttributes.addFlashAttribute("msg", "Đã xóa tài khoản : " + account.getAccountName());
         }
         return "redirect:/account/admin";
     }

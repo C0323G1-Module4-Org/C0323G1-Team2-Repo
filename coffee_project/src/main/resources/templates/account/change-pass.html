@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Đổi mật khẩu</title>
     <style th:insert="/layout::style"></style>
-    <link rel="shortcut icon" href="/static/healthy_drink-1_4x.png" th:href="@{/healthy_drink-1_4x.png}">
+    <link rel="shortcut icon" href="/static/android-chrome-512x512.png" th:href="@{/android-chrome-512x512.png}">
     <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
           href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
     <link rel="stylesheet"
@@ -24,21 +24,21 @@
             <div class="row min-vh-100 content">
                 <div class="col-12">
                     <div class="row">
-                        <h1 style="text-align: center">Đổi mật khẩu</h1>
+                        <h1 style="text-align: center;margin-top: 2rem">Đổi mật khẩu</h1>
                         <!--                        nust quay laji-->
                         <div class="row col-12" style="margin: auto">
+                            <div class="col-12"><a style="text-decoration: none" href="/order/">
+                                <button title="Quay lại"
+                                        class="btn btn-primary">
+                                    <i class="fa-solid fa-circle-arrow-left"></i></button>
+                            </a></div>
                             <div class="col-2">
-                                <a style="text-decoration: none" href="/order/">
-                                    <button title="Quay lại"
-                                            class="btn btn-primary">
-                                        <i class="fa-solid fa-circle-arrow-left"></i></button>
-                                </a>
                             </div>
                             <div class="col-8">
                                 <form action="/account/change-password" method="post">
                                     <table class="table table-hover">
                                         <tr>
-                                            <th><label for="currentPassword">Nhập mật khẩu cũ:</label></th>
+                                            <th><label for="currentPassword">Nhập mật khẩu cũ <span style="color: red">*</span></label></th>
                                             <td><input class="form-control" type="password" id="currentPassword"
                                                        name="currentPassword"
                                                        th:value="${currentPassword}"
@@ -46,7 +46,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th><label for="newPassword">Mật khẩu mới: </label></th>
+                                            <th><label for="newPassword">Mật khẩu mới <span style="color: red">*</span></label></th>
                                             <td>
                                                 <input class="form-control" type="password" id="newPassword"
                                                        name="newPassword"
@@ -56,7 +56,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th><label for="newPassword1">Nhập lại mật khẩu mới: </label></th>
+                                            <th><label for="newPassword1">Nhập lại mật khẩu mới <span style="color: red">*</span></label></th>
                                             <td><input class="form-control" type="password" id="newPassword1"
                                                        name="newPassword1"
                                                        th:value="${newPassword1}"
@@ -64,8 +64,9 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2">
-                                                <button class="btn btn-primary" type="submit">Đổi mật khẩu</button>
+                                            <th></th>
+                                            <td style="text-align: center">
+                                                <button class="btn btn-primary" style="width: 100%" type="submit">Đổi mật khẩu</button>
                                             </td>
                                         </tr>
                                     </table>

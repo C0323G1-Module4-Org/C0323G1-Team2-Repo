@@ -4,7 +4,7 @@
     <title>Đăng Nhập</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="shortcut icon" href="/static/healthy_drink-1_4x.png" th:href="@{/healthy_drink-1_4x.png}">
+    <link rel="shortcut icon" href="/static/android-chrome-512x512.png" th:href="@{/android-chrome-512x512.png}">
 
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
 
@@ -47,36 +47,39 @@
                                 </p>
                             </div>
                         </div>
-                        <div th:if="${#request.getParameter('error')=='true'}"
-                             style="color: red;margin: 10px 0">
-                            Đăng nhập thất bại
-                        </div>
                         <form th:object="${accountDto}" th:action="@{/j_spring_security_check}" method="POST"
                               class="signin-form">
                             <div class="form-group mb-3">
                                 <label style="color: #6694a1"  for="username">Tên đăng nhập</label>
-                                <input id="username" th:field="*{accountName}" type="text" class="form-control" required>
+                                <input id="username" th:field="*{accountName}" type="text"   class="form-control" required>
                             </div>
                             <div class="form-group mb-3">
                                 <label style="color: #6694a1" for="password">Mật khẩu</label>
                                 <input type="password" th:field="*{accountPassword}" id="password" class="form-control"
                                        required>
                             </div>
+                            <div style="height: 40px">
+                                <div th:if="${#request.getParameter('error')=='true'}"
+                                     style="color: red;margin: 10px 0">
+                                    Đăng nhập thất bại
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <button type="submit" class="form-control btn btn-primary rounded submit px-3">Đăng
                                     nhập
                                 </button>
                             </div>
                             <div class="form-group d-md-flex">
-                                <div class="w-50 text-left">
+                                <div hidden="hidden">
                                     <label style="color: #6694a1" class="checkbox-wrap checkbox-primary mb-0">Nhớ thông
                                         tin
-                                        <input type="checkbox" checked name="remember-me">
+                                        <input type="checkbox" checked name="remember-me" value="true">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
-                                <div class="w-50 text-md-right">
-                                    <a href="/account/forgot-password">Quên mật khẩu</a>
+                                <div  class="w-50 text-md-right">
+                                    <a href="/account/forgot-password">Quên mật khẩu ?</a>
                                 </div>
                             </div>
                         </form>
@@ -85,26 +88,6 @@
             </div>
         </div>
     </div>
-    <!-------------------------Toast-------------------------------------------------------------->
-    <div class="position-fixed bottom-0 end-0 p-3">
-        <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto">Tin nhắn</strong>
-                <small>Bây giờ</small>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body text-info" th:text="${message}">
-            </div>
-        </div>
-    </div>
-    <!-------------------------End Toast-------------------------------------------------------------->
 </section>
-<script th:if="${message!=null}">
-    window.onload = function () {
-        let myAlert = document.getElementById('liveToast');//select id of toast
-        let bsAlert = new bootstrap.Toast(myAlert);//inizialize it
-        bsAlert.show();//show it
-    }
-</script>
 </body>
 </html>
