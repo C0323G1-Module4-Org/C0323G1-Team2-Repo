@@ -4,16 +4,12 @@
     <title>Quản Lý Tài Khoản</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style th:insert="/layout::style"></style>
+    <link rel="shortcut icon" href="/static/healthy_drink-1_4x.png" th:href="@{/healthy_drink-1_4x.png}">
+    <style th:replace="/layout::style"></style>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
           href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
-    <script src="/js/jquery-3.7.0.min.js"></script>
-    <style>
-        .modal-backdrop {
-            z-index: 1040 !important;
-        }
-    </style>
 </head>
 <body>
 <div class="container-fluid">
@@ -39,27 +35,42 @@
                         </form>
                     </div>
                     <div class="row col-12" style="margin: auto">
-                        <div class="col-4">
-                            <div>
-                                <label for="username1"><h5>
-                                    Đăng ký tài khoản mới
-                                </h5></label>
-                                <hr/>
-                                <label for="username1">Tên tài khoản</label>
-                                <div class="input-group">
-                                    <input id="username1" type="text"
-                                           style="margin: 5px;display: inline-block" class="form-control" required>
-                                    <button type="button" style="margin: 5px;display: inline-block" class="btn btn-primary"
-                                            onclick="confirmCreate()"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal1">
-                                        <i class="fa-solid fa-plus"></i>
-                                    </button>
+                        <div class="col-4 " style="padding-left: 5%">
+                            <div style="width: 80%;height: 50%">
+                                <div class="container shadow-lg p-3 mb-5 bg-body rounded"
+                                     style="border-radius: 20px/20px ">
+                                    <h4 class="text-center login-title">Đăng ký tài khoản </h4>
+                                    <div class="account-wall  justify-content-center">
+                                        <div class="d-flex justify-content-center">
+                                            <img class="profile-img"
+                                                 src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG.png"
+                                                 alt="" style="width: 80%">
+                                        </div>
+                                        <form class="form-signin">
+                                            <div class="d-flex justify-content-center">
+                                                <input type="text" class="form-control" id="username1" placeholder="Tài khoản"
+                                                       autofocus style="width: 80%">
+                                            </div>
+
+                                            <div class="d-flex justify-content-center ">
+
+                                                <button style="width: 80%;margin-top: 0.5rem"
+                                                        class="btn btn-lg btn-primary btn-block " type="button"
+                                                        onclick="confirmCreate()"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModal1">
+                                                    Đăng ký
+                                                </button>
+                                            </div>
+
+                                        </form>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-8">
-                            <table class="table table-hover">
+                            <table class="table table-hover table-responsive">
                                 <tr>
                                     <th>STT</th>
                                     <th>Tên tài khoản</th>
@@ -69,12 +80,12 @@
                                 <tr th:each="a,status:${accountPage}">
                                     <td th:text="${status.count}"></td>
                                     <td th:text="${a.accountName}"></td>
-                                    <td th:text="${a.role.roleName=='employee'}?'Nhân viên':'Quản trị viên'">
+                                    <td th:text="${a.role.roleName=='ROLE_EMPLYEE'}?'Nhân viên':'Quản trị viên'">
 
                                     </td>
                                     <td>
                                         <!-- Button trigger modal -->
-                                        <button th:if="${a.role.roleName!='admin'}" type="button" class="btn btn-danger"
+                                        <button th:if="${a.role.roleName!='ROLE_ADMIN'}" type="button" class="btn btn-danger"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal"
                                                 th:attr="onclick=|confirmDelete(${a.accountName})|">
@@ -83,30 +94,31 @@
                                     </td>
                                 </tr>
                             </table>
+                            <!-----------------------------------------Phân trang----------------------------------------->
+                            <div th:if="${accountPage.totalPages >1}">
+                                <div class="d-flex justify-content-center">
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination">
+                                            <li th:class="${!accountPage.hasPrevious()} ? 'page-item disabled' : 'page-item'">
+                                                <a class="page-link"
+                                                   th:href="@{/account/admin(page=${(accountPage.number)-1},searchName=${searchName})}">Trước
+                                                </a>
+                                            </li>
+                                            <li class="page-link disabled"><span th:text="${accountPage.number+1}"></span>/<span
+                                                    th:text="${accountPage.totalPages}"></span>
+                                            </li>
+                                            <li th:class="${!accountPage.hasNext()} ? 'page-item disabled' : 'page-item'">
+                                                <a class="page-link"
+                                                   th:href="@{/account/admin(page=${accountPage.number+1},searchName=${searchName})}">Sau
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <!-----------------------------------------Phân trang----------------------------------------->
-                    <div th:if="${accountPage.totalPages >0}">
-                        <div class="d-flex justify-content-center">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <li th:class="${!accountPage.hasPrevious()} ? 'page-item disabled' : 'page-item'">
-                                        <a class="page-link"
-                                           th:href="@{/account/admin(page=${(accountPage.number)-1},searchName=${searchName})}">Trước
-                                        </a>
-                                    </li>
-                                    <li class="page-link disabled"><span th:text="${accountPage.number+1}"></span>/<span
-                                            th:text="${accountPage.totalPages}"></span>
-                                    </li>
-                                    <li th:class="${!accountPage.hasNext()} ? 'page-item disabled' : 'page-item'">
-                                        <a class="page-link"
-                                           th:href="@{/account/admin(page=${accountPage.number+1},searchName=${searchName})}">Sau
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
+
                 </div>
             </div>
             <div th:replace="~{layout::footer}"></div>

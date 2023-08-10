@@ -26,13 +26,6 @@ import java.util.Objects;
 @Controller
 @RequestMapping("/account")
 public class AccountController {
-    @ModelAttribute("role")
-    public String showRole(){
-        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
-        String role=authentication.getAuthorities().toString();
-        System.out.println(role);
-        return role;
-    }
     @Autowired
     private IAccountService accountService;
     @Autowired
@@ -63,7 +56,7 @@ public class AccountController {
     public  ModelAndView showListAccount(@RequestParam(defaultValue = "0") int page,
                                          @RequestParam(defaultValue = "") String searchName) {
         Pageable pageable = PageRequest.of(page, 5, Sort.by("role.roleId").ascending());
-        Page<Account> accountPage = accountService.getAllAccount(pageable, searchName,"employee");
+        Page<Account> accountPage = accountService.getAllAccount(pageable, searchName,"ROLE_EMPLOYEE");
         ModelAndView modelAndView = new ModelAndView("/account/list-account");
         modelAndView.addObject("accountDto", new AccountDto());
         modelAndView.addObject("accountPage", accountPage);
@@ -107,10 +100,10 @@ public class AccountController {
 
     @PostMapping("/reset-password")
     public String reset(@RequestParam String username,
-                              @RequestParam String password,
-                              @RequestParam String password2,
-                              @RequestParam String emailCode,
-                              @RequestParam String code) {
+                        @RequestParam String password,
+                        @RequestParam String password2,
+                        @RequestParam String emailCode,
+                        @RequestParam String code) {
         Account account=accountService.findByUsername(username);
         if (Objects.equals(password, password2) && Objects.equals(emailCode, code)) {
             account.setAccountPassword(password);
@@ -125,7 +118,7 @@ public class AccountController {
     public String delete(@RequestParam String accountName,
                          RedirectAttributes redirectAttributes) {
         Account account = accountService.findByUsername(accountName);
-        if (account.getRole().getRoleName().equals("admin")) {
+        if (account.getRole().getRoleName().equals("ROLE_ADMIN")) {
             redirectAttributes.addFlashAttribute("msg", "Bạn không thể xóa tài khoản này");
         } else {
             accountService.deleteAccount(account);
