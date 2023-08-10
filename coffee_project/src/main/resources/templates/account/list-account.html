@@ -80,7 +80,7 @@
                                 <tr th:each="a,status:${accountPage}">
                                     <td th:text="${status.count}"></td>
                                     <td th:text="${a.accountName}"></td>
-                                    <td th:text="${a.role.roleName=='ROLE_EMPLYEE'}?'Nhân viên':'Quản trị viên'">
+                                    <td th:text="${a.role.roleName=='ROLE_EMPLOYEE'}?'Nhân viên':'Quản trị viên'">
 
                                     </td>
                                     <td>

@@ -75,28 +75,36 @@ public class AccountController {
 
     @GetMapping("/forgot-password")
     public ModelAndView showFormForgot() {
-        ModelAndView modelAndView = new ModelAndView("forgot");
+        ModelAndView modelAndView = new ModelAndView("/forgot");
         return modelAndView;
     }
 
     @PostMapping("/forgot-password")
-    public ModelAndView forgot(@RequestParam String username,
-                               @RequestParam String email) {
-        ModelAndView modelAndView = new ModelAndView("accuracy");
+    public String forgot(@RequestParam String username,
+                               @RequestParam String email,
+                         RedirectAttributes redirectAttributes,
+                         Model model) {
         User user = userService.findByName(username);
-        System.out.println(user.getAccount().getAccountName());
-        if (user != null) {
-            if (user.getUserEmail().equals(email)) {
-                System.out.println(email);
-                Account account = accountService.findByUsername(username);
-                String code=accountService.sendEmailAndReturnCode(user.getUserEmail());
-                System.out.println(account.getAccountName());
-                modelAndView.addObject("username", username);
-                modelAndView.addObject("code",code);
-                return modelAndView;
-            }
+        if (user==null){
+            redirectAttributes.addFlashAttribute("username",username);
+            redirectAttributes.addFlashAttribute("email",email);
+            redirectAttributes.addFlashAttribute("msg","Kiểm tra lại");
+            return "redirect:/account/forgot-password";
         }
-        return new ModelAndView("/forgot","msg","Kiểm tra lại");
+        if (user.getUserEmail().equals(email)) {
+            System.out.println(email);
+            Account account = accountService.findByUsername(username);
+            String code = accountService.sendEmailAndReturnCode(user.getUserEmail());
+            System.out.println(account.getAccountName());
+            model.addAttribute("username", username);
+            model.addAttribute("code", code);
+        }else {
+            redirectAttributes.addFlashAttribute("username",username);
+            redirectAttributes.addFlashAttribute("email",email);
+            redirectAttributes.addFlashAttribute("msg","Kiểm tra lại");
+            return "redirect:/account/forgot-password";
+        }
+        return "/accuracy";
     }
 
     @PostMapping("/reset-password")
@@ -104,15 +112,16 @@ public class AccountController {
                         @RequestParam String password,
                         @RequestParam String password2,
                         @RequestParam String emailCode,
-                        @RequestParam String code) {
+                        @RequestParam String code,RedirectAttributes redirectAttributes) {
         Account account=accountService.findByUsername(username);
         if (Objects.equals(password, password2) && Objects.equals(emailCode, code)) {
             account.setAccountPassword(password);
             accountService.forgot(account);
+            redirectAttributes.addFlashAttribute("msg","Thành công");
             return "redirect:/account/login";
-        } else {
-            return "redirect:/account/forgot";
         }
+            redirectAttributes.addFlashAttribute("Vui lòng kiểm tra lại");
+            return "redirect:/account/forgot-password";
     }
 
     @PostMapping("/delete")
