@@ -6,6 +6,8 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style th:fragment="style">
+        @import url('https://fonts.googleapis.com/css?family=Cairo');
+
         * {
             font-family: Verdana, Geneva, Tahoma, sans-serif;
         }
@@ -21,7 +23,17 @@
         }
 
         .side-bar {
-            background-image: linear-gradient(20deg, #eeeeee, black);
+            background-image: linear-gradient(1rad, #a1a1a1, black);
+        }
+
+        #user-container:hover {
+            background-color: #d4d4d4;
+        }
+
+        .text {
+            font-family: "Brush Script MT";
+            color: black;
+            letter-spacing: 0.3rem;
         }
     </style>
     <link rel="stylesheet" href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
@@ -54,29 +66,29 @@
                     <li class="nav-item w-100">
                         <a href="/customer/list" class="nav-link px-0 align-middle text-light">
                             <i class="fa-solid fa-users" style="color: #ffffff;"></i><span
-                                class="ms-1 d-none d-sm-inline">Quản lí khách hàng</span> </a>
+                                class="ms-1 d-none d-sm-inline">Quản lý khách hàng</span> </a>
                     </li>
 
                     <li th:if="${#request.isUserInRole('ROLE_ADMIN')}" class="nav-item w-100">
                         <a href="/user/list" class="nav-link px-0 align-middle text-light">
                             <i class="fa-solid fa-person" style="color: #ffffff;"></i> <span
-                                class="ms-1 d-none d-sm-inline">Quản lí nhân viên</span> </a>
+                                class="ms-1 d-none d-sm-inline">Quản lý nhân viên</span> </a>
                     </li>
                     <li th:if="${#request.isUserInRole('ROLE_ADMIN')}" class="nav-item w-100">
                         <a href="/user/new-employee" class="nav-link px-0 align-middle text-light">
                             <i class="fa-solid fa-person" style="color: #ffffff;"></i> <span
-                                class="ms-1 d-none d-sm-inline">nhân viên mới</span> </a>
+                                class="ms-1 d-none d-sm-inline">Nhân viên mới</span> </a>
                     </li>
                     <li th:if="${#request.isUserInRole('ROLE_ADMIN')}" class="nav-item w-100">
                         <a href="/product" class="nav-link px-0 align-middle text-light">
                             <i class="fa-solid fa-mug-hot" style="color: #ffffff;"></i> <span
-                                class="ms-1 d-none d-sm-inline">Quản lí sản phẩm</span>
+                                class="ms-1 d-none d-sm-inline">Quản lý sản phẩm</span>
                         </a>
                     </li>
                     <li th:if="${#request.isUserInRole('ROLE_ADMIN')}" class="nav-item w-100">
                         <a href="/account/admin" class="nav-link px-0 align-middle text-light">
                             <i class="fa-solid fa-users-gear" style="color: #ffffff;"></i> <span
-                                class="ms-1 d-none d-sm-inline">Quản lí tài khoản</span>
+                                class="ms-1 d-none d-sm-inline">Quản lý tài khoản</span>
                         </a>
                     </li>
                     <li class="nav-item w-100">
@@ -89,36 +101,31 @@
             </div>
         </div>
         <div class="col-10  col-sm-9 col-md-9 col-lg-10">
-            <nav class="navbar navbar-expand-md navbar-dark row" style="background-color: #c29867"
+            <nav class="navbar navbar-expand-md navbar-dark row shadow-lg "
+                 style="background-color: #FFFFFF ;height: 5rem"
                  th:fragment="nav-bar">
-                <div class="container-fluid ">
-                    <div class="mx-auto col-6">
-                        <span class="navbar-brand mx-auto float-end h1" style="color:#FF0066">e</span>
-                        <span class="navbar-brand mx-auto float-end h1" style="color:#FF0066">e</span>
-                        <span class="navbar-brand mx-auto float-end h1" style="color:#FF9966">f</span>
-                        <span class="navbar-brand mx-auto float-end h1" style="color:#FFCCCC">f</span>
-                        <span class="navbar-brand mx-auto float-end h1" style="color:#66CC66">o</span>
-                        <span class="navbar-brand mx-auto float-end h1" style="color:#222831">C</span>
-                        <span class="navbar-brand mx-auto float-end h1" style="color:#ffe272">n</span>
-                        <span class="navbar-brand mx-auto float-end h1" style="color:#de6fff">e</span>
-                        <span class="navbar-brand mx-auto float-end h1" style="color:#53afff">e</span>
-                        <span class="navbar-brand mx-auto float-end h1" style="color:#36d8b7">u</span>
-                        <span class="navbar-brand mx-auto float-end h1" style="color:#9de16f">Q </span>
-
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                <div class="container-fluid">
+                    <div class="mx-auto col-8 col-sm-4">
+                        <button class="navbar-toggler bg-dark mt-3" type="button" data-bs-toggle="collapse"
                                 data-bs-target=".dual-collapse2">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                     </div>
-                    <div class="navbar-collapse collapse dual-collapse2 col-6">
-                        <div class="navbar-nav ms-auto text-light" id="user-container">
+                    <div class="mx-auto col-4">
+                        <span class="navbar-brand float-end text-dark text px-5"
+                              style="font-size: 40px">Queen Coffee</span>
+                    </div>
+                    <div class="navbar-collapse collapse dual-collapse2 col-4">
+                        <div class="navbar-nav ms-auto text-light">
                             <div class="dropdown mx-2">
-                                <span class="text-light" th:text="${#request.getUserPrincipal().getName()}"></span>
-                                <button class="btn btn-dark" style="background-color: #c29867"
-                                        id="dropdownMenuButton1"
+                                <label for="user-container" class="text-dark"
+                                       th:text="${#request.getUserPrincipal().getName()}" data-bs-toggle="dropdown"
+                                       aria-expanded="false"></label>
+                                <button class="btn btn-outline-light" style="border: none;"
+                                        id="user-container"
                                         data-bs-toggle="dropdown"
                                         aria-expanded="false">
-                                    <i class="fa-regular fa-user" style="color: #ffffff;"></i>
+                                    <i class="fa-solid fa-user" style="color: #000000;"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                                     <li><a class="dropdown-item" href="/user/update-form">Sửa thông tin</a></li>
@@ -133,14 +140,16 @@
             <div class="row min-vh-100 content">
                 <div class="col-12">
 
+
                 </div>
             </div>
-            <div class="row" style="background-color: #c29867" th:fragment="footer">
-                <footer class="text-light text-center text-lg-start bottom-0">
+            <div class="row shadow-lg" style="background-color:#FFFFFF" th:fragment="footer">
+                <footer class="text-dark text-center text-lg-start bottom-0">
                     <!-- Copyright -->
-                    <div class="text-center p-3">
+                    <div class="text-center position-relative p-3">
                         © 2023 Copyright: Team 2
-                        <a class="text-light" href="http://localhost:8080/">Queen Coffee</a>
+                        <a class="text-light position-absolute" style="right: 75%" href="http://localhost:8080/order/">Queen
+                            Coffee</a>
                     </div>
                     <!-- Copyright -->
                 </footer>
