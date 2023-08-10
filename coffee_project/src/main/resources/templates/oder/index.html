@@ -23,10 +23,13 @@
             <div class="row min-vh-100 content">
                 <div class="col-12">
                     <div class="container-fluid d-flex mt-3">
-                        <p class="h1">Bán chạy nhất</p>
+                        <p class="h1">Bán Chạy Nhất</p>
                     </div>
-                    <div class="container-fluid d-flex flex-sm-wrap flex-md-nowrap justify-content-between gap-1 mt-3">
-                        <div class="card" th:each="product:${bestSeller}">
+                    <div class="container-fluid position-relative d-flex flex-sm-wrap flex-md-nowrap justify-content-between gap-2 mt-3">
+                        <div class="card position-relative" th:each="product:${bestSeller}">
+                            <span class="position-absolute " style="top: 5%; left: 83%">
+                                <img src="../../static/hot.png" class="w-100 h-100" th:src="@{/hot.png}" alt="">
+                            </span>
                             <img th:src="${product.productImagePath}"
                                  class="card-img-top" alt="...">
                             <div class="card-body d-flex flex-column justify-content-between">
@@ -51,7 +54,7 @@
                         </div>
                     </div>
                     <div class="container-fluid d-flex justify-content-between my-4">
-                        <p class="h1 float-start">Đặt sản phẩm</p>
+                        <p class="h1 float-start">Đặt Sản Phẩm</p>
                         <form action="/order/" class="float-end" method="get">
                             <div class="input-group rounded">
                                 <input id="search-input" name="name" type="search" placeholder="Tên sản phẩm"
@@ -62,7 +65,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="container-fluid d-flex flex-wrap gap-3 justify-content-between">
+                    <div class="container-fluid d-flex flex-wrap gap-2 justify-content-between">
 
                         <div class="card" style="width: 18rem;margin-bottom: 30px"
                              th:each="product:${listProduct}">
