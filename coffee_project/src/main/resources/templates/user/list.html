@@ -48,17 +48,18 @@
                             </div>
                             <div class="col-7">
                                 <form th:action="@{/user/list}" th:method="get">
-                                    <div class="input-group d-flex justify-content-end">
+                                    <div class="d-flex justify-content-end">
 
-                                        <div class="form-outline">
+                                        <div class="form-outline" style="margin-right: 0.6rem">
                                             <input id="search-input" name="search" type="search"
                                                    placeholder="Tên nhân viên"
                                                    class="form-control" th:value="${search}"/>
                                         </div>
-                                        <button title="Tìm kiếm" id="search-button" type="submit"
+                                        <button title="Tìm kiếm" type="submit"
                                                 class="btn btn-primary">
                                             <i class="fas fa-search"></i>
                                         </button>
+
 
                                     </div>
                                 </form>
