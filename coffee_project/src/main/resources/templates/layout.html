@@ -36,47 +36,48 @@
         <!--        ≥1200px	xxl-->
         <div class="col-2 col-sm-3 col-md-3 col-lg-2 px-sm-2 px-0 bg-dark" th:fragment="side-bar">
             <div class="d-flex flex-column align-items-center align-items-sm-start px-0 pt-2 text-white min-vh-100">
-                <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                <a href="/order/"
+                   class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                     <img class="fs-5 d-none d-sm-inline w-100 h-100" src="/static/healthy_drink-1_4x.png"
                          th:src="@{/healthy_drink-1_4x.png}"/>
                 </a>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start "
                     id="menu">
-                    <li class="nav-item w-100">
+                    <li class="nav-item w-100" th:if="${#request.isUserInRole('ROLE_EMPLOYEE')}">
                         <a href="/order/" class="nav-link align-middle px-0 text-light">
                             <i class="fa-solid fa-file-pen" style="color: #ffffff;"></i><span
                                 class="ms-1 d-none d-sm-inline">Đặt sản phẩm</span>
                         </a>
                     </li>
-                    <li class="nav-item w-100">
+                    <li class="nav-item w-100" th:if="${#request.isUserInRole('ROLE_EMPLOYEE')}">
                         <a href="/customer/list" class="nav-link px-0 align-middle text-light">
                             <i class="fa-solid fa-users" style="color: #ffffff;"></i><span
                                 class="ms-1 d-none d-sm-inline">Quản lí khách hàng</span> </a>
                     </li>
 
-                    <li class="nav-item w-100">
+                    <li th:if="${#request.isUserInRole('ROLE_ADMIN')}" class="nav-item w-100">
                         <a href="/user/list" class="nav-link px-0 align-middle text-light">
                             <i class="fa-solid fa-person" style="color: #ffffff;"></i> <span
                                 class="ms-1 d-none d-sm-inline">Quản lí nhân viên</span> </a>
                     </li>
-                    <li class="nav-item w-100">
+                    <li th:if="${#request.isUserInRole('ROLE_ADMIN')}" class="nav-item w-100">
                         <a href="/user/new-employee" class="nav-link px-0 align-middle text-light">
                             <i class="fa-solid fa-person" style="color: #ffffff;"></i> <span
                                 class="ms-1 d-none d-sm-inline">nhân viên mới</span> </a>
                     </li>
-                    <li class="nav-item w-100">
+                    <li th:if="${#request.isUserInRole('ROLE_ADMIN')}" class="nav-item w-100">
                         <a href="/product" class="nav-link px-0 align-middle text-light">
                             <i class="fa-solid fa-mug-hot" style="color: #ffffff;"></i> <span
                                 class="ms-1 d-none d-sm-inline">Quản lí sản phẩm</span>
                         </a>
                     </li>
-                    <li class="nav-item w-100">
+                    <li th:if="${#request.isUserInRole('ROLE_ADMIN')}" class="nav-item w-100">
                         <a href="/account/admin" class="nav-link px-0 align-middle text-light">
                             <i class="fa-solid fa-users-gear" style="color: #ffffff;"></i> <span
                                 class="ms-1 d-none d-sm-inline">Quản lí tài khoản</span>
                         </a>
                     </li>
-                    <li class="nav-item w-100">
+                    <li class="nav-item w-100" th:if="${#request.isUserInRole('ROLE_EMPLOYEE')}">
                         <a href="/order/revenue" class="nav-link px-0 align-middle text-light">
                             <i class="fa-solid fa-chart-simple" style="color: #ffffff;"></i> <span
                                 class="ms-1 d-none d-sm-inline">Doanh thu 3 tháng gần nhất</span>
@@ -108,13 +109,15 @@
                         </button>
                     </div>
                     <div class="navbar-collapse collapse dual-collapse2 col-6">
-                        <div class="navbar-nav ms-auto text-light">
-                            <div class="dropdown">
-                                <a id="dropdownMenuButton1"
-                                   data-bs-toggle="dropdown"
-                                   aria-expanded="false">
+                        <div class="navbar-nav ms-auto text-light" id="user-container">
+                            <div class="dropdown mx-2">
+                                <span class="text-light" th:text="${#request.getUserPrincipal().getName()}"></span>
+                                <button class="btn btn-dark" style="background-color: #c29867"
+                                        id="dropdownMenuButton1"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false">
                                     <i class="fa-regular fa-user" style="color: #ffffff;"></i>
-                                </a>
+                                </button>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                                     <li><a class="dropdown-item" href="/user/update-form">Thông tin</a></li>
                                     <li><a class="dropdown-item" href="/account/change-password">Đổi mật khẩu</a></li>
