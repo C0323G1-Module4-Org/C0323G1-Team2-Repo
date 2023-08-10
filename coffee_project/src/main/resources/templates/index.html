@@ -22,7 +22,10 @@
             <div class="row min-vh-100 content">
                 <div class="col-12">
                     Thả code vào đây
-                </div>
+                    <span th:if="${#request.isUserInRole('ROLE_ADMIN')}">quyền admin</span>
+                    <span th:if="${#request.isUserInRole('ROLE_EMPLOYEE')}">quyền nhân viên</span>
+                    <span th:utext="${#request.isUserInRole('ROLE_ADMIN')}"></span>
+                    <!-- Hiển thị nội dung chỉ khi người dùng có quyền ROLE_ADMIN -->
             </div>
             <div th:replace="layout::footer">
             </div>
@@ -32,5 +35,6 @@
 
 <script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
         src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
+</div>
 </body>
 </html>

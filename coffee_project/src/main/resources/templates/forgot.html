@@ -4,7 +4,7 @@
     <title>Quên mật khẩu</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="shortcut icon" href="/static/healthy_drink-1_4x.png" th:href="@{/healthy_drink-1_4x.png}">
+    <link rel="shortcut icon" href="/static/android-chrome-512x512.png" th:href="@{/android-chrome-512x512.png}">
 
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
 
@@ -38,9 +38,9 @@
                     <div style="background: #fefae0" class="login-wrap p-4 p-md-5">
                         <div class="d-flex">
                             <div class="w-100">
-                                <h2 class="mb-4">Quên mật khẩu</h2>
+                                <h2 class="mb-2">Quên mật khẩu</h2>
                             </div>
-                            <div class="w-100">
+                            <div class="w-50">
                                 <p class="social-media d-flex justify-content-end">
                                     <a class="social-icon d-flex align-items-center justify-content-center"><span
                                             class="fa fa-facebook"></span></a>
@@ -59,6 +59,11 @@
                                 <label for="email">Email</label>
                                 <input type="email" name="email" id="email" class="form-control" required>
                             </div>
+                            <div style="height: 40px">
+                                <div th:text="${msg}"
+                                     style="color: red;margin: 10px 0">
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <button type="submit" id="button" class="form-control btn btn-primary rounded submit px-3">
                                     Lấy mã
@@ -71,10 +76,5 @@
         </div>
     </div>
 </section>
-<script>
-    function submit(){
-
-    }
-</script>
 </body>
 </html>
