@@ -11,7 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,26 +29,37 @@ public class AccountController {
     private IAccountService accountService;
     @Autowired
     private IUserService userService;
+
     @ModelAttribute("accountDto")
     public AccountDto setUpLoginForm() {
         return new AccountDto();
     }
+
     @GetMapping("/login")
     public ModelAndView login(@ModelAttribute AccountDto accountDto) {
         ModelAndView modelAndView = new ModelAndView("/login");
-        modelAndView.addObject("accountDto",accountDto);
+
+        modelAndView.addObject("accountDto", accountDto);
         return modelAndView;
+    }
+
+    @PostMapping("/j_spring_security_check")
+    public String returnLogin(@RequestBody AccountDto accountDto,
+                                    RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("accountDto", accountDto);
+        redirectAttributes.addFlashAttribute("msg", "Kiểm tra lại");
+        return "redirect:/account/login";
     }
 
     @PostMapping("/signup")
     public String signupAccount(@Valid @ModelAttribute AccountDto accountDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("msg", "Không để trống ");
-        }else {
-            if (accountService.findByUsername(accountDto.getAccountName())!=null){
-                redirectAttributes.addFlashAttribute("msg","Tài khoản đã tồn tại");
-            }else {
-                redirectAttributes.addFlashAttribute("msg","Thêm mới thành công");
+        } else {
+            if (accountService.findByUsername(accountDto.getAccountName()) != null) {
+                redirectAttributes.addFlashAttribute("msg", "Tài khoản đã tồn tại");
+            } else {
+                redirectAttributes.addFlashAttribute("msg", "Thêm mới thành công");
                 accountService.save(accountDto);
             }
         }
@@ -84,6 +94,12 @@ public class AccountController {
                                @RequestParam String email,
                          RedirectAttributes redirectAttributes,
                          Model model) {
+        if (username.trim().equals("") || email.trim().equals("")){
+            redirectAttributes.addFlashAttribute("msg","Vui lòng điền đầy đủ thông tin");
+            redirectAttributes.addFlashAttribute("username",username);
+            redirectAttributes.addFlashAttribute("email",email);
+            return "redirect:/account/forgot-password";
+        }
         User user = userService.findByName(username);
         if (user==null){
             redirectAttributes.addFlashAttribute("username",username);
@@ -98,12 +114,17 @@ public class AccountController {
             System.out.println(account.getAccountName());
             model.addAttribute("username", username);
             model.addAttribute("code", code);
+            model.addAttribute("msg", "Kiểm tra email");
         }else {
             redirectAttributes.addFlashAttribute("username",username);
             redirectAttributes.addFlashAttribute("email",email);
             redirectAttributes.addFlashAttribute("msg","Kiểm tra lại");
             return "redirect:/account/forgot-password";
         }
+        return "/accuracy";
+    }
+    @GetMapping("/reset-password")
+    public String resetForm(){
         return "/accuracy";
     }
 
@@ -117,11 +138,16 @@ public class AccountController {
         if (Objects.equals(password, password2) && Objects.equals(emailCode, code)) {
             account.setAccountPassword(password);
             accountService.forgot(account);
-            redirectAttributes.addFlashAttribute("msg","Thành công");
+            redirectAttributes.addFlashAttribute("error","Thành công");
             return "redirect:/account/login";
         }
-            redirectAttributes.addFlashAttribute("Vui lòng kiểm tra lại");
-            return "redirect:/account/forgot-password";
+            redirectAttributes.addFlashAttribute("msg","Vui lòng kiểm tra lại");
+            redirectAttributes.addFlashAttribute("username",username);
+            redirectAttributes.addFlashAttribute("password",password);
+            redirectAttributes.addFlashAttribute("password2",password2);
+            redirectAttributes.addFlashAttribute("emailCode",emailCode);
+            redirectAttributes.addFlashAttribute("code",code);
+            return "redirect:/account/reset-password";
     }
 
     @PostMapping("/delete")

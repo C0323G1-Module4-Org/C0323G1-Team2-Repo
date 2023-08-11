@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         http.authorizeRequests().antMatchers("/account/login").anonymous();
-        http.authorizeRequests().antMatchers("/account/forgot-password","/account/reset-password").permitAll();
+        http.authorizeRequests().antMatchers("/account/forgot-password","/account/reset-password").anonymous();
         // đổi mk
         http.authorizeRequests().antMatchers("/account/change-password").hasAnyAuthority("ROLE_ADMIN", "ROLE_EMPLOYEE");
 
@@ -82,6 +82,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/new-employee").hasAuthority("ROLE_ADMIN")
 
         ;
+
         //
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/account/403");
         //    cấu hình login
@@ -89,8 +90,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginProcessingUrl("/j_spring_security_check") // liên kết từ trang login
                 .loginPage("/account/login")                           //trang login
-                .defaultSuccessUrl("/order/")                         //login thành công
-                .failureUrl("/account/login?error=true")  // trang error
+                .defaultSuccessUrl("/order/") //login thành công
+                .failureHandler((request, response, exception) -> {
+                    String username = request.getParameter("accountName");
+                    response.sendRedirect("/account/login?error=true&accountName=" + username);
+                })
+
+//                .failureUrl("/account/login?error=true")  // trang error
                 .usernameParameter("accountName")                      //tham số
                 .passwordParameter("accountPassword")
                 .and().logout().invalidateHttpSession(true).logoutUrl("/account/logout").logoutSuccessUrl("/account/login");

@@ -5,9 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" href="/static/android-chrome-512x512.png" th:href="@{/android-chrome-512x512.png}">
-
+    <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
+          href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/style.css">
     <script src="/js/bootstrap.min.js"></script>
@@ -17,13 +17,11 @@
     <style>
         body {
             background: #f1f0ee;
-            /*background: #927055;*/
         }
-       div,form,h2,label{
-            color: #6694a1;
-        }
-        .label{
-            color: #6694a1;
+
+        @font-face {
+            font-family: "Fira Code Light";
+            src: url("https://fonts.google.com/specimen/Fira+Sans");
         }
     </style>
 </head>
@@ -37,32 +35,22 @@
                     </div>
                     <div style="background: #fefae0" class="login-wrap p-4 p-md-5">
                         <div class="d-flex">
-                            <div class="w-100">
-                                <h2 class="mb-2">Quên mật khẩu</h2>
-                            </div>
-                            <div class="w-50">
-                                <p class="social-media d-flex justify-content-end">
-                                    <a class="social-icon d-flex align-items-center justify-content-center"><span
-                                            class="fa fa-facebook"></span></a>
-                                    <a class="social-icon d-flex align-items-center justify-content-center"><span
-                                            class="fa fa-twitter"></span></a>
-                                </p>
+                            <div class="w-150">
+                                <h2 class="mb-4" style="color: #6694a1">Quên Mật Khẩu</h2>
                             </div>
                         </div>
-                        <form  action="/account/forgot-password" method="post"
+                        <form  action="/account/forgot-password" method="post" id="form"
                               class="signin-form">
                             <div class="form-group mb-3">
-                                <label for="username">Tên đăng nhập</label>
-                                <input id="username" name="username" type="text" class="form-control" required>
+                                <label for="username" style="color: #6694a1">Tên đăng nhập <span style="color: red">*</span></label>
+                                <input id="username" name="username" th:value="${username}" type="text" class="form-control">
                             </div>
                             <div class="form-group mb-3">
-                                <label for="email">Email</label>
-                                <input type="email" name="email" id="email" class="form-control" required>
+                                <label for="email" style="color: #6694a1">Email <span style="color: red">*</span></label>
+                                <input type="email" name="email" th:value="${email}" id="email" class="form-control">
                             </div>
                             <div style="height: 40px">
-                                <div th:text="${msg}"
-                                     style="color: red;margin: 10px 0">
-                                </div>
+
                             </div>
                             <div class="form-group">
                                 <button type="submit" id="button" class="form-control btn btn-primary rounded submit px-3">
@@ -76,5 +64,67 @@
         </div>
     </div>
 </section>
+
+<!-------------------------Toast-------------------------------------------------------------->
+<div class="position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Tin nhắn</strong>
+            <small>Bây giờ</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body text-info" th:text="${msg}">
+        </div>
+    </div>
+</div>
+<!-------------------------End Toast-------------------------------------------------------------->
+<div class="position-fixed bottom-0 end-0 p-3">
+    <div id="load" class="toast hide" aria-live="assertive" aria-atomic="true" >
+        <div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-secondary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-success" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-danger" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-info" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-light" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <div class="spinner-grow text-dark" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div>
+<script th:if="${msg}">
+    // toast
+    window.onload = function () {
+        let myAlert = document.getElementById('liveToast');//select id of toast
+        let bsAlert = new bootstrap.Toast(myAlert);//inizialize it
+        bsAlert.show();//show it
+    }
+</script>
+<script>
+    document.getElementById('form').addEventListener('submit', function(){
+        let myAlert = document.getElementById('load');//select id of toast
+        let bsAlert = new bootstrap.Toast(myAlert);//inizialize it
+        bsAlert.show();//show it
+        let button = document.getElementById("button");
+        button.disabled = true;
+    });
+</script>
+
+<script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
+        src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
 </body>
 </html>
