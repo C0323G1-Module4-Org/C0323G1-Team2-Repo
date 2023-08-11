@@ -67,4 +67,8 @@ public class ProductService implements IProductService {
     public List<Product> getBestSeller() {
         return productRepository.getBestSeller();
     }
+    @Override
+    public Page<Product> searchByNameAndProductType(Pageable pageable, String name, String type) {
+        return productRepository.findByNameAndType(pageable, name, type);
+    }
 }
