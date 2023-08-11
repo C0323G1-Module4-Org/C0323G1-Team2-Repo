@@ -35,12 +35,14 @@ public class OrderDetailService implements IOrderDetailService {
     public OrderDetail findByOrderDetailId(int orderDetailId) {
         return orderDetailRepository.findByOrderDetailId(orderDetailId);
     }
+
     @Override
     public List<String> revenue() {
         List<String> revenueList = new ArrayList<>();
         revenueList.add(orderDetailRepository.revenue3());
         revenueList.add(orderDetailRepository.revenue2());
         revenueList.add(orderDetailRepository.revenue1());
+        revenueList.add(orderDetailRepository.revenue());
         return revenueList;
     }
 }

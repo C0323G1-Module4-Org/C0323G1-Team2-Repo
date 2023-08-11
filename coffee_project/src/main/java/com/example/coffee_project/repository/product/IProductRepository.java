@@ -30,4 +30,6 @@ public interface IProductRepository extends JpaRepository<Product, Integer> {
     void enableForeignKeyChecks();
     @Query(value = "select p.product_id,p.product_name,p.product_price,p.product_description,p.product_image_path,p.product_type_id,sum(od.quantity_product) as quantity from product p left join order_detail od on od.product_id=p.product_id group by p.product_id order by quantity desc limit 4;",nativeQuery = true)
     List<Product> getBestSeller();
+    @Query(value = "select p.product_id,p.product_name,p.product_description,p.product_price,p.product_image_path,p.product_type_id from product p join product_type pt on p.product_type_id=pt.product_type_id where pt.product_type_name like :type and p.product_name like :name", nativeQuery = true)
+    Page<Product> findByNameAndType(Pageable pageable, @Param("name") String name, @Param("type") String type);
 }

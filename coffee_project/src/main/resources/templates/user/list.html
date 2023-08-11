@@ -2,15 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Danh Sách Nhân Viên</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="/static/android-chrome-512x512.png" th:href="@{/android-chrome-512x512.png}">
     <style th:replace="/layout::style"></style>
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
           href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
-
+    <script src="/js/jquery-3.7.0.min.js"></script>
+    <link rel="shortcut icon" href="/static/android-chrome-512x512.png" th:href="@{/android-chrome-512x512.png}">
+    <style>
+        .modal-backdrop {
+            z-index: 1040 !important;
+        }
+    </style>
 </head>
 <body>
 <div class="container-fluid">
@@ -54,7 +57,6 @@
                                                 class="btn btn-primary">
                                             <i class="fas fa-search"></i>
                                         </button>
-
 
                                     </div>
                                 </form>
@@ -184,7 +186,7 @@
                 <div class="modal-body">
                     <input id="userId" hidden="hidden" name="userId">
                     <input name="userName" id="userName" hidden="hidden">
-                    <div>Bạn có xác nhận xoá người dùng có tên là: <span id="userNameDisplay"></span></div>
+                    <div>Bạn có xác nhận xoá người dùng có tên là: <span id="userNameDisplay"></span>?</div>
                     <div style="color: red"><strong>Lưu ý:</strong> không thể hoàn tác hành động này!</div>
                 </div>
                 <div class="modal-footer">
@@ -303,5 +305,6 @@
         crossorigin="anonymous"></script>
 <script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
         src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
+
 </body>
 </html>
