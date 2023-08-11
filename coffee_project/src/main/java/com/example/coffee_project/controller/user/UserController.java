@@ -1,5 +1,6 @@
 package com.example.coffee_project.controller.user;
 
+import com.example.coffee_project.common.user.UserValidate;
 import com.example.coffee_project.dto.user.UserDto;
 import com.example.coffee_project.model.user.User;
 import com.example.coffee_project.service.account.IAccountService;
@@ -147,8 +148,8 @@ public class UserController {
     public String changeSalaryAndEmployeeType(@Valid @ModelAttribute UserDto userDto, BindingResult bindingResult,
                                               Model model,
                                               RedirectAttributes redirectAttributes){
+        UserValidate.checkValidateUserUserSalary(userDto.getUserSalary(),bindingResult);
 
-        new UserDto().validate(userDto,bindingResult);
         if(bindingResult.hasErrors()){
             model.addAttribute("employeeTypeList", employeeTypeService.findAll());
             model.addAttribute("userDto",userDto);
