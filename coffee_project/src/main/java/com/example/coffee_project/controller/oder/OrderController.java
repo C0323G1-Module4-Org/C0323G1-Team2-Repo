@@ -5,11 +5,13 @@ import com.example.coffee_project.model.customer.Customer;
 import com.example.coffee_project.model.oder.Order;
 import com.example.coffee_project.model.oder.OrderDetail;
 import com.example.coffee_project.model.product.Product;
+import com.example.coffee_project.model.product.ProductType;
 import com.example.coffee_project.model.user.User;
 import com.example.coffee_project.service.customer.ICustomerService;
 import com.example.coffee_project.service.oder.IOrderDetailService;
 import com.example.coffee_project.service.oder.IOrderService;
 import com.example.coffee_project.service.product.IProductService;
+import com.example.coffee_project.service.product.IProductTypeService;
 import com.example.coffee_project.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,6 +37,8 @@ public class OrderController {
     @Autowired
     IProductService productService;
     @Autowired
+    IProductTypeService productTypeService;
+    @Autowired
     ICustomerService customerService;
     @Autowired
     IUserService userService;
@@ -44,20 +48,21 @@ public class OrderController {
     IOrderDetailService orderDetailService;
 
     @GetMapping(value = "/")
-    public String home(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "") String name, Model model) {
+    public String home(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "") String name, Model model, @RequestParam(defaultValue = "") String type) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findByName(authentication.getName());
         List<Product> bestSeller = productService.getBestSeller();
         if (user == null)
             return "redirect:/user/create-form";
         Order order = orderService.findCurrentOrder(true, user);
-        Pageable pageable = PageRequest.of(page, 6, Sort.by("productName").ascending());
-        Page<Product> listProduct = productService.searchByName(pageable, name);
+        Pageable pageable = PageRequest.of(page, 8, Sort.by("product_name").ascending());
+        Page<Product> listProduct = productService.searchByNameAndProductType(pageable, "%" + name + "%", "%" + type + "%");
         if (order != null) {
             OrderDetailDto orderDetailDto = new OrderDetailDto();
             orderDetailDto.setOrderDetailList(new ArrayList<>(order.getOrderDetailSet()));
             model.addAttribute("listOrderDetail", orderDetailDto);
         }
+        model.addAttribute("listProductType", productTypeService.display());
         model.addAttribute("bestSeller", bestSeller);
         model.addAttribute("name", name);
         model.addAttribute("listProduct", listProduct);
