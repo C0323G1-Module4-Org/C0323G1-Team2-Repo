@@ -25,4 +25,9 @@ public interface IOrderDetailRepository extends JpaRepository<OrderDetail, Integ
             "on d.order_id=o.order_id\n" +
             "where MONTH(o.order_date)=MONTH(CURDATE())-1 and o.order_status=false", nativeQuery = true)
     String revenue1();
+
+    @Query(value = "SELECT sum(coffee.d.product_price * coffee.d.quantity_product) as revenue FROM coffee.order_detail d join coffee.orders o \n" +
+            "on d.order_id=o.order_id\n" +
+            "where MONTH(o.order_date)=MONTH(CURDATE()) and o.order_status=false", nativeQuery = true)
+    String revenue();
 }
