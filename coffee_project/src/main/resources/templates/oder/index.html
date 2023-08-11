@@ -57,6 +57,13 @@
                         <p class="h1 float-start">Đặt Sản Phẩm</p>
                         <form action="/order/" class="float-end" method="get">
                             <div class="input-group rounded">
+                                <select class="form-select" name="type" aria-label="Default select example">
+                                    <option selected value="">Chọn loại đồ uống</option>
+                                    <option th:each="type:${listProductType}" th:value="${type.productTypeName}"
+                                            th:text="${type.productTypeName}">
+                                        One
+                                    </option>
+                                </select>
                                 <input id="search-input" name="name" type="search" placeholder="Tên sản phẩm"
                                        class="form-control rounded mx-2" th:value="${name}"/>
                                 <button id="search-button" type="submit" class="btn btn-primary">
