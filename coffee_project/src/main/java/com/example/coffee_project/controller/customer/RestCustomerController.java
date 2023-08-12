@@ -22,4 +22,11 @@ public class RestCustomerController {
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    @GetMapping("/config-phone-number/{phoneNumber}")
+    public ResponseEntity<Customer> getCustomerByPhoneNumber(@PathVariable String phoneNumber) {
+        Customer customer = customerService.findByCustomerPhoneNumber(phoneNumber);
+        if (customer != null)
+            return new ResponseEntity<>(customer, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

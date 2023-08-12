@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Danh sách khách hàng</title>
     <style th:replace="/layout::style"></style>
+
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
@@ -40,10 +41,16 @@
                             <!------------------------------- Thanh tìm kiếm ------------------------------------>
 
                             <form class="navbar-form navbar-right" action="/customer/list" method="get">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Nhập tên khách hàng..."
-                                           th:name="searchName" th:value="${searchName}">
-                                    <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                                <div class="d-flex justify-content-end">
+                                    <div class="form-outline" style="margin-right: 0.6rem">
+                                        <input id="search-input" name="search" type="search"
+                                               th:name="searchName" placeholder="Nhập tên khách hàng..."
+                                               class="form-control" th:value="${searchName}"/>
+                                    </div>
+                                    <button title="Tìm kiếm" type="submit"
+                                            class="btn btn-primary">
+                                        <i class="fas fa-search"></i>
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -81,7 +88,7 @@
                                 <th scope="col">Ngày sinh</th>
                                 <th scope="col">Số điện thoại</th>
                                 <th scope="col">Điểm</th>
-                                <th scope="col" colspan="2" style="text-align: center">Chức năng</th>
+                                <th scope="col" style="text-align: center">Chức năng</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -111,13 +118,12 @@
                                 <!--                        </td>-->
                                 <td style="text-align: center">
                                     <a th:href="@{/customer/{id}/edit(id=${customer.getCustomerId()})}">
-                                        <button class="btn btn-primary">
+                                        <button class="btn btn-primary" style="margin-right: 1rem">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </button>
                                     </a>
-                                </td>
-                                <td style="text-align: center">
                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                            style="margin-right: 1rem"
                                             data-bs-target="#deleteModal" th:data-id="${customer.customerId}"
                                             th:data-name="${customer.customerName}"
                                             onclick="sendInfoToDelete(this.getAttribute('data-id'),this.getAttribute('data-name'))">
@@ -212,18 +218,19 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteModalLabel">Hộp thoại</h5>
+                                    <h5 class="modal-title" id="deleteModalLabel">Xóa khách hàng</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Không"></button>
                                 </div>
                                 <div class="modal-body">
-                                    Bạn có chắc chắn muốn xóa <strong id="nameDelete"></strong> ?</span>
+                                    Bạn có xác nhận xóa khách hàng có tên là <strong id="nameDelete"></strong> ?</span>
+                                    <div style="color: red"> Lưu ý: Không thể hoàn tác hành động này!</div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát
                                     </button>
                                     <a id="idDelete">
-                                        <button type="button" class="btn btn-primary" id="myToastBtn">Có</button>
+                                        <button type="button" class="btn btn-primary" id="myToastBtn">Xác nhận</button>
                                     </a>
                                 </div>
                             </div>
