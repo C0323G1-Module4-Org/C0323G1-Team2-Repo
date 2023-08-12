@@ -72,13 +72,9 @@
                     <!-------------------------CODE--------------------------------------------------------------------------------->
 
 
-                    <h1 style="text-align: center;margin-top: 2rem;margin-bottom: 20px">
+                    <h1 style="text-align: center;margin-top: 2rem;margin-bottom: 50px">
                         Thay Đổi Thông Tin Nhân Viên</h1>
-                    <a class="col-1 mt-2" style="text-decoration: none" href="/order/">
-                        <button title="Quay lại"
-                                class="btn btn-primary">
-                            <i class="fa-solid fa-circle-arrow-left"></i></button>
-                    </a>
+
                     <form th:object="${userDto}" method="post" th:action="@{/user/update}">
 
                         <!--------------//Drag and Drop---------------------------------------------------------->
