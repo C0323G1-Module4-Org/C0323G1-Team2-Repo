@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Quản lý sản phẩm</title>
-    <style th:insert="/layout::style"></style>
+    <style th:replace="/layout::style"></style>
     <style>
         .table td, .table th {
             vertical-align: middle;
@@ -253,16 +253,16 @@
                                         </div>
                                         <div class="modal-body">
                                             <input type="hidden" id="id" name="id">
-                                            Bạn có chắc chắn muốn xóa sản phẩm
-                                            <span style="color: red" id="name"> </span>?
+                                            Bạn có xác nhận muốn xóa sản phẩm
+                                            <span id="name"> </span>?
                                             <!--                                có id là: <span style="color: red" id="idDelete"></span> ?-->
-                                            <p style="color: red"><b>Lưu ý:</b> Hoạt động này không thể hoàn tác! </p>
+                                            <p style="color: red"><b>Lưu ý:</b> Không thể hoàn tác hành động này ! </p>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                                Hủy
+                                                Thoát
                                             </button>
-                                            <button type="submit" class="btn btn-primary">Xóa</button>
+                                            <button type="submit" class="btn btn-primary">Xác nhận</button>
                                         </div>
                                     </div>
                                 </div>
