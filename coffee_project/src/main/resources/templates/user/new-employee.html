@@ -44,7 +44,7 @@
                             <td th:text="${user.account.accountName}"></td>
                             <td th:text="${user.userEmail}"></td>
                             <td th:text="${user.userPhoneNumber}"></td>
-                            <td style="text-align: center"><a th:href="@{/user/change-form/{id}(id=${user.userId})}">
+                            <td style="text-align: center"><a th:href="@{/user/new-employee-form/{id}(id=${user.userId})}">
                                 <button type="button" class="btn btn-primary">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </button>

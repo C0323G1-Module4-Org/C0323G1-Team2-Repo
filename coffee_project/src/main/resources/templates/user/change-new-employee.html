@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Thay đổi thông tin nhân viên</title>
+    <title>Thay đổi thông tin nhân viên mới</title>
     <style th:replace="/layout::style"></style>
     <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
           href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
@@ -51,13 +51,13 @@
 
                     <!-------------------------------CODE--------------------------------------------------->
                     <h1 class="col-11" style="text-align: center;margin-top: 2rem;margin-bottom: 20px">
-                        Thay Đổi Thông Tin Nhân Viên</h1>
+                        Thay Đổi Thông Tin Nhân Viên Mới</h1>
 
-                    <a class="col-1 mt-2" style="text-decoration: none" href="/user/list">
-                        <button title="Quay lại"
-                                class="btn btn-primary">
-                            <i class="fa-solid fa-circle-arrow-left"></i></button>
-                    </a>
+                        <a class="col-1 mt-2" style="text-decoration: none" href="/user/new-employee">
+                            <button title="Quay lại"
+                                    class="btn btn-primary">
+                                <i class="fa-solid fa-circle-arrow-left"></i></button>
+                        </a>
 
 
                     <div class="row">
@@ -102,7 +102,7 @@
                                     <th>Tên đăng nhập:</th>
                                     <td><div th:text="${userDto.account.accountName}"></div></td>
                                 </tr>
-                                <form th:object="${userDto}" method="post" th:action="@{/user/change}">
+                                <form th:object="${userDto}" method="post" th:action="@{/user/change-new-employee}">
                                     <input hidden="hidden" th:field="*{userId}">
                                     <input hidden="hidden" th:field="*{userImagePath}">
                                     <input hidden="hidden" th:field="*{userBirthday}">
