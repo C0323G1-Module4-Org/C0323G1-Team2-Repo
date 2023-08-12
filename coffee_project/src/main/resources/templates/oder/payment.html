@@ -91,7 +91,7 @@
                                     <div class="col-xl-12">
                                         <p class="float-end fw-bold mx-3 " id="totalPrice"
                                            th:text="${#numbers.formatDecimal(order.getTotalPrice(), 0, 'COMMA', 0, 'POINT')} + ' VND'">
-                                            Total: $100000
+                                            Total: $1000000
                                         </p>
                                     </div>
                                     <hr style="border: 2px solid black;">
@@ -123,15 +123,15 @@
                                     <div class="col-md-6">
                                         <label for="input-phone-number" class="form-label">Số điện thoại</label>
                                         <span class="form-label float-end text-info" id="result"></span>
-                                        <div th:each="customer:${listCustomer}" class="customer">
-                                            <input type="text" hidden="hidden"
-                                                   th:value="${customer.customerPhoneNumber}"
-                                                   class="phoneNumber">
-                                            <input type="text" hidden="hidden" th:value="${customer.customerName}"
-                                                   class="name">
-                                            <input type="text" hidden="hidden" th:value="${customer.customerPoint}"
-                                                   class="point">
-                                        </div>
+                                        <!--                                        <div th:each="customer:${listCustomer}" class="customer">-->
+                                        <!--                                            <input type="text" hidden="hidden"-->
+                                        <!--                                                   th:value="${customer.customerPhoneNumber}"-->
+                                        <!--                                                   class="phoneNumber">-->
+                                        <!--                                            <input type="text" hidden="hidden" th:value="${customer.customerName}"-->
+                                        <!--                                                   class="name">-->
+                                        <!--                                            <input type="text" hidden="hidden" th:value="${customer.customerPoint}"-->
+                                        <!--                                                   class="point">-->
+                                        <!--                                        </div>-->
                                         <input type="text" class="form-control input" name="phoneNumber"
                                                id="input-phone-number">
                                     </div>
@@ -155,7 +155,6 @@
                         </div>
                     </div>
 
-
                 </div>
             </div>
             <div th:replace="layout::footer">
@@ -168,63 +167,111 @@
     let totalPrice = parseInt($('#totalPrice').text().replace(/[^0-9]/gi, ''));
     $(document).ready(function () {
         $('#net').html($('#totalPrice').text());
-    });
 
-    function updatePoint() {
-        let point = parseInt($('#result').text().replace(/[^0-9]/gi, ''));
-        if (
-            $('#input-phone-number').val() == ""
-            || $('#result').text() === 'Không có'
-        ) {
-            return;
-        } else {
-            let pointTotal = 0;
-            if (totalPrice >= 500000)
-                pointTotal += 100;
-            else if (totalPrice >= 200000)
-                pointTotal += 30;
-            else if (totalPrice >= 100000)
-                pointTotal += 10;
-            pointTotal += point;
-            if (parseInt($(this).val()) > pointTotal) {
-                $('#error').html('Có thể không đủ điểm');
-                return;
-            }
+        $('#input-phone-number').change(function () {
+            if ($(this).val() == "")
+                $('#result').html("");
+            $.ajax({
+                contentType: "application/json",
+                method: "GET",
+                dataType: "json",
+                url: "http://localhost:8080/api/customer/config-phone-number/" + $('#input-phone-number').val(),
+                success: function (data) {
+                    if (data == null) {
+                        $('#result').html("SDT không đúng");
+                        $('#error').html('');
+                        $('#sale').html("0 VND");
+                        $('#net').html(totalPrice.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
+                    } else {
+                        $('#result').html(data.customerName + " " + data.customerPoint + " điểm");
+                        let point = parseInt(data.customerPoint);
+                        let pointTotal = 0;
+                        if (totalPrice >= 500000)
+                            pointTotal += 100;
+                        else if (totalPrice >= 200000)
+                            pointTotal += 30;
+                        else if (totalPrice >= 100000)
+                            pointTotal += 10;
+                        pointTotal += point;
+                        if (parseInt($('#select').val()) > pointTotal) {
+                            $('#error').html('Có thể không đủ điểm');
+                            return;
+                        }
+                        $('#error').html('');
 
-        }
-        $('#error').html('');
-
-        let sale = 0;
-        if (parseInt($(this).val()) == 100)
-            sale = (totalPrice * 50) / 100;
-        else if (parseInt($(this).val()) == 50)
-            sale = (totalPrice * 20) / 100;
-        else if (parseInt($(this).val()) == 30)
-            sale = (totalPrice * 10) / 100;
-        let netPrice = totalPrice - sale;
-        $('#sale').html(sale.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
-        $('#net').html(netPrice.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
-    };
-
-    $('#select').change(updatePoint);
-
-    $('#input-phone-number').change(function () {
-        let phoneNumber = $(this).val();
-        let oldContent = $('#result').text();
-        $('.phoneNumber').each(function () {
-            if ($(this).val() == phoneNumber) {
-                $('#result').html($(this).parents('.customer').find(".name").val() + " " + $(this).parents('.customer').find(".point").val() + " điểm");
-            }
+                        let sale = 0;
+                        if (parseInt($('#select').val()) == 100)
+                            sale = (totalPrice * 50) / 100;
+                        else if (parseInt($('#select').val()) == 50)
+                            sale = (totalPrice * 20) / 100;
+                        else if (parseInt($('#select').val()) == 30)
+                            sale = (totalPrice * 10) / 100;
+                        let netPrice = totalPrice - sale;
+                        $('#sale').html(sale.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
+                        $('#net').html(netPrice.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
+                    }
+                }
+            });
         });
-        if (oldContent == $('#result').text()) {
-            $('#result').html("Không có");
+
+        function updatePoint() {
+            let point = parseInt($('#result').text().replace(/[^0-9]/gi, ''));
+            if (
+                $('#input-phone-number').val() == ""
+                || $('#result').text() === 'SDT không đúng'
+            ) {
+                return;
+            } else {
+                let pointTotal = 0;
+                if (totalPrice >= 500000)
+                    pointTotal += 100;
+                else if (totalPrice >= 200000)
+                    pointTotal += 30;
+                else if (totalPrice >= 100000)
+                    pointTotal += 10;
+                pointTotal += point;
+                if (parseInt($(this).val()) > pointTotal) {
+                    $('#error').html('Có thể không đủ điểm');
+                    return;
+                }
+
+            }
             $('#error').html('');
-            $('#totalPrice').html(totalPrice.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
-            $('#sale').html("0 VND");
-            $('#net').html(totalPrice.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
-        }
-        updatePoint.call($('#select'));
+
+            let sale = 0;
+            if (parseInt($(this).val()) == 100)
+                sale = (totalPrice * 50) / 100;
+            else if (parseInt($(this).val()) == 50)
+                sale = (totalPrice * 20) / 100;
+            else if (parseInt($(this).val()) == 30)
+                sale = (totalPrice * 10) / 100;
+            let netPrice = totalPrice - sale;
+            $('#sale').html(sale.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
+            $('#net').html(netPrice.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
+        };
+        $('#select').change(updatePoint);
     });
+
+
+    //
+    // $('#input-phone-number').change(function () {
+    //     let phoneNumber = $(this).val();
+    //     let oldContent = $('#result').text();
+    //     $('.phoneNumber').each(function () {
+    //         if ($(this).val() == phoneNumber) {
+    //             $('#result').html($(this).parents('.customer').find(".name").val() + " " + $(this).parents('.customer').find(".point").val() + " điểm");
+    //         }
+    //     });
+    //     if (oldContent == $('#result').text()) {
+    //         $('#result').html("Không có");
+    //         $('#error').html('');
+    //         $('#totalPrice').html(totalPrice.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
+    //         $('#sale').html("0 VND");
+    //         $('#net').html(totalPrice.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
+    //     }
+    //     updatePoint.call($('#select'));
+    // });
+
 </script>
 <script th:src="@{/bootstrap-5.0.2-dist/js/bootstrap.bundle.js}"
         src="../static/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>

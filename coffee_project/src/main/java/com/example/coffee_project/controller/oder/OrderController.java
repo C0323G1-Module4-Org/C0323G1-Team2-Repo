@@ -75,7 +75,7 @@ public class OrderController {
         User user = userService.findByName(authentication.getName());
         Order order = orderService.findCurrentOrder(true, user);
         Product product = productService.findProductById(idProduct);
-        if (quantity > 0) {
+        if (quantity > 0 || quantity < 101) {
             if (order == null) {
                 order = orderService.save(new Order(true, new Timestamp(new Date().getTime()), user));
             }
@@ -88,7 +88,7 @@ public class OrderController {
             }
             redirectAttributes.addFlashAttribute("msg", "Đã đặt thành công");
         } else {
-            redirectAttributes.addFlashAttribute("msg", "Đặt thất bại");
+            redirectAttributes.addFlashAttribute("msg", "Số lượng vượt giới hạn");
         }
         return "redirect:/order/";
     }
@@ -119,7 +119,6 @@ public class OrderController {
                     return "redirect:/order/";
                 orderDetailService.save(o);
             }
-            model.addAttribute("listCustomer", listCustomer);
             model.addAttribute("order", order);
             return "oder/payment";
         }
