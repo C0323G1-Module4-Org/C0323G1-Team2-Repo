@@ -17,4 +17,5 @@ public interface IProductService {
     Page<Product> searchByName(Pageable pageable, String name);
     List<Product> getBestSeller();
     Page<Product> searchByNameAndProductType(Pageable pageable, String name, String type);
+    boolean isExitProduct(int id);
 }

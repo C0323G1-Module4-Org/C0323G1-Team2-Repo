@@ -71,4 +71,8 @@ public class ProductService implements IProductService {
     public Page<Product> searchByNameAndProductType(Pageable pageable, String name, String type) {
         return productRepository.findByNameAndType(pageable, name, type);
     }
+    @Override
+    public boolean isExitProduct(int id) {
+        return productRepository.existsById(id);
+    }
 }
