@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Danh Sách Nhân Viên</title>
     <style th:replace="/layout::style"></style>
-    <!--    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
           href="../static/bootstrap-5.0.2-dist/cs/bootstrap.css">
@@ -65,7 +65,7 @@
                                 <th scope="col">Tài khoản</th>
                                 <th scope="col">Lương</th>
                                 <th scope="col">Vị trí</th>
-                                <th colspan="3" scope="col" style="text-align: center">Chức năng</th>
+                                <th  scope="col" style="text-align: center">Chức năng</th>
 
                                 </thead>
                                 <tr th:each="user, status :${userPage}">
@@ -81,26 +81,24 @@
                                         <td th:text="${user.account.accountName}">
                                         <td th:text="${#numbers.formatDecimal(user.userSalary, 0, 'COMMA', 0, 'POINT') + ' VND'}"></td>
                                         <td th:text="${user.employeeType.employeeTypeName}">
-                                        <td style="text-align: center">
+                                        <td style="text-align: center   ">
 
-                                            <a th:href="@{/user/change-form/{id}(id=${user.userId})}">
+                                            <a style="text-decoration: none;margin-right: 1rem" th:href="@{/user/change-form/{id}(id=${user.userId})}">
                                                 <button title="Sửa lương và ca làm việc" type="button"
                                                         class="btn btn-primary">
                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                 </button>
                                             </a>
-                                        </td>
-                                        <td style="text-align: center">
+
 
                                             <!-- Button trigger detail modal -->
-                                            <button title="Chi tiết" type="button" class="btn btn-primary"
+                                            <button style="margin-right: 1rem" title="Chi tiết" type="button" class="btn btn-primary"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#exampleModal1"
                                                     th:attr="onclick=|showDetail(${user.userId})|">
                                                 <i class="fa-solid fa-circle-info"></i>
                                             </button>
-                                        </td>
-                                        <td style="text-align: center">
+
                                             <button title="Xoá" style="text-align: center" type="button"
                                                     class="btn btn-danger"
                                                     data-bs-toggle="modal"
@@ -145,8 +143,8 @@
 
 
             </div>
-        </div>
-        <div th:replace="layout::footer">
+            <div th:replace="layout::footer"></div>
+
         </div>
     </div>
 </div>
