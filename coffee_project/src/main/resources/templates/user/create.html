@@ -95,7 +95,7 @@
 
                             <!-----------------------//Table đăng kí thông tin------------------------->
 
-                            <div class="col-8" id="form-create">
+                            <div class="col-8" id="form-create" >
                                 <div style="width: 67%">
                                     <table class="table table-hover table-responsive">
                                         <input id="thumbnailURL" hidden="hidden" th:field="*{userImagePath}">
@@ -131,16 +131,16 @@
                                             </td>
 
                                         </tr>
-
                                         <tr>
                                             <th>Ngày sinh <span style="color: red">*</span>
                                                 <div style="height: 20px"></div>
                                             </th>
-                                            <td><input class="form-control" type="date"
+                                            <td><input class="form-control" type="date" placeholder="dd-mm-yyy"
                                                        th:field="*{userBirthday}">
                                                 <div style=" height: 20px"><small style="color: red"
                                                                                   th:if="${#fields.hasErrors('userBirthday')}"
                                                                                   th:errors="*{userBirthday}"></small>
+
                                                 </div>
                                             </td>
                                         </tr>
