@@ -25,7 +25,7 @@
                     <div class="container-fluid d-flex mt-3">
                         <p class="h1">Bán Chạy Nhất</p>
                     </div>
-                    <div class="container-fluid position-relative d-flex flex-sm-wrap flex-md-nowrap justify-content-between gap-2 mt-3">
+                    <div class="container-fluid position-relative d-flex flex-sm-wrap flex-md-nowrap justify-content-between gap-4 mt-3">
                         <div class="card position-relative" th:each="product:${bestSeller}">
                             <span class="position-absolute " style="top: 5%; left: 83%">
                                 <img src="../../static/hot.png" class="w-100 h-100" th:src="@{/hot.png}" alt="">
@@ -131,10 +131,10 @@
     </div>
 
     <div class="col-12 position-fixed top-50 bottom-50" style="z-index: 2;">
-        <button class="btn btn-outline-dark float-end position-relative" style="margin-top: 12%;margin-right: 4%"
+        <button class="btn btn-outline-dark float-end position-relative" style="margin-top: 11%;margin-right: 2%"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal">
-            <i class="fa-solid fa-cart-shopping" style="color: #3a4d50;">
+            <i class="fa-solid fa-file-pen" style="color: #3a4d50;"></i>
             </i>
             <span
                     th:if="${listOrderDetail}" th:text="${listOrderDetail.orderDetailList.size()}"
@@ -180,10 +180,6 @@
                                 </thead>
                                 <tbody th:if="${listOrderDetail}">
                                 <tr class="orderDetail" th:each="orderDetail,status:${listOrderDetail.orderDetailList}">
-                                    <!--                                this.quantityProduct = quantityProduct;-->
-                                    <!--                                this.productPrice = productPrice;-->
-                                    <!--                                this.product = product;-->
-                                    <!--                                this.order = order;-->
                                     <input class="price" type="hidden"
                                            th:field="*{orderDetailList[__${status.index}__].productPrice}">
                                     <input type="hidden"
@@ -199,23 +195,12 @@
                                         Mark
                                     </td>
                                     <td>
-                                        <!--                                    <div class="def-number-input number-input safari_only">-->
-                                        <!--                                        <button type="button"-->
-                                        <!--                                                onclick="this.parentNode.querySelector('input[type=number]').stepDown()"-->
-                                        <!--                                                class="minus"></button>-->
-                                        <!--                                        <input class="quantity" name="quantity" min="0"-->
-                                        <!--                                               th:field="*{orderDetailList[__${status.index}__].quantityProduct}"-->
-                                        <!--                                               type="number">-->
-                                        <!--                                        <button type="button"-->
-                                        <!--                                                onclick="this.parentNode.querySelector('input[type=number]').stepUp()"-->
-                                        <!--                                                class="plus"></button>-->
-                                        <!--                                    </div>-->
                                         <div class="row d-flex justify-content-center wrapper">
                                             <button type="button"
                                                     class="btn btn-primary col-2 center py-2 d-flex justify-content-center minus">
                                                 <i class="fa-solid fa-minus"></i>
                                             </button>
-                                            <input class="input-group-text col-3 num"
+                                            <input class="input-group-text col-4 num"
                                                    th:field="*{orderDetailList[__${status.index}__].quantityProduct}"
                                                    min="1" max="100" type="number">
                                             <button type="button"
