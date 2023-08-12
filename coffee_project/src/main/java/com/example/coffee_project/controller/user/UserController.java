@@ -142,7 +142,7 @@ public class UserController {
         BeanUtils.copyProperties(user,userDto);
         model.addAttribute("employeeTypeList",employeeTypeService.findAll());
         model.addAttribute("userDto",userDto);
-        return "/user/change";
+        return "user/change";
     }
     @PostMapping("/change")
     public String changeSalaryAndEmployeeType(@Valid @ModelAttribute UserDto userDto, BindingResult bindingResult,
@@ -153,13 +153,13 @@ public class UserController {
         if(bindingResult.hasErrors()){
             model.addAttribute("employeeTypeList", employeeTypeService.findAll());
             model.addAttribute("userDto",userDto);
-            return "/user/change";
+            return "user/change";
         }
         User user = new User();
         BeanUtils.copyProperties(userDto,user);
         userService.saveUser(user);
         redirectAttributes.addFlashAttribute("msg","Chỉnh sửa thành công!");
-        return "redirect:/user/new-employee";
+        return "redirect:/user/list";
     }
     @GetMapping("/new-employee")
     public String showNewEmployeeList(@RequestParam(defaultValue = "0")Integer page,
@@ -171,5 +171,37 @@ public class UserController {
         }
         model.addAttribute("userPage",userPage);
         return "/user/new-employee";
+    }
+    @GetMapping("/new-employee-form/{id}")
+    public String changeNewEmployeeForm(@PathVariable Integer id, Model model,RedirectAttributes redirectAttributes){
+        User user = userService.findByID(id);
+
+        if(user == null){
+            redirectAttributes.addFlashAttribute("msg","Không có nhân viên này!");
+            return "redirect:/user/new-employee";
+        }
+
+        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(user,userDto);
+        model.addAttribute("employeeTypeList",employeeTypeService.findAll());
+        model.addAttribute("userDto",userDto);
+        return "user/change-new-employee";
+    }
+    @PostMapping("/change-new-employee")
+    public String changeSalaryAndEmployeeTypeNewEmployee(@Valid @ModelAttribute UserDto userDto, BindingResult bindingResult,
+                                              Model model,
+                                              RedirectAttributes redirectAttributes){
+        UserValidate.checkValidateUserUserSalary(userDto.getUserSalary(),bindingResult);
+
+        if(bindingResult.hasErrors()){
+            model.addAttribute("employeeTypeList", employeeTypeService.findAll());
+            model.addAttribute("userDto",userDto);
+            return "user/change-new-employee";
+        }
+        User user = new User();
+        BeanUtils.copyProperties(userDto,user);
+        userService.saveUser(user);
+        redirectAttributes.addFlashAttribute("msg","Chỉnh sửa thành công!");
+        return "redirect:/user/new-employee";
     }
 }
