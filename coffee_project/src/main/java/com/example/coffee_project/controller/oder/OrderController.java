@@ -73,22 +73,27 @@ public class OrderController {
     public String addOrder(@RequestParam(required = false, defaultValue = "-1") int quantity, @RequestParam int idProduct, RedirectAttributes redirectAttributes) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findByName(authentication.getName());
-        Order order = orderService.findCurrentOrder(true, user);
-        Product product = productService.findProductById(idProduct);
-        if (quantity > 0 || quantity < 101) {
-            if (order == null) {
-                order = orderService.save(new Order(true, new Timestamp(new Date().getTime()), user));
-            }
-            OrderDetail orderDetail = orderDetailService.findByOrderAndProduct(order, product);
-            if (orderDetail != null) {
-                orderDetail.setQuantityProduct(orderDetail.getQuantityProduct() + quantity);
-                orderDetailService.save(orderDetail);
-            } else {
-                orderDetailService.save(new OrderDetail(quantity, product.getProductPrice(), product, order));
-            }
-            redirectAttributes.addFlashAttribute("msg", "Đã đặt thành công");
+        if (!productService.isExitProduct(idProduct)) {
+            redirectAttributes.addFlashAttribute("msg", "Sản phẩm không có trong kho");
         } else {
-            redirectAttributes.addFlashAttribute("msg", "Số lượng vượt giới hạn");
+            Order order = orderService.findCurrentOrder(true, user);
+            Product product = productService.findProductById(idProduct);
+            if (quantity > 0 && quantity < 101) {
+                if (order == null) {
+                    order = orderService.save(new Order(true, new Timestamp(new Date().getTime()), user));
+                }
+                OrderDetail orderDetail = orderDetailService.findByOrderAndProduct(order, product);
+
+                if (orderDetail != null) {
+                    orderDetail.setQuantityProduct(orderDetail.getQuantityProduct() + quantity);
+                    orderDetailService.save(orderDetail);
+                } else {
+                    orderDetailService.save(new OrderDetail(quantity, product.getProductPrice(), product, order));
+                }
+                redirectAttributes.addFlashAttribute("msg", "Đã đặt thành công");
+            } else {
+                redirectAttributes.addFlashAttribute("msg", "Số lượng vượt giới hạn");
+            }
         }
         return "redirect:/order/";
     }
@@ -112,7 +117,6 @@ public class OrderController {
         User user = userService.findByName(authentication.getName());
         Order order = orderService.findCurrentOrder(true, user);
         order.setOrderDate(new Timestamp(new Date().getTime()));
-        List<Customer> listCustomer = customerService.findListCustomer();
         if (orderDetailDto != null && orderDetailDto.getOrderDetailList().size() != 0) {
             for (OrderDetail o : orderDetailDto.getOrderDetailList()) {
                 if (o.getQuantityProduct() == null || o.getQuantityProduct() < 1)
