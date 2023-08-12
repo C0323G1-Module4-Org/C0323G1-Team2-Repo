@@ -64,8 +64,10 @@ public class ProductController {
         model.addAttribute("productTypes", productTypeService.display());
         Page<Product> products = productService.search(pageable, name, productType, price);
         if (products.isEmpty()){
-            redirectAttributes.addFlashAttribute("msg","Danh sách trống");
-            return "redirect:/product";
+            model.addAttribute("msg","Danh sách trống");
+            model.addAttribute("products", products);
+            return "product/list";
+//            return "redirect:/product";
         }
         model.addAttribute("products", products);
         return "product/list";
