@@ -162,9 +162,9 @@
                                 <option style="text-align: center" th:value="${pricee}" selected> Chọn giá</option>
                                 <option th:each="price : ${prices}" th:value="${price}"
                                         th:selected="${price} == ${pricee}"
-                                        th:text="${price}+' VNĐ'"></option>
+                                        th:text="${price}+' VND'"></option>
                             </select>
-                            <input th:value="${name}" type="text" name="name" placeholder="nhập tên sản phẩm ">
+                            <input th:value="${name}" type="text" name="name" placeholder="nhập tên ">
                             <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i>
                             </button>
                         </form>
@@ -178,7 +178,8 @@
                                 <th>Tên</th>
                                 <th>Loại</th>
                                 <th>Giá</th>
-                                <th style="text-align: center" colspan="2">Chức năng</th>
+                                <!--                                <th style="text-align: center" colspan="2">Chức năng</th>-->
+                                <th style="text-align: center">Chức năng</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -188,21 +189,20 @@
                                                             width="100"></td>
                                 <td th:text="${product.productName}">Product Name</td>
                                 <td th:text="${product.productType.productTypeName}">Product Type</td>
-                                <td th:text="${#numbers.formatDecimal(product.productPrice, 0, 'COMMA', 0, 'POINT')} +' VNĐ'"
+                                <td th:text="${#numbers.formatDecimal(product.productPrice, 0, 'COMMA', 0, 'POINT')} +' VND'"
                                     class="card-text">Product Price
                                 </td>
-                                <div class="d-flex justify-content-between">
-                                    <td style="text-align: center">
-                                        <a style="color: white"
+<!--                                <div class="d-flex justify-content-between">-->
+                                    <td class=" d-flex justify-content-center">
+                                        <a style="color: white; margin-right: 1rem"
                                            th:href="@{/product/edit/{id}(id=${product.productId})}">
                                             <button class="btn btn-primary">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </button>
                                         </a>
-                                    </td>
-                                    <td style="text-align: center">
                                         <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                        <button type="button" class="btn btn-danger"
+                                                data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal"
                                                 th:data-p1="${product.productId}" th:data-p2="${product.productName}"
                                                 th:data-p3="${product.productId}"
@@ -210,7 +210,10 @@
                                             <i class="fa-regular fa-trash-can"></i>
                                         </button>
                                     </td>
-                                </div>
+                                    <!--                                    <td style="text-align: center">-->
+                                    <!--                                       -->
+                                    <!--                                    </td>-->
+<!--                                </div>-->
                             </tr>
                             </tbody>
                         </table>
