@@ -22,7 +22,7 @@
             <div class="row min-vh-100 content">
                 <div class="col-12">
                     <div class="row">
-                        <h1 style="text-align: center;margin-top: 2rem">Quản Lý Tài Khoản</h1>
+                        <h1 style="text-align: center;margin-top: 2rem;margin-bottom: 20px">Quản Lý Tài Khoản</h1>
                         <!--                    //     search-->
                         <form th:action="@{/account/admin}" th:method="get">
                             <label style="float: right">
@@ -133,17 +133,18 @@
         <div class="modal-content">
             <form action="/account/delete" method="post">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Thông báo!!!!</h5>
+                    <h5 class="modal-title" id="exampleModalLabel"><b>Xóa tài khoản</b></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Bạn muốn xóa tài khoản :</p>
+                    <p>Bạn muốn xóa tài khoản :
+                    <span id="usernameDelete" ></span></p>
                     <input type="text" hidden="hidden" name="accountName" id="accountName">
-                    <span id="usernameDelete" ></span>
+                    <p style="color: red"><b>Lưu ý:</b> Hoạt động này không thể hoàn tác! </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
-                    <button type="submit" class="btn btn-primary">Xóa</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
+                    <button type="submit" class="btn btn-primary">Xác nhận</button>
                 </div>
             </form>
 
