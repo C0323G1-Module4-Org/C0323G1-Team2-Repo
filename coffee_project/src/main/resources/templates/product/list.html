@@ -110,6 +110,7 @@
             font-size: 2em;
             color: #007bff;
         }
+
         .image-cell {
             width: 100px;
             height: 100px;
@@ -151,13 +152,14 @@
                         <span class="col-4"></span>
                         <form class="col-7" action="/product" method="get">
                             <select name="productType">
-                                <option style="text-align: center" value="" selected>Chọn loại</option>
+                                <option style="text-align: center" th:value="${productTypee}" selected>Chọn loại
+                                </option>
                                 <option th:each="productType : ${productTypes}" th:value="${productType.productTypeId}"
                                         th:selected="${productType.productTypeId} == ${productTypee}"
                                         th:text="${productType.productTypeName}"></option>
                             </select>
                             <select name="price">
-                                <option style="text-align: center" value="" selected> Chọn giá</option>
+                                <option style="text-align: center" th:value="${pricee}" selected> Chọn giá</option>
                                 <option th:each="price : ${prices}" th:value="${price}"
                                         th:selected="${price} == ${pricee}"
                                         th:text="${price}+' VNĐ'"></option>
@@ -182,12 +184,13 @@
                             <tbody>
                             <tr th:each="product,status: ${products}">
                                 <td th:text="${status.count}"></td>
-                                <td class="image-cell"><img th:src="${product.productImagePath}" alt="product image" width="100"></td>
+                                <td class="image-cell"><img th:src="${product.productImagePath}" alt="product image"
+                                                            width="100"></td>
                                 <td th:text="${product.productName}">Product Name</td>
                                 <td th:text="${product.productType.productTypeName}">Product Type</td>
                                 <td th:text="${#numbers.formatDecimal(product.productPrice, 0, 'COMMA', 0, 'POINT')} +' VNĐ'"
                                     class="card-text">Product Price
-                                </td >
+                                </td>
                                 <div class="d-flex justify-content-between">
                                     <td style="text-align: center">
                                         <a style="color: white"
@@ -212,26 +215,31 @@
                             </tbody>
                         </table>
                         <!---------------------------Paging--------------------------------------------------------------->
-                        <div class="d-flex justify-content-center">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <li th:class="${!products.hasPrevious()} ? 'page-item disabled' : 'page-item'"><a
-                                            class="page-link"
-                                            th:href="@{/product(page=${products.number-1},name=${name},productType=${productType},price=${price})}">Trước</a>
-                                    </li>
+                        <div th:if="${products.totalPages>1}">
+                            <div class="d-flex justify-content-center">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <li th:class="${!products.hasPrevious()} ? 'page-item disabled' : 'page-item'">
+                                            <a
+                                                    class="page-link"
+                                                    th:href="@{/product(page=${(products.number)-1},name=${name},productType=${productType},price=${price})}">Trước</a>
+                                        </li>
 
-                                    <li class="page-link disabled"><span th:text="${products.number +1}"></span>/<span
-                                            th:text="${products.totalPages}"></span>
-                                    </li>
+                                        <li class="page-link disabled"><span
+                                                th:text="${products.number +1}"></span>/<span
+                                                th:text="${products.totalPages}"></span>
+                                        </li>
 
-                                    <li th:class="${!products.hasNext()} ? 'page-item disabled' : 'page-item'"><a
-                                            class="page-link"
-                                            th:href="@{/product(page=${products.number+1},name=${name},productType=${productType},price=${price})}">Sau</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                            <!------------------------End Paging------------------------------------------------------------>
+                                        <li th:class="${!products.hasNext()} ? 'page-item disabled' : 'page-item'"><a
+                                                class="page-link"
+                                                th:href="@{/product(page=${products.number+1},name=${name},productType=${productType},price=${price})}">Sau</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <!------------------------End Paging------------------------------------------------------------>
+                            </div>
                         </div>
+
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                              aria-hidden="true">
