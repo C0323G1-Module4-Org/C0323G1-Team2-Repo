@@ -81,11 +81,29 @@ public class AccountService implements IAccountService {
     }
     public String sendEmailAndReturnCode(String to){
         // Sinh mã ngẫu nhiên
-        String code = generateRandomCode(6); // Mã có độ dài 6
+        String code = generateRandomCode(4); // Mã có độ dài 4
         // Tạo nội dung email
-        String body = "Mã xác nhận của bạn là: " + code +" .Bạn vui lòng lấy mã để tại lại mật khẩu";
+        String body = "<fieldset style=\"border: 2px solid sandybrown;color: darkslategray;background-image:url('https://i.pinimg.com/550x/ef/ff/ce/efffcecb709c4ac7cf5e536694f2ea99.jpg');height: 320px;width:500px\">\n" +
+                "    <legend style=\"text-align: center\">\n" +
+                "        <h1 style=\"color: sandybrown\">Queen Coffee</h1>\n" +
+                "    </legend>\n" +
+                "    <legend>\n" +
+                "        <h4>\n" +
+                "            Chào bạn\n" +
+                "            <br/>\n" +
+                "            <br/>\n" +
+                "            Chúng tôi gửi bạn mã xác nhận tài khoản của bạn tại Queen coffee <br/><br/>\n" +
+                "\n" +
+                "            Mã xác nhận của bạn là : " + code + "\n" +
+                "        </h4>\n" +
+                "        <h4>\n" +
+                "            Bạn không chia sẻ mã trên cho bất kì ai !!!\n" +
+                "        </h4>\n" +
+                "        <h4>Trân trọng !!!</h4>\n" +
+                "    </legend>\n" +
+                "</fieldset>";
         // Cấu hình subject
-        String subject = "Queen Coffee gửi mã xác thực ta khoản của bạn";
+        String subject = "Queen Coffee trân trọng thông báo!!!";
         sendEmail(to, subject, body);
         return code;
     }

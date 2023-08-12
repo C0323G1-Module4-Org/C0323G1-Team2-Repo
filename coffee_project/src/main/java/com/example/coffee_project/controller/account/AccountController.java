@@ -104,7 +104,7 @@ public class AccountController {
         if (user==null){
             redirectAttributes.addFlashAttribute("username",username);
             redirectAttributes.addFlashAttribute("email",email);
-            redirectAttributes.addFlashAttribute("msg","Kiểm tra lại");
+            redirectAttributes.addFlashAttribute("msg","Kiểm tra lại email hoặc tên đăng nhập");
             return "redirect:/account/forgot-password";
         }
         if (user.getUserEmail().equals(email)) {
@@ -118,7 +118,7 @@ public class AccountController {
         }else {
             redirectAttributes.addFlashAttribute("username",username);
             redirectAttributes.addFlashAttribute("email",email);
-            redirectAttributes.addFlashAttribute("msg","Kiểm tra lại");
+            redirectAttributes.addFlashAttribute("msg","Kiểm tra lại email hoặc tên đăng nhập");
             return "redirect:/account/forgot-password";
         }
         return "/accuracy";
@@ -138,7 +138,7 @@ public class AccountController {
         if (Objects.equals(password, password2) && Objects.equals(emailCode, code)) {
             account.setAccountPassword(password);
             accountService.forgot(account);
-            redirectAttributes.addFlashAttribute("error","Thành công");
+            redirectAttributes.addFlashAttribute("msg","Thành công");
             return "redirect:/account/login";
         }
             redirectAttributes.addFlashAttribute("msg","Vui lòng kiểm tra lại");
