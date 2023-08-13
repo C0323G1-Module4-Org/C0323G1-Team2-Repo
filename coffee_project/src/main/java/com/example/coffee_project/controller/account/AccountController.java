@@ -37,7 +37,7 @@ public class AccountController {
 
     @GetMapping("/login")
     public ModelAndView login(@ModelAttribute AccountDto accountDto) {
-        ModelAndView modelAndView = new ModelAndView("/login");
+        ModelAndView modelAndView = new ModelAndView("index");
 
         modelAndView.addObject("accountDto", accountDto);
         return modelAndView;
