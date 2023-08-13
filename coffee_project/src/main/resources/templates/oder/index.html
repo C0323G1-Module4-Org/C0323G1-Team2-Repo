@@ -25,13 +25,15 @@
                     <div class="container-fluid d-flex mt-3">
                         <p class="h1">Bán Chạy Nhất</p>
                     </div>
-                    <div class="container-fluid position-relative d-flex flex-sm-wrap flex-md-nowrap justify-content-between gap-4 mt-3">
-                        <div class="card position-relative shadow-sm" style="border-radius: 2em; padding: 1.5em .5em .5em;"
+                    <div class="container-fluid position-relative d-flex flex-sm-wrap flex-md-nowrap justify-content-between gap-2 mt-3">
+                        <div class="card position-relative shadow-sm"
+                             style="width: 18rem;border-radius: 2em; padding: 1.5em .5em .5em;"
                              th:each="product:${bestSeller}">
                             <span class="position-absolute " style="top: 5%; left: 83%">
                                 <img src="../../static/hot.png" class="w-100 h-100" th:src="@{/hot.png}" alt="">
                             </span>
-                            <img th:src="${product.productImagePath}" src="https://www.highlandscoffee.com.vn/vnt_upload/product/04_2023/New_product/HLC_New_logo_5.1_Products__PHIN_SUADA.jpg"
+                            <img th:src="${product.productImagePath}"
+                                 src="https://www.highlandscoffee.com.vn/vnt_upload/product/04_2023/New_product/HLC_New_logo_5.1_Products__PHIN_SUADA.jpg"
                                  class="card-img-top" alt="...">
                             <div class="card-body d-flex flex-column justify-content-between">
                                 <h5 class="card-title" th:text="${product.productName}"></h5>
@@ -57,17 +59,17 @@
                     <div class="container-fluid d-flex justify-content-between my-4">
                         <p class="h1 float-start">Đặt Sản Phẩm</p>
                         <form action="/order/" class="float-end" method="get">
-                            <div class="input-group rounded">
-                                <select class="form-select" name="type" aria-label="Default select example">
-                                    <option selected value="">Chọn loại đồ uống</option>
-                                    <option th:each="type:${listProductType}" th:value="${type.productTypeName}"
-                                            th:text="${type.productTypeName}">
+                            <div class="input-group">
+                                <select class="form-select rounded"  name="type" aria-label="Default select example">
+                                    <option th:selected="${type==''}"  value="">Chọn loại đồ uống</option>
+                                    <option th:selected="${type==typeProduct.productTypeName}"  th:each="typeProduct:${listProductType}" th:value="${typeProduct.productTypeName}"
+                                            th:text="${typeProduct.productTypeName}">
                                         One
                                     </option>
                                 </select>
                                 <input id="search-input" name="name" type="search" placeholder="Tên sản phẩm"
                                        class="form-control rounded mx-2" th:value="${name}"/>
-                                <button id="search-button" type="submit" class="btn btn-primary">
+                                <button id="search-button" type="submit" class="btn btn-primary rounded">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>
@@ -75,7 +77,8 @@
                     </div>
                     <div class="container-fluid d-flex flex-wrap gap-2 justify-content-between">
 
-                        <div class="card shadow-sm" style="width: 18rem;margin-bottom: 30px;border-radius: 2em; padding: 1.5em .5em .5em;"
+                        <div class="card shadow-sm"
+                             style="width: 18rem;margin-bottom: 30px;border-radius: 2em; padding: 1.5em .5em .5em;"
                              th:each="product:${listProduct}">
                             <img th:src="${product.productImagePath}"
                                  class="card-img-top" alt="...">
@@ -132,7 +135,8 @@
     </div>
 
     <div class="col-12 position-fixed top-50 bottom-50" style="z-index: 2;">
-        <button class="btn btn-outline-dark float-end position-relative" style="margin-top: 11%;margin-right: 2%"
+        <button class="btn btn-outline-dark float-end position-relative rounded-circle"
+                style="margin-top: 11%;margin-right: 2%"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal">
             <i class="fa-solid fa-file-pen" style="color: #3a4d50;"></i>
