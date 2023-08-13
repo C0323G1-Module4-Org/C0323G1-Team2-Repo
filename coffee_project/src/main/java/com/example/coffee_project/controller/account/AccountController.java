@@ -43,14 +43,6 @@ public class AccountController {
         return modelAndView;
     }
 
-    @PostMapping("/j_spring_security_check")
-    public String returnLogin(@RequestBody AccountDto accountDto,
-                                    RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("accountDto", accountDto);
-        redirectAttributes.addFlashAttribute("msg", "Kiểm tra lại");
-        return "redirect:/account/login";
-    }
-
     @PostMapping("/signup")
     public String signupAccount(@Valid @ModelAttribute AccountDto accountDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
