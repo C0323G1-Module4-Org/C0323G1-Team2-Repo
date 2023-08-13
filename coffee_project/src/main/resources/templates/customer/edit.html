@@ -27,89 +27,86 @@
             <div class="row min-vh-100 content">
                 <div class="col-12">
                     <!----------------------------------------Main------------------------------------------->
+                    <h1 style="text-align: center; margin-top: 2rem">Chỉnh Sửa Thông Tin Khách Hàng</h1>
+                    <a class="col-12 mt-2" style="text-decoration: none" th:href="@{/customer/list}">
+                        <button title="Quay lại"
+                                class="btn btn-primary">
+                            <i class="fa-solid fa-circle-arrow-left"></i></button>
+                    </a>
                     <div class="form">
                         <form class="form-group" th:action="@{/customer/update}" th:object="${customerDto}"
                               method="post">
-                            <fieldset>
-                                <legend style="text-align: center; margin-top: 2rem"><h1>Chỉnh Sửa Thông Tin Khách Hàng</h1></legend>
-                                <div>
-                                    <a class="col-12 mt-2" style="text-decoration: none" th:href="@{/customer/list}">
-                                        <button title="Quay lại"
-                                                class="btn btn-primary">
-                                            <i class="fa-solid fa-circle-arrow-left"></i></button>
-                                    </a>
-                                </div>
-                                <div class="table">
-                                    <table class="table table-hover">
-                                        <tr>
-                                            <td></td>
-                                            <td>
-                                                <input class="form-control" type="hidden" th:field="*{customerId}"/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>Tên khách hàng <span style="color: red">*</span></th>
-                                            <td><input class="form-control" type="text" id="enterName" th:field="*{customerName}"
-                                                       th:value="${customerDto.customerName}">
-                                                <div style="height: 20px">
-                                                    <small th:if="${#fields.hasErrors('customerName')}"
-                                                           th:errors="*{customerName}"
-                                                           style="color: red">
-                                                    </small>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>Giới tính <span style="color: red">*</span></th>
-                                            <td>
-                                                <input type="radio" th:field="*{customerGender}" th:value="true">
-                                                <span th:text="Nam"></span>
-                                                <input type="radio" th:field="*{customerGender}" th:value="false">
-                                                <span th:text="Nữ"></span>
-                                                <div style="height: 20px">
-                                                    <small th:if="${#fields.hasErrors('customerGender')}"
-                                                           th:errors="*{customerGender}" style="color: red"></small>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>Ngày sinh <span style="color: red">*</span></th>
-                                            <td>
-                                                <input class="form-control" type="date" th:field="*{customerBirthday}">
-                                                <div style="height: 20px">
-                                                    <small th:if="${#fields.hasErrors('customerBirthday')}"
-                                                           th:errors="*{customerBirthday}" style="color: red"></small>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>Số điện thoại <span style="color: red">*</span></th>
-                                            <td><input class="form-control" type="number"
-                                                       th:field="*{customerPhoneNumber}">
-                                                <div style="height: 20px">
-                                                    <small th:if="${#fields.hasErrors('customerPhoneNumber')}"
-                                                           th:errors="*{customerPhoneNumber}"
-                                                           style="color: red"></small>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>Điểm</th>
-                                            <td>
-                                                <div th:text="${customerDto.getCustomerPoint()}"></div>
-                                            </td>
-                                        </tr>
-                                        <!--  <input class="form-control" hidden="hidden" th:field="*{customerPoint}" readonly>-->
-                                        <tr>
-                                        <tr>
-                                            <td></td>
-                                            <td>
-                                                <button type="submit" class="btn btn-primary">Chỉnh sửa</button>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </fieldset>
+                            <div class="table">
+                                <table class="table table-hover">
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <input class="form-control" type="hidden" th:field="*{customerId}"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tên khách hàng <span style="color: red">*</span></th>
+                                        <td><input class="form-control" type="text" id="enterName"
+                                                   th:field="*{customerName}"
+                                                   th:value="${customerDto.customerName}">
+                                            <div style="height: 20px">
+                                                <small th:if="${#fields.hasErrors('customerName')}"
+                                                       th:errors="*{customerName}"
+                                                       style="color: red">
+                                                </small>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Giới tính <span style="color: red">*</span></th>
+                                        <td>
+                                            <input type="radio" th:field="*{customerGender}" th:value="true">
+                                            <span th:text="Nam"></span>
+                                            <input type="radio" th:field="*{customerGender}" th:value="false">
+                                            <span th:text="Nữ"></span>
+                                            <div style="height: 20px">
+                                                <small th:if="${#fields.hasErrors('customerGender')}"
+                                                       th:errors="*{customerGender}" style="color: red"></small>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Ngày sinh <span style="color: red">*</span></th>
+                                        <td>
+                                            <input class="form-control" type="date" th:field="*{customerBirthday}">
+                                            <div style="height: 20px">
+                                                <small th:if="${#fields.hasErrors('customerBirthday')}"
+                                                       th:errors="*{customerBirthday}" style="color: red"></small>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Số điện thoại <span style="color: red">*</span></th>
+                                        <td><input class="form-control" type="number"
+                                                   th:field="*{customerPhoneNumber}">
+                                            <div style="height: 20px">
+                                                <small th:if="${#fields.hasErrors('customerPhoneNumber')}"
+                                                       th:errors="*{customerPhoneNumber}"
+                                                       style="color: red"></small>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Điểm</th>
+                                        <td>
+                                            <div th:text="${customerDto.getCustomerPoint()}"></div>
+                                        </td>
+                                    </tr>
+                                    <!--  <input class="form-control" hidden="hidden" th:field="*{customerPoint}" readonly>-->
+                                    <tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary" style="width: 100%">Chỉnh sửa</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
                         </form>
                     </div>
                     <!------------------------------End-main------------------------------------->
@@ -130,15 +127,16 @@
         let arrayName = name.split("");
         let newName = arrayName[0].toUpperCase();
         for (let i = 1; i < arrayName.length; i++) {
-            if (arrayName[i-1] === " " && arrayName[i] === "") {
+            if (arrayName[i - 1] === " " && arrayName[i] === "") {
                 continue;
             }
-            if (arrayName[i-1] === " " && arrayName[i] != " ") {
+            if (arrayName[i - 1] === " " && arrayName[i] != " ") {
                 newName += " " + arrayName[i].toUpperCase();
-            } else if (arrayName[i] != " "){
+            } else if (arrayName[i] != " ") {
                 newName += arrayName[i].toLowerCase();
             }
-        } document.getElementById('enterName').value = newName;
+        }
+        document.getElementById('enterName').value = newName;
     })
 </script>
 </body>
