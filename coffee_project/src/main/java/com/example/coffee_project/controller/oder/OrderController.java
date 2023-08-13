@@ -66,6 +66,7 @@ public class OrderController {
         model.addAttribute("bestSeller", bestSeller);
         model.addAttribute("name", name);
         model.addAttribute("listProduct", listProduct);
+        model.addAttribute("type", type);
         return "oder/index";
     }
 
@@ -153,10 +154,8 @@ public class OrderController {
             } else {
                 customerService.save(customer);
             }
-        } else {
-            order.setOrderStatus(false);
-            orderService.save(order);
         }
+        orderService.getPdf(order, sale);
         order.setOrderDate(new Timestamp(new Date().getTime()));
         order.setOrderStatus(false);
         orderService.save(order);
