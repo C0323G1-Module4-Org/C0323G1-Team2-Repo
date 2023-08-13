@@ -2,9 +2,11 @@ package com.example.coffee_project.dto.account;
 
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 public class AccountDto {
     @NotBlank(message = "Không được để trống tên tài khoản")
+    @Size(min = 5,max = 255,message = "Tên tài khoản phải tên 5 kí tự,dưới 255 kí tự")
     private String accountName;
     private String accountPassword;
 
