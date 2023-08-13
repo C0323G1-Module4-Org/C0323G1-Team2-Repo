@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -57,6 +58,8 @@ public class OrderController {
         Order order = orderService.findCurrentOrder(true, user);
         Pageable pageable = PageRequest.of(page, 8, Sort.by("product_name").ascending());
         Page<Product> listProduct = productService.searchByNameAndProductType(pageable, "%" + name + "%", "%" + type + "%");
+        if (listProduct.isEmpty())
+            model.addAttribute("msg2", "Không có sản phẩm nào được tìm thấy");
         if (order != null) {
             OrderDetailDto orderDetailDto = new OrderDetailDto();
             orderDetailDto.setOrderDetailList(new ArrayList<>(order.getOrderDetailSet()));
@@ -124,6 +127,7 @@ public class OrderController {
                     return "redirect:/order/";
                 orderDetailService.save(o);
             }
+            model.addAttribute("now", LocalDateTime.now());
             model.addAttribute("order", order);
             return "oder/payment";
         }
