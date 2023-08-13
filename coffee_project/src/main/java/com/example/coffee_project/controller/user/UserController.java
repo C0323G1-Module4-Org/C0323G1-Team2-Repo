@@ -40,7 +40,7 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView("/user/list");
         Pageable pageable = PageRequest.of(page, 5,
                 Sort.by("userName").ascending().and(Sort.by("userSalary").ascending()));
-        Page<User> userPage = userService.findAll(pageable, search);
+        Page<User> userPage = userService.findAll(pageable, search,"ROLE_EMPLOYEE");
         if(userPage.getTotalElements() == 0){
             modelAndView.addObject("msg","Không có nhân viên nào!");
         }

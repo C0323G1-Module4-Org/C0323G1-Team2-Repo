@@ -10,7 +10,7 @@ import org.springframework.validation.Errors;
 import java.util.List;
 
 public interface IUserService {
-    Page<User> findAll(Pageable pageable, String search);
+    Page<User> findAll(Pageable pageable, String search,String roleName);
 
     void saveUser(User user);
 

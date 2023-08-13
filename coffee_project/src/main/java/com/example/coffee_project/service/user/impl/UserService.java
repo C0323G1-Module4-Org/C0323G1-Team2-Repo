@@ -19,8 +19,8 @@ public class UserService implements IUserService {
     private IUserRepository userRepository;
 
     @Override
-    public Page<User> findAll(Pageable pageable, String search) {
-        return userRepository.findUserByUserNameContaining(pageable, search);
+    public Page<User> findAll(Pageable pageable, String search,String roleName) {
+        return userRepository.findUserByUserNameContainingAndAccount_RoleRoleName(pageable, search, roleName);
     }
 
     @Override
