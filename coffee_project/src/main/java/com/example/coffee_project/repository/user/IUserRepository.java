@@ -13,7 +13,7 @@ import java.util.List;
 
 
 public interface IUserRepository extends JpaRepository<User, Integer> {
-    Page<User> findUserByUserNameContaining(Pageable pageable, String search);
+    Page<User> findUserByUserNameContainingAndAccount_RoleRoleName(Pageable pageable, String search,String roleName);
 
     User findUserByAccountAccountName(String name);
 
