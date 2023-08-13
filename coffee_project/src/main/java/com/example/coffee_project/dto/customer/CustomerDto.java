@@ -145,8 +145,8 @@ public class CustomerDto implements Validator {
         // Check birthday
         if (customerDto.getCustomerBirthday() == null) {
             errors.rejectValue("customerBirthday", null, "Không được để trống ngày sinh!");
-        } else if (CustomerValidate.checkValidateBirthday(customerDto.getCustomerBirthday())) {
-            errors.rejectValue("customerBirthday", null, "Thời gian bạn nhập không hợp lệ!");
+        } else if (!CustomerValidate.checkValidateBirthday(customerDto.getCustomerBirthday())) {
+            errors.rejectValue("customerBirthday", null, "Tuổi khách hàng phải lớn hơn 10!");
         }
         // Check number phone
         if (customerDto.getCustomerPhoneNumber().trim().equals("")) {

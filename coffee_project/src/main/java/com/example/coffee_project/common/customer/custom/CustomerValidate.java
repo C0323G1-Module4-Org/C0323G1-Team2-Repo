@@ -16,7 +16,7 @@ public class CustomerValidate {
         LocalDate currentDay = LocalDate.now();
         LocalDate localBirthday = birthday.toLocalDate();
         Period period = Period.between(localBirthday, currentDay);
-        return period.isNegative();
+        return period.getYears() > 10;
     }
 
     public static String validateString(String s) {
