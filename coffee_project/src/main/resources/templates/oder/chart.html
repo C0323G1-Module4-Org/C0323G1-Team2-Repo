@@ -5,7 +5,7 @@
     <title>Biểu đồ lịch sử doanh thu</title>
     <link rel="shortcut icon" href="/static/android-chrome-512x512.png" th:href="@{/android-chrome-512x512.png}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style th:insert="/layout::style"></style>
+    <style th:replace="/layout::style"></style>
     <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
           href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
     <link rel="stylesheet"
@@ -28,7 +28,7 @@
                 <div class="col-12">
                     <br>
                     <h1 style="text-align: center">Biểu Đồ Lịch Sử Doanh Thu </h1>
-                    <div class="content">
+                    <div class="content ">
                         <div>
                             <input type="hidden" th:value="${msg0}" id="msg0">
                             <input type="hidden" th:value="${msg1}" id="msg1">
