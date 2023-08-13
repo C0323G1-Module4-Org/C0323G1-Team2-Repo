@@ -22,7 +22,7 @@
             <div class="row min-vh-100 content">
                 <div class="col-12">
 
-                    <div class="card">
+                    <div class="card my-5">
                         <div class="card-body mx-4">
                             <div class="container ">
                                 <div class="row d-flex ">
@@ -35,7 +35,7 @@
                                                                           th:text="${order.user.employeeType.employeeTypeName}"></span>
                                         </li>
                                         <li class="text-black mt-1"
-                                            th:text="${order.orderDate}">
+                                            th:text="${#temporals.format(now, 'dd-MM-yyyy HH:mm')}">
                                             April 17
                                             2021
                                         </li>
@@ -169,8 +169,12 @@
         $('#net').html($('#totalPrice').text());
 
         $('#input-phone-number').change(function () {
-            if ($(this).val() == "")
+            if ($(this).val() == "") {
                 $('#result').html("");
+                $('#error').html("");
+                $('#sale').html("0 VND");
+                $('#net').html(totalPrice.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
+            }
             $.ajax({
                 contentType: "application/json",
                 method: "GET",
@@ -178,8 +182,9 @@
                 url: "http://localhost:8080/api/customer/config-phone-number/" + $('#input-phone-number').val(),
                 success: function (data) {
                     if (data == null) {
+                        alert(1);
                         $('#result').html("SDT không đúng");
-                        $('#error').html('');
+                        $('#error').html("");
                         $('#sale').html("0 VND");
                         $('#net').html(totalPrice.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VND");
                     } else {
