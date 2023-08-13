@@ -43,18 +43,10 @@ public class AccountController {
         return modelAndView;
     }
 
-    @PostMapping("/j_spring_security_check")
-    public String returnLogin(@RequestBody AccountDto accountDto,
-                                    RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("accountDto", accountDto);
-        redirectAttributes.addFlashAttribute("msg", "Kiểm tra lại");
-        return "redirect:/account/login";
-    }
-
     @PostMapping("/signup")
     public String signupAccount(@Valid @ModelAttribute AccountDto accountDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("msg", "Không để trống ");
+            redirectAttributes.addFlashAttribute("msg", "Tài khoản phải hơn 5 và dưới 255 kí tự");
         } else {
             if (accountService.findByUsername(accountDto.getAccountName()) != null) {
                 redirectAttributes.addFlashAttribute("msg", "Tài khoản đã tồn tại");

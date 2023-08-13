@@ -80,6 +80,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/change").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/user/list").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/user/new-employee").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/user/new-employee-form/{id}").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/user/change-new-employee").hasAuthority("ROLE_ADMIN")
 
         ;
 
