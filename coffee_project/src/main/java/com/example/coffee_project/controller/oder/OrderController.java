@@ -155,7 +155,7 @@ public class OrderController {
                 customerService.save(customer);
             }
         }
-        orderService.getPdf(order, sale);
+//        orderService.getPdf(order, sale);
         order.setOrderDate(new Timestamp(new Date().getTime()));
         order.setOrderStatus(false);
         orderService.save(order);
