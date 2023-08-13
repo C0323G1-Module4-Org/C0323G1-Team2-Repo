@@ -9,7 +9,7 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" th:href="@{/bootstrap-5.0.2-dist/css/bootstrap.css}"
           href="../static/bootstrap-5.0.2-dist/css/bootstrap.css">
-    <link rel="shortcut icon" href="/static/healthy_drink-1_4x.png" th:href="@{/healthy_drink-1_4x.png}">
+    <link rel="shortcut icon" href="/static/android-chrome-512x512.png" th:href="@{/android-chrome-512x512.png}">
 </head>
 <body>
 <div class="container-fluid">
@@ -25,30 +25,28 @@
                     <!------------------------------------ Thanh công cụ ------------------------------------>
 
                     <nav class="navbar navbar-inverse">
-                        <div class="container-fluid">
-                            <div class="navbar-form navbar-left">
-                                <a th:href="@{/customer/showCreateForm}">
-                                    <button title="Thêm mới khách hàng"
-                                            class="btn btn-primary">
-                                        <i class="fa-solid fa-plus"></i></button>
-                                </a>
-                            </div>
-                            <!------------------------------- Thanh tìm kiếm ------------------------------------>
-
-                            <form class="navbar-form navbar-right" action="/customer/list" method="get">
-                                <div class="d-flex justify-content-end">
-                                    <div class="form-outline" style="margin-right: 0.6rem">
-                                        <input id="search-input" name="search" type="search"
-                                               th:name="searchName" placeholder="Nhập tên khách hàng..."
-                                               class="form-control" th:value="${searchName}"/>
-                                    </div>
-                                    <button title="Tìm kiếm" type="submit"
-                                            class="btn btn-primary">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                            </form>
+                        <div class="navbar-form navbar-left">
+                            <a th:href="@{/customer/showCreateForm}">
+                                <button title="Thêm mới khách hàng"
+                                        class="btn btn-primary">
+                                    <i class="fa-solid fa-plus"></i></button>
+                            </a>
                         </div>
+                        <!------------------------------- Thanh tìm kiếm ------------------------------------>
+
+                        <form class="navbar-form navbar-right" action="/customer/list" method="get">
+                            <div class="d-flex justify-content-end">
+                                <div class="form-outline" style="margin-right: 0.6rem">
+                                    <input id="search-input" name="search" type="search"
+                                           th:name="searchName" placeholder="Nhập tên khách hàng"
+                                           class="form-control" th:value="${searchName}"/>
+                                </div>
+                                <button title="Tìm kiếm" type="submit"
+                                        class="btn btn-primary">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </form>
                     </nav>
                     <!-------------------------------------------Toast--------------------------------------------->
 
@@ -112,13 +110,13 @@
                                 <!--                            </a>-->
                                 <!--                        </td>-->
                                 <td style="text-align: center">
-                                    <a th:href="@{/customer/{id}/edit(id=${customer.getCustomerId()})}">
+                                    <a th:href="@{/customer/{id}/edit(id=${customer.getCustomerId()})}"
+                                       style="text-decoration: none">
                                         <button class="btn btn-primary" style="margin-right: 1rem">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </button>
                                     </a>
                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                            style="margin-right: 1rem"
                                             data-bs-target="#deleteModal" th:data-id="${customer.customerId}"
                                             th:data-name="${customer.customerName}"
                                             onclick="sendInfoToDelete(this.getAttribute('data-id'),this.getAttribute('data-name'))">
@@ -128,28 +126,28 @@
                             </tr>
                             </tbody>
                         </table>
-                    </div>
+                        <!-----------------------------------------Phân trang----------------------------------------->
 
-                    <!-----------------------------------------Phân trang----------------------------------------->
-
-                    <div class="d-flex justify-content-center">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination">
-                                <li th:class="${!customerPage.hasPrevious()} ? 'page-item disabled' : 'page-item'">
-                                    <a class="page-link"
-                                       th:href="@{/customer/list(page=${customerPage.number - 1}, searchName=${searchName})}">Trước
-                                    </a>
-                                </li>
-                                <li class="page-link disabled"><span th:text="${customerPage.number +1}"></span>/<span
-                                        th:text="${customerPage.totalPages}"></span>
-                                </li>
-                                <li th:class="${!customerPage.hasNext()} ? 'page-item disabled' : 'page-item'">
-                                    <a class="page-link"
-                                       th:href="@{/customer/list(page=${customerPage.number+1},searchName=${searchName})}">Sau
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
+                        <div class="d-flex justify-content-center">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li th:class="${!customerPage.hasPrevious()} ? 'page-item disabled' : 'page-item'">
+                                        <a class="page-link"
+                                           th:href="@{/customer/list(page=${customerPage.number - 1}, searchName=${searchName})}">Trước
+                                        </a>
+                                    </li>
+                                    <li class="page-link disabled"><span
+                                            th:text="${customerPage.number +1}"></span>/<span
+                                            th:text="${customerPage.totalPages}"></span>
+                                    </li>
+                                    <li th:class="${!customerPage.hasNext()} ? 'page-item disabled' : 'page-item'">
+                                        <a class="page-link"
+                                           th:href="@{/customer/list(page=${customerPage.number+1},searchName=${searchName})}">Sau
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                     <!--------------------------------------------------------------------------------------->
                     <!--                <div style="text-align: center ; gap: 1rem">-->
