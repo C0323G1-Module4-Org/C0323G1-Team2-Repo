@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Chỉnh sửa thông tin nhân viên</title>
+    <title>Thêm mới thông tin nhân viên</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -71,7 +71,7 @@
                     <!---------------BODY---------------------------------------------------------------------------------------->
                     <div class="row" style="margin-top: 2rem;margin-bottom: 20px">
 
-                        <h1 class="col-10" style="text-align: center">Chỉnh Sửa Thông Tin Nhân Viên</h1>
+                        <h1 class="col-10" style="text-align: center">Thêm Mới Thông Tin Nhân Viên</h1>
 
 
                     </div>
@@ -104,7 +104,7 @@
                                                 <div style=" height: 20px"></div>
                                             </th>
                                             <td>
-                                                <div><input  id="userName"
+                                                <div><input required id="userName"
                                                             class="form-control" th:field="*{userName}"
                                                             th:value="${userDto.userName}"></div>
                                                 <div style=" height: 20px"><small style="color: red"
@@ -117,10 +117,10 @@
                                             <th>Giới tính <span style="color: red">*</span>
                                                 <div style=" height: 20px"></div>
                                             </th>
-                                            <td><input class="form-check-input" type="radio" name="gender"
+                                            <td><input  class="form-check-input" type="radio" name="gender"
                                                        th:field="*{userGender}"
                                                        th:value="true">&nbsp;<span>Nam</span>
-                                                <input class="form-check-input" type="radio" name="gender"
+                                                <input  class="form-check-input" type="radio" name="gender"
                                                        th:field="*{userGender}"
                                                        th:value="false">&nbsp;<span>Nữ</span>
                                                 <div style=" height: 20px">
@@ -135,7 +135,7 @@
                                             <th>Ngày sinh <span style="color: red">*</span>
                                                 <div style="height: 20px"></div>
                                             </th>
-                                            <td><input class="form-control" type="date" placeholder="dd-mm-yyy"
+                                            <td><input required class="form-control" type="date" placeholder="dd-mm-yyy"
                                                        th:field="*{userBirthday}">
                                                 <div style=" height: 20px"><small style="color: red"
                                                                                   th:if="${#fields.hasErrors('userBirthday')}"
@@ -149,7 +149,7 @@
                                             <th>Điện thoại <span style="color: red">*</span>
                                                 <div style=" height: 20px"></div>
                                             </th>
-                                            <td><input class="form-control" th:field="*{userPhoneNumber}">
+                                            <td><input required class="form-control" th:field="*{userPhoneNumber}">
                                                 <div style=" height: 20px"><small style="color: red"
                                                                                   th:if="${#fields.hasErrors('userPhoneNumber')}"
                                                                                   th:errors="*{userPhoneNumber}"></small>
@@ -161,7 +161,7 @@
                                             <th>Mail <span style="color: red">*</span>
                                                 <div style=" height: 20px"></div>
                                             </th>
-                                            <td><input class="form-control" th:field="*{userEmail}">
+                                            <td><input required class="form-control" th:field="*{userEmail}">
                                                 <div style=" height: 20px"><small style="color: red"
                                                                                   th:if="${#fields.hasErrors('userEmail')}"
                                                                                   th:errors="*{userEmail}"></small>
@@ -173,7 +173,7 @@
                                             <th>Căn cước <span style="color: red">*</span>
                                                 <div style=" height: 20px"></div>
                                             </th>
-                                            <td><input class="form-control" th:field="*{userIdCard}">
+                                            <td><input required class="form-control" th:field="*{userIdCard}">
                                                 <div style=" height: 20px"><small style="color: red"
                                                                                   th:if="${#fields.hasErrors('userIdCard')}"
                                                                                   th:errors="*{userIdCard}"></small>
@@ -185,7 +185,7 @@
                                             <th>Địa chỉ <span style="color: red">*</span>
                                                 <div style=" height: 20px"></div>
                                             </th>
-                                            <td><input class="form-control" id="a" th:field="*{userAddress}">
+                                            <td><input required class="form-control" id="a" th:field="*{userAddress}">
                                                 <div style=" height: 20px"><small style="color: red"
                                                                                   th:if="${#fields.hasErrors('userAddress')}"
                                                                                   th:errors="*{userAddress}"></small>
