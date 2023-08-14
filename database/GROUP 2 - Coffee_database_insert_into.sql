@@ -1,0 +1,59 @@
+
+-- Product Type
+INSERT INTO `coffee`.`product_type` (`product_type_id`, `product_type_name`) VALUES ('1', 'Cà phê phin');
+INSERT INTO `coffee`.`product_type` (`product_type_id`, `product_type_name`) VALUES ('2', 'Phindi');
+INSERT INTO `coffee`.`product_type` (`product_type_id`, `product_type_name`) VALUES ('3', 'Espresso');
+INSERT INTO `coffee`.`product_type` (`product_type_id`, `product_type_name`) VALUES ('4', 'Trà');
+INSERT INTO `coffee`.`product_type` (`product_type_id`, `product_type_name`) VALUES ('5', 'Freeze');
+INSERT INTO `coffee`.`product_type` (`product_type_id`, `product_type_name`) VALUES ('6', 'Bánh');
+INSERT INTO `coffee`.`product_type` (`product_type_id`, `product_type_name`) VALUES ('7', 'Món khác');
+-- Product
+INSERT INTO `coffee`.`product` (`product_description`, `product_image_path`, `product_name`, `product_price`, `product_type_id`) VALUES ('Cà phê pha phin truyền thống, pha chút sữa đặc và thêm vào chút đá tạo nên ly sữa đá đậm đà chất phin.', 'https://www.highlandscoffee.com.vn/vnt_upload/product/04_2023/New_product/HLC_New_logo_5.1_Products__PHIN_SUADA.jpg', 'Phin sữa đá', '35000', '1');
+INSERT INTO `coffee`.`product` (`product_description`, `product_image_path`, `product_name`, `product_price`, `product_type_id`) VALUES ('Cà phê đậm đà pha hoàn toàn từ phin, cho thêm 1 thìa đường, một ít viên đá mát lạnh.', 'https://www.highlandscoffee.com.vn/vnt_upload/product/04_2023/HLC_New_logo_5.1_Products__PHIN_DEN_DA.jpg', 'Phin đen đá', '29000', '1');
+INSERT INTO `coffee`.`product` (`product_description`, `product_image_path`, `product_name`, `product_price`, `product_type_id`) VALUES ('Hương vị cà phê đích thực được pha với nước sôi, kết hợp với từng giọt sữa đặc tạo nên ly Phin sữa nóng mang lại một trải nghiệm tuyệt vời cho người sử dụng.', 'https://www.highlandscoffee.com.vn/vnt_upload/product/11_2022/BR_Drink/HLC__PHIN_SUA_NONG.jpg', 'Phin sữa nóng ', '29000', '1');
+INSERT INTO `coffee`.`product` (`product_description`, `product_image_path`, `product_name`, `product_price`, `product_type_id`) VALUES ('Thơm ngon khó cưỡng, trên cùng là lớp kem tương thơm béo và caramel ngọt ngào. Món nước phù hợp trong những cuộc gặp gỡ bạn bè, bởi sự ngọt ngào thường mang mọi người xích lại gần nhau.', 'https://www.highlandscoffee.com.vn/vnt_upload/product/06_2023/HLC_New_logo_5.1_Products__CARAMEL_FREEZE_PHINDI.jpg', 'Caramel Phin Freeze', '55000', '5');
+INSERT INTO `coffee`.`product` (`product_description`, `product_image_path`, `product_name`, `product_price`, `product_type_id`) VALUES ('Một thức uống ngon lạ miệng kết hợp giữa cookie socola giòn xốp cùng hỗn hợp sữa tươi sữa đặc vô cùng hoàn hảo.', 'https://www.highlandscoffee.com.vn/vnt_upload/product/06_2023/HLC_New_logo_5.1_Products__COOKIES_FREEZE.jpg', 'Cookie & Cream', '55000', '5');
+INSERT INTO `coffee`.`product` (`product_description`, `product_image_path`, `product_name`, `product_price`, `product_type_id`) VALUES ('Vị trà xanh kết hợp kem đá xay tạo nên một thức uống thơm ngon, mát lạnh và cực kỳ tươi mới. Không khó hiểu khi đây là món best seller của Queen coffee.', 'https://www.highlandscoffee.com.vn/vnt_upload/product/06_2023/HLC_New_logo_5.1_Products__FREEZE_TRA_XANH.jpg', 'Freezee trà xanh', '55000', '5');
+INSERT INTO `coffee`.`product` (`product_description`, `product_image_path`, `product_name`, `product_price`, `product_type_id`) VALUES ('Thức uống chinh phục những thực khách khó tính. Vị thơm ngọt của trà kết hợp với hương sen thanh nhã tạo nên một thức uống đầy sức hút khó cưỡng', 'https://www.highlandscoffee.com.vn/vnt_upload/product/06_2023/HLC_New_logo_5.1_Products__TRA_SEN_VANG_CU_NANG.jpg', 'Trà sen vàng Queenie', '55000', '4');
+INSERT INTO `coffee`.`product` (`product_description`, `product_image_path`, `product_name`, `product_price`, `product_type_id`) VALUES ('Một sự kết hợp thú vị giữa trà đen, vị vải thơm ngon và thạch trơn mượt ngọt ngào tạo nên sức hút độc đáo.', 'https://www.highlandscoffee.com.vn/vnt_upload/product/06_2023/HLC_New_logo_5.1_Products__TRA_TACH_VAI.jpg', 'Trà thạch vải', '55000', '4');
+INSERT INTO `coffee`.`product` (`product_description`, `product_image_path`, `product_name`, `product_price`, `product_type_id`) VALUES ('Vị trà đen mát lạnh kết hợp với vị đào thơm ngọt và những miếng thạch mềm mại mang lại một trải nghiệm vô cùng mới mẻ và tuyệt vời.', 'https://www.highlandscoffee.com.vn/vnt_upload/product/06_2023/HLC_New_logo_5.1_Products__TRA_THANH_DAO-09.jpg', 'Trà thạch đào', '45000', '4');
+
+-- Customer
+INSERT INTO `coffee`.`customer` (`customer_birthday`, `customer_gender`, `customer_name`, `customer_phone_number`, `customer_point`) VALUES ('1996-02-01', b'0', 'Ngô Hữu Nhật', '0919232456', '0');
+INSERT INTO `coffee`.`customer` (`customer_birthday`, `customer_gender`, `customer_name`, `customer_phone_number`, `customer_point`) VALUES ('1995-04-01', b'1', 'Ngô Trà My', '0919232789', '0'); 
+INSERT INTO `coffee`.`customer` (`customer_birthday`, `customer_gender`, `customer_name`, `customer_phone_number`, `customer_point`) VALUES ('1991-04-01', b'0', 'Ngô Huy', '0899456999', '0');
+INSERT INTO `coffee`.`customer` (`customer_birthday`, `customer_gender`, `customer_name`, `customer_phone_number`, `customer_point`) VALUES ('1990-04-11', b'1', 'Hoàng Hạnh', '0903227991', '0'); 
+INSERT INTO `coffee`.`customer` (`customer_birthday`, `customer_gender`, `customer_name`, `customer_phone_number`, `customer_point`) VALUES ('1999-12-01', b'0', 'Lê Lan', '0935414444', '0'); 
+INSERT INTO `coffee`.`customer` (`customer_birthday`, `customer_gender`, `customer_name`, `customer_phone_number`, `customer_point`) VALUES ('2005-04-01', b'1', 'Nguyễn Quý Phúc', '0232234789', '0');  
+INSERT INTO `coffee`.`customer` (`customer_birthday`, `customer_gender`, `customer_name`, `customer_phone_number`, `customer_point`) VALUES ('1995-10-20', b'1', 'Nguyễn Tố Tố', '0903234567', '0'); 
+INSERT INTO `coffee`.`customer` (`customer_birthday`, `customer_gender`, `customer_name`, `customer_phone_number`, `customer_point`) VALUES ('1991-06-06', b'0', 'Ngô An', '0899777110', '0');
+INSERT INTO `coffee`.`customer` (`customer_birthday`, `customer_gender`, `customer_name`, `customer_phone_number`, `customer_point`) VALUES ('1990-08-31', b'1', 'Hoàng Mạnh Quỳnh', '0823456345', '0'); 
+INSERT INTO `coffee`.`customer` (`customer_birthday`, `customer_gender`, `customer_name`, `customer_phone_number`, `customer_point`) VALUES ('2004-12-12', b'0', 'Lê Tú Anh', '0919234799', '0'); 
+INSERT INTO `coffee`.`customer` (`customer_birthday`, `customer_gender`, `customer_name`, `customer_phone_number`, `customer_point`) VALUES ('2005-07-12', b'1', 'Nguyễn Quý Nương', '0876123678', '0');
+INSERT INTO `coffee`.`customer` (`customer_birthday`, `customer_gender`, `customer_name`, `customer_phone_number`, `customer_point`) VALUES ('1991-10-21', b'1', 'Nguyễn Bích Trâm', '0903232347', '0'); 
+INSERT INTO `coffee`.`customer` (`customer_birthday`, `customer_gender`, `customer_name`, `customer_phone_number`, `customer_point`) VALUES ('1990-06-20', b'0', 'Nguyễn Hạnh Bình', '0899777111', '0');
+INSERT INTO `coffee`.`customer` (`customer_birthday`, `customer_gender`, `customer_name`, `customer_phone_number`, `customer_point`) VALUES ('1989-08-21', b'1', 'Hoàng Nhi', '0823457979', '0'); 
+INSERT INTO `coffee`.`customer` (`customer_birthday`, `customer_gender`, `customer_name`, `customer_phone_number`, `customer_point`) VALUES ('2000-12-10', b'0', 'Lê Ngọc', '0919234777', '0'); 
+INSERT INTO `coffee`.`customer` (`customer_birthday`, `customer_gender`, `customer_name`, `customer_phone_number`, `customer_point`) VALUES ('2002-09-11', b'1', 'Nguyễn Phúc Anh', '0876123666', '0');
+-- Employee type
+INSERT INTO `coffee`.`employee_type` (`employee_type_name`) VALUES ('Full-time');
+INSERT INTO `coffee`.`employee_type` (`employee_type_name`) VALUES ('Part-time day');
+INSERT INTO `coffee`.`employee_type` (`employee_type_name`) VALUES ('Part-time night');
+
+-- role
+INSERT INTO `coffee`.`role` (`role_name`) VALUES ('ROLE_ADMIN');
+INSERT INTO `coffee`.`role` (`role_name`) VALUES ('ROLE_EMPLOYEE');
+-- account
+INSERT INTO `coffee`.`account` (`account_name`, `account_password`,`role_id`) VALUES ('admin', '$2a$10$hEl68N.Fp/jZKsMAeosTJesnViuslOZlA.TGZQtcoXEnopOHjomcC','1');
+INSERT INTO `coffee`.`account` (`account_name`, `account_password`,`role_id`) VALUES ('baoanh', '$2a$10$hEl68N.Fp/jZKsMAeosTJesnViuslOZlA.TGZQtcoXEnopOHjomcC','2');
+INSERT INTO `coffee`.`account` (`account_name`, `account_password`,`role_id`) VALUES ('leanh', '$2a$10$hEl68N.Fp/jZKsMAeosTJesnViuslOZlA.TGZQtcoXEnopOHjomcC','2');
+INSERT INTO `coffee`.`account` (`account_name`, `account_password`,`role_id`) VALUES ('giabao', '$2a$10$hEl68N.Fp/jZKsMAeosTJesnViuslOZlA.TGZQtcoXEnopOHjomcC','2');
+INSERT INTO `coffee`.`account` (`account_name`, `account_password`,`role_id`) VALUES ('tuantuan', '$2a$10$hEl68N.Fp/jZKsMAeosTJesnViuslOZlA.TGZQtcoXEnopOHjomcC','2');
+INSERT INTO `coffee`.`account` (`account_name`, `account_password`,`role_id`) VALUES ('tranquoc', '$2a$10$hEl68N.Fp/jZKsMAeosTJesnViuslOZlA.TGZQtcoXEnopOHjomcC','2');
+-- user
+INSERT INTO `coffee`.`user` (`user_address`, `user_birthday`, `user_email`, `user_gender`, `user_id_card`, `user_image_path`, `user_name`, `user_phone_number`, `user_salary`, `account_name`, `employee_type_id`) VALUES ('123 Đặng Hà Thủy Trâm, Hải Châu, Đà Nẵng', '1995-04-04', 'anan@gmail.com', b'1', '033194310105', 'https://antimatter.vn/wp-content/uploads/2022/05/mau-anh-the-1.jpg', 'Đặng Bảo An', '0935678999', '50000000', 'admin', '1');
+INSERT INTO `coffee`.`user` (`user_address`, `user_birthday`, `user_email`, `user_gender`, `user_id_card`, `user_image_path`, `user_name`, `user_phone_number`, `user_salary`, `account_name`, `employee_type_id`) VALUES ('03 Bạch Đằng, Hải Châu, Đà Nẵng', '1995-02-14', 'baoanh@gmail.com', b'1', '033194010105', 'https://vnn-imgs-a1.vgcloud.vn/icdn.dantri.com.vn/2021/05/26/ngo-ngang-voi-ve-dep-cua-hot-girl-anh-the-chua-tron-18-docx-1622043349706.jpeg', 'Trần Bảo Anh', '0935678777', '30000000', 'baoanh', '2');
+INSERT INTO `coffee`.`user` (`user_address`, `user_birthday`, `user_email`, `user_gender`, `user_id_card`, `user_image_path`, `user_name`, `user_phone_number`, `user_salary`, `account_name`, `employee_type_id`) VALUES ('02 Nguyễn Huệ, Thanh Khê, Đà Nẵng', '1997-04-02', 'leanh@gmail.com', b'1', '033199910035', 'https://cacanh24.com/wp-content/uploads/2023/05/Mau-anh-the-nam.jpg', 'Lê Anh', '0234567891', '15000000', 'leanh', '2');
+INSERT INTO `coffee`.`user` (`user_address`, `user_birthday`, `user_email`, `user_gender`, `user_id_card`, `user_image_path`, `user_name`, `user_phone_number`, `user_salary`, `account_name`, `employee_type_id`) VALUES ('02 Nguyễn Khuyến, Ngũ Hành Sơn, Đà Nẵng', '1999-04-01', 'giabao@gmail.com', b'0', '033199910005', 'https://toplist.vn/images/800px/studio-anh-khoa-792817.jpg', 'Hoàng Gia Bảo', '0914567891', '15000000', 'giabao', '2');
+INSERT INTO `coffee`.`user` (`user_address`, `user_birthday`, `user_email`, `user_gender`, `user_id_card`, `user_image_path`, `user_name`, `user_phone_number`, `user_salary`, `account_name`, `employee_type_id`) VALUES ('02 Nguyễn Hòa Bình, Thanh Khê, Đà Nẵng', '1997-04-02', 'tuan@gmail.com', b'1', '033199940005', 'https://khoinguonsangtao.vn/wp-content/uploads/2022/11/mau-anh-the-nu-sinh-xinh-dep-nen-xanh.jpg', 'Võ Kiều Tuấn Nhi', '0234567888', '10000000', 'tuantuan', '2');
+INSERT INTO `coffee`.`user` (`user_address`, `user_birthday`, `user_email`, `user_gender`, `user_id_card`, `user_image_path`, `user_name`, `user_phone_number`, `user_salary`, `account_name`, `employee_type_id`) VALUES ('02 Nguyễn An, Thanh Khê, Đà Nẵng', '1997-04-02', 'tranquoc@gmail.com', b'0', '032199910001', 'https://kenh14cdn.com/2020/6/30/img0096-1592366363868430058761-1593507888983990295582.jpeg', 'Trần Văn Quốc', '0234567876', '11000000', 'tranquoc', '2');
