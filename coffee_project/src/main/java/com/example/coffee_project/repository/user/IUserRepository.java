@@ -27,6 +27,10 @@ public interface IUserRepository extends JpaRepository<User, Integer> {
     @Modifying
     @Query(value = " call remove_user(:id) ; ",nativeQuery = true)
     void removeUserByUserId(@Param("id") Integer id);
-    @Query(value = " select * from user u where u.user_salary = 0 ",nativeQuery = true)
+    @Query(value = " select * \n" +
+            "from user u \n" +
+            "join account a on a.account_name = u.account_name\n" +
+            "join role r on r.role_id = a.role_id\n" +
+            "where r.role_name = 'ROLE_EMPLOYEE' and u.user_salary = 0 ",nativeQuery = true)
     Page<User> findNewEmployeeList(Pageable pageable);
 }
